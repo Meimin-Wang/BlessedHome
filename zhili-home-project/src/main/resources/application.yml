@@ -1,6 +1,7 @@
 swagger:
   info:
-    title: Zhili Zhou Home Project
-    version: 1.0.0
+    title: Zhili Zhou Home
+    version: 0.0.1-SNAPSHOT
     name: Blessed
     email: blessedwmm@gmail.com
+    contact-name:
