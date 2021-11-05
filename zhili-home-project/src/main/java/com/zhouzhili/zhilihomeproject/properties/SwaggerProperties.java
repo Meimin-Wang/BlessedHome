@@ -14,6 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "swagger.info")
 public class SwaggerProperties {
 
+
     /**
      * 文档的标题
      */
