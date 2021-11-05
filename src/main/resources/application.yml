@@ -1,0 +1,16 @@
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    include:
+      - swagger
+      - email
+      - server
+      - logging
+      - database
+      - redis
+      - rabbitmq
+      - druid
+      - actuator
+      - aliyun

@@ -1,0 +1,6 @@
+aliyun:
+  oss:
+    endpoint: oss-cn-shanghai.aliyuncs.com  # oss对外服务的访问域名
+    accessKeyId: LTAIVwYXkrqU6mwd # 访问身份验证中用到用户标识
+    accessKeySecret: HjbzMs7vtztnjuG9UELpgUsuCFFNLp # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    bucketName: blessed-wmm # oss的存储空间

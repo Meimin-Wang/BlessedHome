@@ -1,0 +1,56 @@
+# Swagger API Description
+User:
+  id: 用户id，自增方式
+  username: 用户名，在认证时会调用UserDetailsService的loadByUsername方法进行查询用户
+  password: 密码，会经过BCrypt加密算法进行加密后存储到数据库中
+  roles: 用户角色，一个用户会有多个角色
+UserRepository:
+  findByUsername:
+    description: 根据用户名查询用户实体
+    summary: 当用户发出认证请求时，Spring Security将调用UserDetailsService中的loadByUsername()方法
+PersonalInformation:
+  id: 用户信息实体id，自增方式
+  name: 用户的真实姓名，可以不提供
+  nickName: 用户昵称，必须提供，登录使用的是User中的username，而不是这里的昵称
+  email: 用户邮箱，可以用于找回密码
+  avatarUrl: 用户头像在文件数据库中的URL
+  phoneNumber: 手机号码，可以用于登录和找回密码
+  weChatQRCodeUrl: 微信的二维码
+  weChatPayQRCodeUrl: 微信支付的二维码
+  alipayQRCodeUrl: 支付宝的二维码
+  birthday: 用户的生日，可以用于计算年龄
+  createTime: 用户信息创建时间
+  updateTime: 用户信息修改时间
+  postcode: 用户所在城市的邮编
+  education: 学历信息
+  address: 用户所在地址
+  user: 用户信息实体对应的用户实体
+Address:
+  addressId: 地址实体id，自增方式
+  country: 国家实体
+  province: 省/洲实体
+  city: 城市实体
+  address: 详细地址
+Country:
+  countryId: 国家实体id，自增方式
+  countryName: 国家名称
+  abbr: 国家代码
+  provinces: 该国家包含的省/洲
+Province:
+  provinceId: 省/洲实体id，自增方式
+  provinceName: 省/洲的名称
+  cities: 该省包含的城市
+City:
+  cityId: 城市实体id，自增方式
+  cityName: 城市名称
+Tag:
+  tagId: 标签实体id，自增方式
+  tagName: 标签名称
+  blogs: 标签所对应的博客文章，是一个数组
+EmailDTO:
+  from: 邮件发送方
+  to: 邮件接收方
+  subject: 邮件主题
+  content: 邮件内容，纯文本
+  data: 当发送模版邮件时，用于填充模版的参数变量
+  appendixFiles: 邮件附件

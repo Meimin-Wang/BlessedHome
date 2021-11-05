@@ -1,0 +1,4 @@
+spring:
+  rabbitmq:
+    host: www.blessed.com
+    port: 5672

@@ -1,0 +1,4 @@
+# Web Mapping Test
+logging:
+  level:
+    web: DEBUG
