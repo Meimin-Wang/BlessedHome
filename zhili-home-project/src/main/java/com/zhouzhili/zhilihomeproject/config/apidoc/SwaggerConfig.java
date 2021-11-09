@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject.config;
+package com.zhouzhili.zhilihomeproject.config.apidoc;
 
 import com.zhouzhili.zhilihomeproject.properties.SwaggerProperties;
 import org.springframework.context.annotation.Bean;

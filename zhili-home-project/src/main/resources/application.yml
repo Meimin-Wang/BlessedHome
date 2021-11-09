@@ -27,3 +27,13 @@ spring:
       hibernate:
         format-sql: true
     database: mysql
+  redis:
+    host: 192.168.3.210
+    port: 6379
+  cache:
+    type: redis
+  main:
+    allow-bean-definition-overriding: true
+logging:
+  level:
+    web: DEBUG
