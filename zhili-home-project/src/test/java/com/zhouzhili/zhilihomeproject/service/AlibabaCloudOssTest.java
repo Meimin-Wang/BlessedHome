@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject.service.service;
+package com.zhouzhili.zhilihomeproject.service;
 
 import com.aliyun.oss.OSSClient;
 import com.zhouzhili.zhilihomeproject.config.alibaba.AlibabaCloudOssCredentials;
