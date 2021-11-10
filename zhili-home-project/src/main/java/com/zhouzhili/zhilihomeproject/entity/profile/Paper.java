@@ -1,10 +1,12 @@
 package com.zhouzhili.zhilihomeproject.entity.profile;
 
+import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -17,7 +19,7 @@ import java.util.Date;
 @Data
 @Entity(name = "tbl_paper")
 @Table(value = "tbl_paper")
-public class Paper {
+public class Paper extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "paper_id")

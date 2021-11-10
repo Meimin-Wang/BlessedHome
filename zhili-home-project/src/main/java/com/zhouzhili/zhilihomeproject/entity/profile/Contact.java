@@ -1,12 +1,17 @@
 package com.zhouzhili.zhilihomeproject.entity.profile;
 
+import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
 import com.zhouzhili.zhilihomeproject.validator.annotation.PhoneNumber;
 import com.zhouzhili.zhilihomeproject.validator.annotation.QQNumber;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @ClassName Contact
@@ -18,7 +23,7 @@ import javax.validation.constraints.Email;
 @Data
 @Entity(name = "tbl_contact")
 @Table(value = "tbl_contact")
-public class Contact {
+public class Contact extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "contact_id")

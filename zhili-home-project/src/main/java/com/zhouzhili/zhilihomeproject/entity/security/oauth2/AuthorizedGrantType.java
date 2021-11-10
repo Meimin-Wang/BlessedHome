@@ -1,6 +1,9 @@
 package com.zhouzhili.zhilihomeproject.entity.security.oauth2;
 
+import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -10,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @ClassName AuthorizedGrantType
@@ -21,7 +26,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Entity(name = "tbl_grant_type")
 @Table(value = "tbl_grant_type")
-public class AuthorizedGrantType {
+public class AuthorizedGrantType extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "grant_type_id")
@@ -30,4 +35,5 @@ public class AuthorizedGrantType {
     @Column(name = "grant_type_name", nullable = false, unique = true)
     @NotNull(message = "The grant type cannot be null value.")
     private String grantTypeName;
+
 }

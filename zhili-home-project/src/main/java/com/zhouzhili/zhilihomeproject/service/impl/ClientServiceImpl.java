@@ -17,6 +17,7 @@ import java.util.Optional;
  * @Date 2021/11/9 : 13:49
  * @Email blessedwmm@gmail.com
  */
+@SuppressWarnings("all")
 @Service
 @Slf4j
 public class ClientServiceImpl implements ClientService {
@@ -29,6 +30,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) {
+        log.info("{} 请求获取令牌", clientId);
         Optional<Client> optionalClient = clientRepository.findClientByClientName(clientId);
         if (optionalClient.isPresent()) {
             ClientDetails client = optionalClient.get();

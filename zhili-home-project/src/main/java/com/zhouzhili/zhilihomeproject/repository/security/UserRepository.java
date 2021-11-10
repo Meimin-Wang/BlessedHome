@@ -16,9 +16,12 @@ import java.util.Optional;
  * @Email blessedwmm@gmail.com
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>, KeyValueRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Cacheable(cacheNames = {"user-repo"}, key = "'user' + #id")
+    @Cacheable(cacheNames = {"user-repo"}, key = "'user-id-' + #id")
     @Override
     Optional<User> findById(Long id);
+
+    @Cacheable(cacheNames = {"user-repo"}, key = "'user-name-' + #username")
+    Optional<User> findUserByUsername(String username);
 }

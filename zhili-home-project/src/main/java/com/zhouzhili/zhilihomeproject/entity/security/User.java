@@ -1,20 +1,21 @@
 package com.zhouzhili.zhilihomeproject.entity.security;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
+import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @ClassName User
@@ -23,33 +24,50 @@ import java.util.Objects;
  * @Date 2021/11/7 : 16:23
  * @Email blessedwmm@gmail.com
  */
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-@RedisHash
+@Data
 @Table(value = "tbl_user")
 @Entity(name = "tbl_user")
-public class User implements Serializable {
+public class User extends BaseEntity implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "username", nullable = false, unique = true, length = 30)
     private String username;
 
-    @Column(name = "pwd")
+    @Column(name = "password", nullable = false)
     private String password;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        User user = (User) o;
-        return id != null && Objects.equals(id, user.id);
+    public String getPassword() {
+        return password;
     }
 
     @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

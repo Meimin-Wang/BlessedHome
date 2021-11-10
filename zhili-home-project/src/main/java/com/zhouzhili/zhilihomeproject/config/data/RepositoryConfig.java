@@ -1,6 +1,7 @@
 package com.zhouzhili.zhilihomeproject.config.data;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
@@ -11,10 +12,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @Email blessedwmm@gmail.com
  */
 @Configuration
-//@EnableJpaRepositories(basePackages = {
-//        "com.zhouzhili.zhilihomeproject.repository",
-//        "com.zhouzhili.zhilihomeproject.repository.security"
-//})
+@EnableJpaAuditing
 public class RepositoryConfig {
-    //
 }

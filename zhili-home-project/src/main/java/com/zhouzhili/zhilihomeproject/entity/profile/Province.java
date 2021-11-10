@@ -1,9 +1,11 @@
 package com.zhouzhili.zhilihomeproject.entity.profile;
 
+import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @ClassName Province
@@ -15,7 +17,7 @@ import javax.persistence.*;
 @Data
 @Entity(name = "tbl_province")
 @Table(value = "tbl_province")
-public class Province {
+public class Province extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "province_id")

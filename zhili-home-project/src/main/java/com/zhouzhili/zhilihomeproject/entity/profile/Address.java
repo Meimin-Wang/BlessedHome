@@ -1,9 +1,14 @@
 package com.zhouzhili.zhilihomeproject.entity.profile;
 
+import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @ClassName Address
@@ -15,7 +20,7 @@ import javax.persistence.*;
 @Data
 @Entity(name = "tbl_address")
 @Table(value = "tbl_address")
-public class Address {
+public class Address extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")

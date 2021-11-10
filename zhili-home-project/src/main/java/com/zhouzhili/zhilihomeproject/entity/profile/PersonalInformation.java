@@ -1,5 +1,6 @@
 package com.zhouzhili.zhilihomeproject.entity.profile;
 
+import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
 import com.zhouzhili.zhilihomeproject.entity.security.User;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import java.io.Serializable;
 
 /**
  * @ClassName PersonalInformation
@@ -25,7 +27,7 @@ import javax.persistence.OneToOne;
 @Data
 @Entity(name = "tbl_personal_information")
 @Table(value = "tbl_personal_information")
-public class PersonalInformation {
+public class PersonalInformation extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

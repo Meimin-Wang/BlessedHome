@@ -1,6 +1,9 @@
 package com.zhouzhili.zhilihomeproject.entity.security.oauth2;
 
+import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,10 +20,11 @@ import java.util.*;
  * @Date 2021/11/9 : 13:18
  * @Email blessedwmm@gmail.com
  */
+@SuppressWarnings("all")
 @Data
 @Entity(name = "tbl_client")
 @Table(value = "tbl_client")
-public class Client implements ClientDetails, Serializable {
+public class Client extends BaseEntity implements ClientDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +49,7 @@ public class Client implements ClientDetails, Serializable {
     @Column(name = "a_token_valid")
     private Integer accessTokenValiditySeconds;
 
-    @Column(name = "add_info")
+    @Column(name = "additional_info")
     private String additionalInformation;
 
     @Override
