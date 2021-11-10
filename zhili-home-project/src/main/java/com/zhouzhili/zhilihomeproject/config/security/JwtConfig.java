@@ -29,7 +29,7 @@ public class JwtConfig {
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setSigningKey("Blessed");
+        jwtAccessTokenConverter.setSigningKey("Zhou_Zhili");
         return jwtAccessTokenConverter;
     }
 

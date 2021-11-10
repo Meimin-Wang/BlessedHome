@@ -42,8 +42,10 @@ public class MockDataTest {
 
     @Test
     public void testMockBean() {
-        Faker faker = new Faker(Locale.ENGLISH);
+        Faker faker = new Faker(Locale.CHINA);
         Avatar avatar = faker.avatar();
+        Address address = faker.address();
         System.out.println(avatar.image());
+        System.out.println(address.fullAddress());
     }
 }

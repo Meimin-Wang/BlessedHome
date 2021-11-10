@@ -4,6 +4,7 @@ import com.zhouzhili.zhilihomeproject.entity.security.oauth2.Client;
 import com.zhouzhili.zhilihomeproject.repository.security.oauth2.ClientRepository;
 import com.zhouzhili.zhilihomeproject.service.ClientService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class ClientServiceImpl implements ClientService {
         this.clientRepository = clientRepository;
     }
 
+    @Cacheable(cacheNames = "oauth2", key = "'client-id-' + #clientId")
     @Override
     public ClientDetails loadClientByClientId(String clientId) {
         log.info("{} 请求获取令牌", clientId);

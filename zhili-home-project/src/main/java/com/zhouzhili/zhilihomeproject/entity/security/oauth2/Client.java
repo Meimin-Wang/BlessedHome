@@ -102,7 +102,7 @@ public class Client extends BaseEntity implements ClientDetails, Serializable {
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        return null;
+        return new HashSet<>();
     }
 
     @Override

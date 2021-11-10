@@ -46,17 +46,17 @@ public class MockOAuth2DataTest {
         for (int i = 0; i < types.length; i++) {
             types[i] = new AuthorizedGrantType();
         }
-        types[0].setGrantTypeName("authorization_code".toUpperCase(Locale.ROOT));
-        types[1].setGrantTypeName("password".toUpperCase(Locale.ROOT));
-        types[2].setGrantTypeName("implicit".toUpperCase(Locale.ROOT));
-        types[3].setGrantTypeName("refresh_token".toUpperCase(Locale.ROOT));
+        types[0].setGrantTypeName("authorization_code");
+        types[1].setGrantTypeName("password");
+        types[2].setGrantTypeName("implicit");
+        types[3].setGrantTypeName("refresh_token");
         List<AuthorizedGrantType> authorizedGrantTypes = authorizedGrantTypeRepository.saveAll(Arrays.asList(types));
         log.info(authorizedGrantTypes.toString());
     }
 
     @Test
     public void testAddScope() {
-        Optional<Scope> scope = scopeRepository.findByScopeName("all".toUpperCase(Locale.ROOT));
+        Optional<Scope> scope = scopeRepository.findByScopeName("all");
         if (!scope.isPresent()) {
             Scope s = new Scope();
             s.setScopeName("all".toUpperCase(Locale.ROOT));
@@ -70,8 +70,8 @@ public class MockOAuth2DataTest {
     @Test
     public void testAddClient() {
         Client client = new Client();
-        client.setClientName("Blessed");
-        client.setClientSecret(passwordEncoder.encode("blessed"));
+        client.setClientName("Zhouzhili");
+        client.setClientSecret(passwordEncoder.encode("zhili"));
         client.setAccessTokenValiditySeconds(Integer.MAX_VALUE);
         client.setRefreshTokenValiditySeconds(Integer.MAX_VALUE);
         List<Scope> allScopes = scopeRepository.findAll();
