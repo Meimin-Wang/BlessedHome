@@ -12,7 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * @ClassName MockOAuth2DataTest
@@ -76,12 +81,13 @@ public class MockOAuth2DataTest {
         client.setRefreshTokenValiditySeconds(Integer.MAX_VALUE);
         List<Scope> allScopes = scopeRepository.findAll();
         client.setScopes(new HashSet<>(allScopes));
-        Optional<AuthorizedGrantType> passwordAuthorizationGrantTypeOptional = authorizedGrantTypeRepository.findAuthorizedGrantTypeByGrantTypeName("password".toUpperCase(Locale.ROOT));
-        Set<AuthorizedGrantType> authorizedGrantTypes = new HashSet<>();
-        if (passwordAuthorizationGrantTypeOptional.isPresent()) {
-            authorizedGrantTypes.add(passwordAuthorizationGrantTypeOptional.get());
+
+        List<AuthorizedGrantType> allGrantTypes = authorizedGrantTypeRepository.findAll();
+        if (allGrantTypes.size() > 0) {
+            Set<AuthorizedGrantType> authorizedGrantTypes = new HashSet<>(allGrantTypes);
+            client.setAuthorizedGrantTypes(authorizedGrantTypes);
         }
-        client.setAuthorizedGrantTypes(authorizedGrantTypes);
+
         client.setAdditionalInformation("测试客户端");
         Client savedClient = clientRepository.saveAndFlush(client);
         log.info(savedClient.toString());

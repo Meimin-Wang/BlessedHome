@@ -1,0 +1,7 @@
+alibaba:
+  cloud:
+    oss:
+      access-key: LTAIVwYXkrqU6mwd
+      secret-key: HjbzMs7vtztnjuG9UELpgUsuCFFNLp
+      bucket-name: blessed-wmm
+      endpoint: oss-cn-shanghai.aliyuncs.com

@@ -29,7 +29,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/public/**",
                         "/static/**",
                         "/webjars/**",
-                        "/users/**",
+//                        "/users/**",
                         "/personalInformations/**"
                 ).permitAll()
                 .antMatchers(HttpMethod.POST, "/users/**").permitAll()

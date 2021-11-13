@@ -1,0 +1,7 @@
+security:
+  oauth2:
+    clients:
+      - client-id: Sendy Mall
+        client-secret: 111111
+        grant-types: ['authorization_code', 'password', 'refresh_token', 'implicit']
+        scopes: ['all']

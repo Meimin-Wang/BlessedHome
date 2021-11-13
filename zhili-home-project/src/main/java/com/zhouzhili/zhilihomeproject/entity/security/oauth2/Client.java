@@ -1,54 +1,106 @@
 package com.zhouzhili.zhilihomeproject.entity.security.oauth2;
 
 import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @ClassName Client
- * @Description TODO
+ * @Description 客户端实体，用于进行获取令牌（Token）
  * @Author blessed
  * @Date 2021/11/9 : 13:18
  * @Email blessedwmm@gmail.com
  */
 @SuppressWarnings("all")
 @Data
+@ApiModel(value = "客户端", description = "通常是发起授权请求的客户端，比如前端应用")
 @Entity(name = "tbl_client")
 @Table(value = "tbl_client")
 public class Client extends BaseEntity implements ClientDetails, Serializable {
 
+    /**
+     * 客户端实体的id
+     */
+    @ApiModelProperty(value = "客户端id", dataType = "Long", required = true)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "client_id")
-    private Long clientId;
+    @Column(name = "subject_id")
+    private Long subjectId;
 
+    /**
+     * 客户端实体的名称，也是所谓的clientId {@link Client#getClientId()}
+     * 通过此名称可以查询数据库进行授权
+     */
+    @ApiModelProperty(value = "客户端名称", dataType = "String", required = true)
     @Column(name = "client_name", length = 10, nullable = false, unique = true)
     private String clientName;
 
+    /**
+     * 客户端实体的密码，在数据库中会存储使用 {@link org.springframework.security.crypto.password.PasswordEncoder}
+     * 加密后的密文
+     */
+    @ApiModelProperty(value = "客户端密码", dataType = "String", required = true)
     @Column(name = "clent_secret", nullable = false)
     private String clientSecret;
 
+    /**
+     * 作用域集合，在本系统中，不会进行检测，默认都是 all
+     * 一个作用域可以映射多个客户端，一个客户端可以映射多个作用域，所以是多对多关系
+     * See {@link Scope}
+     * See {@link ManyToMany}
+     */
+    @ApiModelProperty(value = "客户端的作用域", dataType = "Set<Scope>")
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Scope> scopes;
 
+    /**
+     * OAuth2中的授权方式，共有四种：
+     *  authorization_code
+     *  password
+     *  refresh_token
+     *  implicit
+     * see {@link AuthorizedGrantType}
+     */
+    @ApiModelProperty(value = "OAuth2中的授权方式", required = true, dataType = "Set<AuthorizedGrantType>")
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AuthorizedGrantType> authorizedGrantTypes;
 
-    @Column(name = "r_token_valid")
+    /**
+     * 刷新token的过期时间
+     */
+    @ApiModelProperty(value = "刷新token的过期时间", dataType = "Integer", required = true)
+    @Column(name = "r_token_valid", nullable = false)
     private Integer refreshTokenValiditySeconds;
 
-    @Column(name = "a_token_valid")
+    /**
+     * 获取的token的过期时间
+     */
+    @ApiModelProperty(value = "获取的token的过期时间", dataType = "Integer", required = true)
+    @Column(name = "a_token_valid", nullable = false)
     private Integer accessTokenValiditySeconds;
 
+    /**
+     * 额外的一些信息，比如客户端的的描述信息等
+     */
+    @ApiModelProperty(value = "额外的一些信息，比如客户端的的描述信息等", dataType = "String")
     @Column(name = "additional_info")
     private String additionalInformation;
 

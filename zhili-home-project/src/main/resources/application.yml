@@ -1,37 +1,12 @@
-swagger:
-  info:
-    title: Zhili Zhou Home
-    version: 0.0.1-SNAPSHOT
-    name: Blessed
-    email: blessedwmm@gmail.com
-alibaba:
-  cloud:
-    oss:
-      access-key: LTAIVwYXkrqU6mwd
-      secret-key: HjbzMs7vtztnjuG9UELpgUsuCFFNLp
-      bucket-name: blessed-wmm
-      endpoint: oss-cn-shanghai.aliyuncs.com
-
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 123456
-    url: jdbc:mysql://192.168.3.210:3306/zz_db?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format-sql: true
-    database: mysql
-  redis:
-    host: 192.168.3.210
-    port: 6379
-  cache:
-    type: redis
-  main:
-    allow-bean-definition-overriding: true
-
+  profiles:
+    include:
+      - main
+      - mail
+      - jpa
+      - alibaba
+      - swagger
+      - auth
+      - actuator
+      - redis
+      - sms

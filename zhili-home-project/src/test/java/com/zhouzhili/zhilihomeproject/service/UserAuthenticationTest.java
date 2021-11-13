@@ -3,15 +3,18 @@ package com.zhouzhili.zhilihomeproject.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.context.WebApplicationContext;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @ClassName UserAuthenticationTest
@@ -23,6 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
 @Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
+@ExtendWith(value = {RestDocumentationExtension.class, SpringExtension.class})
 public class UserAuthenticationTest {
 
     @Autowired
@@ -38,14 +42,14 @@ public class UserAuthenticationTest {
 
     @Test
     public void testLogin() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(OAUTH2_AUTHENTICATION_PASSWORD_URL)
-                .header("Authorization", "Basic Qmxlc3NlZDoxMjM0NTY=")
+        mockMvc.perform(post(OAUTH2_AUTHENTICATION_PASSWORD_URL)
+                .header("Authorization", "Basic WmhvdXpoaWxpOnpoaWxp")
                 .param("grant_type", "password")
                 .param("username", "Marlon Dickinson DDS")
                 .param("password", "admin")
                 .param("scope", "all")
-        ).andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-                .andDo(MockMvcResultHandlers.print())
+        ).andExpect(status().is2xxSuccessful())
+                .andDo(print())
                 .andReturn();
     }
 

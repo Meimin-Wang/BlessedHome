@@ -1,5 +1,6 @@
 package com.zhouzhili.zhilihomeproject.service;
 
+import com.zhouzhili.zhilihomeproject.dto.ValidationCode;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -10,4 +11,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @Email blessedwmm@gmail.com
  */
 public interface UserService extends UserDetailsService {
+
+    ValidationCode getValidationCode(String username);
+
+    boolean isExistByUsername(String username);
+
+    boolean isExistByEmail(String email);
+
+    boolean isExistByUsernameOrEmail(String loginUser);
+
 }

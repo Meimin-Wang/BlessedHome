@@ -1,0 +1,6 @@
+spring:
+  mail:  # https://help.mail.163.com/faqDetail.do?code=d7a5dc8471cd0c0e8b4b8f4f8e49998b374173cfe9171305fa1ce630d7f67ac22dc0e9af8168582a
+    host: smtp.163.com
+    username: 15850720606@163.com
+    password: CNXWXPGDYNRIBTBC
+    port: 25

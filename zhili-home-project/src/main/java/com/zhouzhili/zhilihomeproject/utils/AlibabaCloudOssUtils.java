@@ -8,7 +8,7 @@ import java.util.UUID;
 
 /**
  * @ClassName AlibabaCloudOssUtils
- * @Description TODO
+ * @Description 阿里云OSS云存储工具类
  * @Author blessed
  * @Date 2021/11/6 : 22:14
  * @Email blessedwmm@gmail.com
@@ -24,4 +24,5 @@ public class AlibabaCloudOssUtils {
     public static String randomGenerateFilename(String rootPath, String filename) {
         return rootPath + File.separator + UUID.randomUUID().toString().substring(10) + filename;
     }
+
 }

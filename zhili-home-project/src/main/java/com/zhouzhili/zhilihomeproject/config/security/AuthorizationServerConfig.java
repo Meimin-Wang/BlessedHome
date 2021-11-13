@@ -1,14 +1,15 @@
 package com.zhouzhili.zhilihomeproject.config.security;
 
+import com.zhouzhili.zhilihomeproject.properties.InMemoryClientDetailsProperties;
 import com.zhouzhili.zhilihomeproject.service.ClientService;
 import com.zhouzhili.zhilihomeproject.service.UserService;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.builders.ClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.builders.InMemoryClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -19,6 +20,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final TokenStore jwtTokenStore;
     private final JwtAccessTokenConverter jwtAccessTokenConverter;
     private final TokenEnhancer tokenEnhancer;
+    private final InMemoryClientDetailsProperties inMemoryClientDetailsProperties;
 
     @Autowired
     public AuthorizationServerConfig(
@@ -52,7 +55,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             UserService userService,
             TokenStore jwtTokenStore,
             JwtAccessTokenConverter jwtAccessTokenConverter,
-            TokenEnhancer tokenEnhancer) {
+            TokenEnhancer tokenEnhancer,
+            InMemoryClientDetailsProperties inMemoryClientDetailsProperties) {
         this.passwordEncoder = passwordEncoder;
         this.clientService = clientService;
         this.authenticationManager = authenticationManager;
@@ -60,6 +64,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         this.jwtTokenStore = jwtTokenStore;
         this.jwtAccessTokenConverter = jwtAccessTokenConverter;
         this.tokenEnhancer = tokenEnhancer;
+        this.inMemoryClientDetailsProperties = inMemoryClientDetailsProperties;
     }
 
     @Override
@@ -76,7 +81,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .accessTokenConverter(jwtAccessTokenConverter)
                 .userDetailsService(userService)
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST, HttpMethod.GET);
-        endpoints.reuseRefreshTokens(true);
     }
 
     @Override
@@ -84,18 +88,35 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         security
                 .passwordEncoder(passwordEncoder)
                 .allowFormAuthenticationForClients();
-
     }
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        log.info("Configure client service with " + clientService.getClass().getName());
-        clients.inMemory()
-                .withClient("Blessed")
-                .secret(passwordEncoder.encode("123456"))
-                .authorizedGrantTypes("authorization_code", "implicit", "password", "refresh_token")
-                .accessTokenValiditySeconds(3600)
-                .scopes("all").and()
+        InMemoryClientDetailsServiceBuilder inMemoryClientDetailsServiceBuilder = clients.inMemory();
+        List<InMemoryClientDetailsProperties.InMemoryClient> inMemoryCliens = inMemoryClientDetailsProperties.getClients();
+        log.info("{}", inMemoryCliens);
+        if (inMemoryCliens.size() > 0) {
+            for (InMemoryClientDetailsProperties.InMemoryClient client : inMemoryCliens) {
+                Assert.hasLength(client.getClientId(), "内存中客户端id不能为空");
+                ClientDetailsServiceBuilder<InMemoryClientDetailsServiceBuilder>.ClientBuilder clientBuilder = inMemoryClientDetailsServiceBuilder.withClient(client.getClientId());
+                Assert.hasLength(client.getClientSecret(), () -> "内存中的客户端密码不能为空!");
+                clientBuilder
+                        .secret(passwordEncoder.encode(client.getClientSecret()))
+                        .scopes(client.getScopes()).authorizedGrantTypes()
+                        .authorizedGrantTypes(client.getGrantTypes())
+                        .accessTokenValiditySeconds(client.getAccessTokenValiditySeconds())
+                        .refreshTokenValiditySeconds(client.getRefreshTokenValiditySeconds())
                 ;
+            }
+        } else {
+            clients.inMemory()
+                    .withClient("Blessed")
+                    .secret(passwordEncoder.encode("123456"))
+                    .authorizedGrantTypes("authorization_code", "implicit", "password", "refresh_token")
+                    .accessTokenValiditySeconds(3600)
+                    .scopes("all").and()
+            ;
+        }
         clients.withClientDetails(clientService);
     }
 }

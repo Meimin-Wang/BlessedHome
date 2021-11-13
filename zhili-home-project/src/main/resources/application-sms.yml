@@ -1,0 +1,4 @@
+sms:
+  valid-code:
+    length: 6
+    timeout: 5m

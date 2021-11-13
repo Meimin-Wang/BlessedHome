@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -46,10 +47,8 @@ public class JwtConfig {
             public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
                 Map<String, Object> info = new LinkedHashMap<>();
                 info.put("userId", ((User)authentication.getPrincipal()).getId());
+                info.put("create time", LocalDateTime.now());
                 ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(info);
-                Calendar nowTime = Calendar.getInstance();
-                nowTime.add(Calendar.MINUTE, 30);
-                ((DefaultOAuth2AccessToken) accessToken).setExpiration(nowTime.getTime());
                 return accessToken;
             }
         };

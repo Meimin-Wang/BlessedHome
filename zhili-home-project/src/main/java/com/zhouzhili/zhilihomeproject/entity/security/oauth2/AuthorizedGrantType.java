@@ -1,6 +1,9 @@
 package com.zhouzhili.zhilihomeproject.entity.security.oauth2;
 
 import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
+import com.zhouzhili.zhilihomeproject.validator.annotation.GrantType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,22 +21,37 @@ import java.util.Date;
 
 /**
  * @ClassName AuthorizedGrantType
- * @Description TODO
+ * @Description OAuth2授权方式实体，通常有以下四种方式：
+ *      - authorization_code
+ *      - implicit
+ *      - password
+ *      - refresh_token
  * @Author blessed
  * @Date 2021/11/9 : 13:36
  * @Email blessedwmm@gmail.com
  */
 @Data
+@ApiModel(value = "OAuth2授权方式实体")
 @Entity(name = "tbl_grant_type")
 @Table(value = "tbl_grant_type")
 public class AuthorizedGrantType extends BaseEntity implements Serializable {
+
+    /**
+     * 授权方式的主键id
+     */
+    @ApiModelProperty(value = "授权方式的主键id", dataType = "Integer")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "grant_type_id")
     private Integer id;
 
+    /**
+     * 授权类型，四种之一
+     */
+    @ApiModelProperty(value = "授权类型，四种之一", dataType = "String", required = true)
     @Column(name = "grant_type_name", nullable = false, unique = true)
     @NotNull(message = "The grant type cannot be null value.")
+    @GrantType(message = "名称必须是 [\"authorization_code\", \"password\", \"refresh_token\", \"implicit\"] 中")
     private String grantTypeName;
 
 }

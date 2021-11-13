@@ -2,6 +2,7 @@ package com.zhouzhili.zhilihomeproject.mockdata;
 
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
+import com.github.jsonzou.jmockdata.JMockData;
 import com.zhouzhili.zhilihomeproject.entity.security.Role;
 import com.zhouzhili.zhilihomeproject.entity.security.User;
 import com.zhouzhili.zhilihomeproject.repository.security.RoleRepository;
@@ -72,5 +73,23 @@ public class UserMockData {
         admin.setRoles(roles);
         User savedAdminUser = userRepository.saveAndFlush(admin);
         log.info(savedAdminUser.toString());
+    }
+
+    @Test
+    public void testAddCommonUser() {
+        List<User> users = new ArrayList<>();
+        Faker faker = new Faker();
+        Name name = faker.name();
+        List<Role> roles = roleRepository.findAll();
+        for (int i = 0; i < 100; i++) {
+            User user = new User();
+            user.setUsername(name.username());
+            user.setPassword(passwordEncoder.encode("123456"));
+            Set<Role> roleSet = Set.of(roles.get((int) (Math.random() * 3)));
+            user.setRoles(roleSet);
+            users.add(user);
+        }
+        List<User> savedUsers = userRepository.saveAll(users);
+        log.info(savedUsers.toString());
     }
 }
