@@ -14,7 +14,7 @@ import java.util.Date;
  * @Email blessedwmm@gmail.com
  */
 @Data
-public class ValidationCode implements Serializable {
+public class VerificationCode implements Serializable {
 
     private String username;
 

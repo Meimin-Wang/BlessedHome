@@ -1,13 +1,12 @@
 package com.zhouzhili.zhilihomeproject.service.impl;
 
-import com.zhouzhili.zhilihomeproject.dto.ValidationCode;
+import com.zhouzhili.zhilihomeproject.dto.VerificationCode;
 import com.zhouzhili.zhilihomeproject.entity.security.User;
 import com.zhouzhili.zhilihomeproject.properties.ValidationCodeProperties;
 import com.zhouzhili.zhilihomeproject.repository.security.UserRepository;
 import com.zhouzhili.zhilihomeproject.service.UserService;
 import com.zhouzhili.zhilihomeproject.utils.SmsUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -54,18 +53,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ValidationCode getValidationCode(String username) {
+    public VerificationCode getVerificationCode(String username) {
         log.info("用户 {} 请求获取验证码", username);
-        ValidationCode validationCode = new ValidationCode();
-        validationCode.setUsername(username);
-        validationCode.setValidationCode(SmsUtils.getValidationCode(validationCodeProperties.getLength()));
-        validationCode.setSendDate(new Date());
-        validationCode.setValidationCodeLength(validationCodeProperties.getLength());
-        validationCode.setTimeout(validationCodeProperties.getTimeout());
-        String key = username + "-" + "valid-code" + "-" + validationCode.getSendDate();
-        redisTemplate.opsForValue().set(key, validationCode);
-        redisTemplate.expire(key, validationCode.getTimeout().getSeconds(), TimeUnit.SECONDS);
-        return validationCode;
+        VerificationCode verificationCode = new VerificationCode();
+        verificationCode.setUsername(username);
+        verificationCode.setValidationCode(SmsUtils.getValidationCode(validationCodeProperties.getLength()));
+        verificationCode.setSendDate(new Date());
+        verificationCode.setValidationCodeLength(validationCodeProperties.getLength());
+        verificationCode.setTimeout(validationCodeProperties.getTimeout());
+        String key = username + "-" + "valid-code";
+        redisTemplate.opsForValue().set(key, verificationCode);
+        redisTemplate.expire(key, verificationCode.getTimeout().getSeconds(), TimeUnit.SECONDS);
+        return verificationCode;
     }
 
     @Override

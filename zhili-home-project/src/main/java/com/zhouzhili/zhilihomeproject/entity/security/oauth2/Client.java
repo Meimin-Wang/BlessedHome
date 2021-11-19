@@ -1,10 +1,12 @@
 package com.zhouzhili.zhilihomeproject.entity.security.oauth2;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.rest.core.annotation.Description;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
@@ -15,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,6 +33,7 @@ import java.util.Set;
  * @Email blessedwmm@gmail.com
  */
 @SuppressWarnings("all")
+@Description(value = "客户端实体类")
 @Data
 @ApiModel(value = "客户端", description = "通常是发起授权请求的客户端，比如前端应用")
 @Entity(name = "tbl_client")
@@ -39,6 +43,7 @@ public class Client extends BaseEntity implements ClientDetails, Serializable {
     /**
      * 客户端实体的id
      */
+    @Description("客户端实体id")
     @ApiModelProperty(value = "客户端id", dataType = "Long", required = true)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +54,7 @@ public class Client extends BaseEntity implements ClientDetails, Serializable {
      * 客户端实体的名称，也是所谓的clientId {@link Client#getClientId()}
      * 通过此名称可以查询数据库进行授权
      */
+    @Description("客户端名称")
     @ApiModelProperty(value = "客户端名称", dataType = "String", required = true)
     @Column(name = "client_name", length = 10, nullable = false, unique = true)
     private String clientName;
@@ -57,8 +63,10 @@ public class Client extends BaseEntity implements ClientDetails, Serializable {
      * 客户端实体的密码，在数据库中会存储使用 {@link org.springframework.security.crypto.password.PasswordEncoder}
      * 加密后的密文
      */
+    @Description("客户端密码")
     @ApiModelProperty(value = "客户端密码", dataType = "String", required = true)
     @Column(name = "clent_secret", nullable = false)
+    @JsonIgnore
     private String clientSecret;
 
     /**
@@ -67,6 +75,7 @@ public class Client extends BaseEntity implements ClientDetails, Serializable {
      * See {@link Scope}
      * See {@link ManyToMany}
      */
+    @Description("客户端的作用域")
     @ApiModelProperty(value = "客户端的作用域", dataType = "Set<Scope>")
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Scope> scopes;
@@ -79,6 +88,7 @@ public class Client extends BaseEntity implements ClientDetails, Serializable {
      *  implicit
      * see {@link AuthorizedGrantType}
      */
+    @Description("客户端权限")
     @ApiModelProperty(value = "OAuth2中的授权方式", required = true, dataType = "Set<AuthorizedGrantType>")
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AuthorizedGrantType> authorizedGrantTypes;
@@ -86,6 +96,7 @@ public class Client extends BaseEntity implements ClientDetails, Serializable {
     /**
      * 刷新token的过期时间
      */
+    @Description("刷新令牌过期时间")
     @ApiModelProperty(value = "刷新token的过期时间", dataType = "Integer", required = true)
     @Column(name = "r_token_valid", nullable = false)
     private Integer refreshTokenValiditySeconds;
@@ -93,13 +104,16 @@ public class Client extends BaseEntity implements ClientDetails, Serializable {
     /**
      * 获取的token的过期时间
      */
+    @Description("令牌过期时间")
     @ApiModelProperty(value = "获取的token的过期时间", dataType = "Integer", required = true)
     @Column(name = "a_token_valid", nullable = false)
+    @Min(value = 0, message = "过期时间必须大于0")
     private Integer accessTokenValiditySeconds;
 
     /**
      * 额外的一些信息，比如客户端的的描述信息等
      */
+    @Description("其他信息")
     @ApiModelProperty(value = "额外的一些信息，比如客户端的的描述信息等", dataType = "String")
     @Column(name = "additional_info")
     private String additionalInformation;

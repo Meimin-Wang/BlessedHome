@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject.config;
+package com.zhouzhili.zhilihomeproject.config.task;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;

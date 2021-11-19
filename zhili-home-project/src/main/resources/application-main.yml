@@ -1,3 +1,6 @@
 spring:
   main:
     allow-bean-definition-overriding: true
+  application:
+    name: '@project.name@'
+    version: '@project.version@'

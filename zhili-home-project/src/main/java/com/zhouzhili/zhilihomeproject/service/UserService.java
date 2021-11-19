@@ -1,6 +1,6 @@
 package com.zhouzhili.zhilihomeproject.service;
 
-import com.zhouzhili.zhilihomeproject.dto.ValidationCode;
+import com.zhouzhili.zhilihomeproject.dto.VerificationCode;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface UserService extends UserDetailsService {
 
-    ValidationCode getValidationCode(String username);
+    VerificationCode getVerificationCode(String username);
 
     boolean isExistByUsername(String username);
 

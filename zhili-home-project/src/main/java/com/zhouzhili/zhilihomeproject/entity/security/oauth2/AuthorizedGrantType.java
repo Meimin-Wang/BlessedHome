@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.rest.core.annotation.Description;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +31,7 @@ import java.util.Date;
  * @Date 2021/11/9 : 13:36
  * @Email blessedwmm@gmail.com
  */
+@Description("授权方式实体")
 @Data
 @ApiModel(value = "OAuth2授权方式实体")
 @Entity(name = "tbl_grant_type")
@@ -39,6 +41,7 @@ public class AuthorizedGrantType extends BaseEntity implements Serializable {
     /**
      * 授权方式的主键id
      */
+    @Description("授权方式id")
     @ApiModelProperty(value = "授权方式的主键id", dataType = "Integer")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +51,7 @@ public class AuthorizedGrantType extends BaseEntity implements Serializable {
     /**
      * 授权类型，四种之一
      */
+    @Description("授权方式")
     @ApiModelProperty(value = "授权类型，四种之一", dataType = "String", required = true)
     @Column(name = "grant_type_name", nullable = false, unique = true)
     @NotNull(message = "The grant type cannot be null value.")

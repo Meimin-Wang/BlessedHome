@@ -3,4 +3,13 @@ management:
     enabled-by-default: true
     web:
       exposure:
-        include: beans, info, health
+        include: beans, info, health, metrics
+info:
+  artifact-id: '@project.artifactId@'
+  group-id: '@project.groupId@'
+  name: '@project.name@'
+  descript: '@project.description@'
+  java-version: '@java.version@'
+  author: Blessed Wang
+  email: blessed@gmail.com
+

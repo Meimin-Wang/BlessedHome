@@ -6,9 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -18,7 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @Date 2021/11/5 : 12:09
  * @Email blessedwmm@gmail.com
  */
-@EnableSwagger2
+@EnableOpenApi
 @Configuration
 public class SwaggerConfig {
 
@@ -30,7 +32,7 @@ public class SwaggerConfig {
 
     @Bean
     public Docket docket() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
                 .apiInfo(new ApiInfoBuilder()
                         .title(swaggerProperties.getTitle())
                         .contact(new Contact(
@@ -44,7 +46,41 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+
+                ;
     }
 
+    @Bean
+    public SecurityConfiguration security() {
+        return SecurityConfigurationBuilder.builder()
+                .clientId("MeiminWang")
+                .clientSecret("meimin")
+                .appName("Zhili-Home Project")
+                .scopeSeparator(",")
+                .build()
+                ;
+    }
+
+    @Bean
+    public UiConfiguration uiConfiguration() {
+        return UiConfigurationBuilder.builder()
+                .deepLinking(true)
+                .displayOperationId(false)
+                .defaultModelsExpandDepth(1)
+                .defaultModelExpandDepth(1)
+                .defaultModelRendering(ModelRendering.EXAMPLE)
+                .displayRequestDuration(false)
+                .docExpansion(DocExpansion.NONE)
+                .filter(false)
+                .maxDisplayedTags(null)
+                .operationsSorter(OperationsSorter.ALPHA)
+                .showExtensions(false)
+                .showCommonExtensions(false)
+                .tagsSorter(TagsSorter.ALPHA)
+                .supportedSubmitMethods(UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS)
+                .validatorUrl(null)
+                .build()
+                ;
+    }
 }

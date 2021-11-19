@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.rest.core.annotation.Description;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
@@ -22,10 +23,12 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 
+    @Description("创建时间")
     @CreatedDate
     @Column(name = "create_time")
     private Date createDate;
 
+    @Description("更新时间")
     @LastModifiedDate
     @Column(name = "update_time")
     private Date updateDate;

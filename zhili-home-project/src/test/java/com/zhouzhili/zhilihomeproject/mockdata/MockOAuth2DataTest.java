@@ -7,15 +7,17 @@ import com.zhouzhili.zhilihomeproject.repository.security.oauth2.AuthorizedGrant
 import com.zhouzhili.zhilihomeproject.repository.security.oauth2.ClientRepository;
 import com.zhouzhili.zhilihomeproject.repository.security.oauth2.ScopeRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -28,7 +30,9 @@ import java.util.Set;
  */
 @Slf4j
 @SpringBootTest
+@DisplayName(value = "测试添加OAuth2相关数据")
 public class MockOAuth2DataTest {
+
     @Autowired
     private AuthorizedGrantTypeRepository authorizedGrantTypeRepository;
 
@@ -64,7 +68,7 @@ public class MockOAuth2DataTest {
         Optional<Scope> scope = scopeRepository.findByScopeName("all");
         if (!scope.isPresent()) {
             Scope s = new Scope();
-            s.setScopeName("all".toUpperCase(Locale.ROOT));
+            s.setScopeName("all");
             Scope savedScoped = scopeRepository.saveAndFlush(s);
             log.info(savedScoped.toString());
         } else {
@@ -75,8 +79,8 @@ public class MockOAuth2DataTest {
     @Test
     public void testAddClient() {
         Client client = new Client();
-        client.setClientName("Zhouzhili");
-        client.setClientSecret(passwordEncoder.encode("zhili"));
+        client.setClientName("MeiminWang");
+        client.setClientSecret(passwordEncoder.encode("meimin"));
         client.setAccessTokenValiditySeconds(Integer.MAX_VALUE);
         client.setRefreshTokenValiditySeconds(Integer.MAX_VALUE);
         List<Scope> allScopes = scopeRepository.findAll();

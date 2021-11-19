@@ -1,6 +1,6 @@
 package com.zhouzhili.zhilihomeproject.service;
 
-import com.zhouzhili.zhilihomeproject.dto.ValidationCode;
+import com.zhouzhili.zhilihomeproject.dto.VerificationCode;
 
 /**
  * @InterfaceName MailService
@@ -9,8 +9,8 @@ import com.zhouzhili.zhilihomeproject.dto.ValidationCode;
  * @Date 2021/11/12 : 15:22
  * @Email blessedwmm@gmail.com
  */
-public interface MailService {
+public interface EmailService {
 
-    void sendValidationCode(String username, String email, ValidationCode validationCode);
+    void sendVerificationCode(String username, String email, VerificationCode verificationCode);
 
 }

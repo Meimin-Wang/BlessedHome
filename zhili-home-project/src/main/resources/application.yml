@@ -10,3 +10,7 @@ spring:
       - actuator
       - redis
       - sms
+      - repository
+logging:
+  level:
+    web: DEBUG

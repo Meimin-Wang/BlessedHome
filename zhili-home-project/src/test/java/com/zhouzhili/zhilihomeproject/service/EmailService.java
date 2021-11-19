@@ -16,7 +16,7 @@ import java.util.Date;
  * @Email blessedwmm@gmail.com
  */
 @SpringBootTest
-public class MailService {
+public class EmailService {
 
     @Autowired
     private MailSender mailSender;

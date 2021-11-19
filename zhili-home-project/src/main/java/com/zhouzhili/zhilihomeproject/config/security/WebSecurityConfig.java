@@ -1,6 +1,7 @@
 package com.zhouzhili.zhilihomeproject.config.security;
 
 import com.zhouzhili.zhilihomeproject.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,10 +20,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @Date 2021/11/9 : 16:48
  * @Email blessedwmm@gmail.com
  */
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
@@ -41,9 +44,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.formLogin().and().httpBasic();
         http.authorizeRequests()
-                .antMatchers("/oauth/**").permitAll()
-                .anyRequest().authenticated();
+//                .antMatchers("/oauth/**").permitAll()
+                .antMatchers("/profile/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .cors()
+                .and()
+                .csrf().disable();
     }
+
+
 
     @Override
     protected UserDetailsService userDetailsService() {
@@ -55,4 +65,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
 }

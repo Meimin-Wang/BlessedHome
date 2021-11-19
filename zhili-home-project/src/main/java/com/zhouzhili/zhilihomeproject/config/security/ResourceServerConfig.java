@@ -22,20 +22,25 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(
                         "/clients/**", "/roles/**", "/countries/**", "/provinces/**", "/cities/**",
-                        "/oauth/**",
-                        "/actuator/**", "/beans",
-                        "/swagger-ui/**", "/v2/**", "/v3/**", "/swagger/**", "/swagger-resources/**",
+                        "/swagger-ui/**", "/v2/**", "/v3/**", "/swagger/**", "/swagger-resources/**", "/springfox/**",
                         "/druid/**",
                         "/public/**",
                         "/static/**",
                         "/webjars/**",
-//                        "/users/**",
+                        "/profile/**",
                         "/personalInformations/**"
                 ).permitAll()
-                .antMatchers(HttpMethod.POST, "/users/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/users/**").hasRole("USER")
-                .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
+
+                // 监控端点
+                .antMatchers("/actuator/**").hasRole("ADMIN")
+
+                // 用户
+                .antMatchers(HttpMethod.POST, "/users/**").permitAll() // 用户注册
+                .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN") // 获取所有用户，只能管理员获取
+                .antMatchers(HttpMethod.PUT, "/users/**").hasRole("USER") // 更新用户信息，管理员可以更新，用户可以更新自己的信息
+                .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN") // 删除用户，只能够管理员进行操作
+
+                // 其他资源
                 .anyRequest().authenticated();
     }
 }
