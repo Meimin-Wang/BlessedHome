@@ -37,6 +37,11 @@ public enum ResponseState {
     /**
      * 创建资源时，该资源已存在
      */
-    HAS_EXISTED
+    HAS_EXISTED,
+
+    /**
+     * 权限不够，禁止访问
+     */
+    FORBIDDEN
 
 }

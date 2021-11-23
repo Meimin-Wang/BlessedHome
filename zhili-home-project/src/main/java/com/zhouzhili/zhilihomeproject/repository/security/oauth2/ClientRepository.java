@@ -35,7 +35,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
             @ApiResponse(code = 200, message = "获取客户端成功", response = Client.class),
             @ApiResponse(code = 401, message = "未认证，需要登录")
     })
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Description("根据【客户端名称】获取客户端")
     Optional<Client> findClientByClientName(
             @ApiParam(value = "客户端名称", required = true, type = "String")

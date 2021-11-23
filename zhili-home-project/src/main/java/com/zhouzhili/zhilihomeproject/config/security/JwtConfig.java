@@ -1,6 +1,7 @@
 package com.zhouzhili.zhilihomeproject.config.security;
 
 import com.zhouzhili.zhilihomeproject.entity.security.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -11,8 +12,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,10 +26,15 @@ import java.util.Map;
 @Configuration
 public class JwtConfig {
 
+
+    @Value("${jwt.key}")
+    private String key;
+
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setSigningKey("Zhou_Zhili");
+//        jwtAccessTokenConverter.setSigningKey("Zhou_Zhili");
+        jwtAccessTokenConverter.setSigningKey(key);
         return jwtAccessTokenConverter;
     }
 

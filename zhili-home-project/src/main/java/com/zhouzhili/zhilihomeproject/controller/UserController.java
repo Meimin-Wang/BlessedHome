@@ -3,13 +3,15 @@ package com.zhouzhili.zhilihomeproject.controller;
 import com.zhouzhili.zhilihomeproject.dto.ResponseData;
 import com.zhouzhili.zhilihomeproject.dto.ResponseState;
 import com.zhouzhili.zhilihomeproject.dto.VerificationCode;
-import com.zhouzhili.zhilihomeproject.service.EmailService;
 import com.zhouzhili.zhilihomeproject.service.UserService;
 import com.zhouzhili.zhilihomeproject.service.impl.EmailServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Email;
 import java.util.Date;
@@ -17,7 +19,7 @@ import java.util.List;
 
 /**
  * @ClassName UserController
- * @Description TODO
+ * @Description 用户控制器
  * @Author blessed
  * @Date 2021/11/13 : 19:04
  * @Email blessedwmm@gmail.com
@@ -27,7 +29,10 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
+    // 注册模式
     private static final String REGISTER_STATE = "register-state";
+
+    // 修改密码模式
     private static final String CHANGE_PASSWORD_STATE = "change-password-state";
 
     private final UserService userService;
@@ -38,6 +43,15 @@ public class UserController {
         this.emailService = emailService;
     }
 
+    /**
+     * 获取验证码，应用于两种场景：
+     *      模式1. 修改密码时候需要验证码验证
+     *      模式2. 注册的时候需要邮箱验证
+     * @param username 用户名
+     * @param email 邮箱
+     * @param state 模式
+     * @return 响应 {@link ResponseData<VerificationCode>} JSON数据
+     */
     @PostMapping("/valid-code")
     public ResponseData<VerificationCode> getValidationCode(
             @RequestParam(name = "username") String username,
@@ -65,7 +79,6 @@ public class UserController {
                 return verificationCodeResponseData;
             }
         } else {
-
             return verificationCodeResponseData;
         }
     }

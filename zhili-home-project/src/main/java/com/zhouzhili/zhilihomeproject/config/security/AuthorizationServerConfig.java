@@ -1,5 +1,6 @@
 package com.zhouzhili.zhilihomeproject.config.security;
 
+import com.zhouzhili.zhilihomeproject.handler.exception.oauth2.OAuth2WebResponseExceptionTranslator;
 import com.zhouzhili.zhilihomeproject.properties.InMemoryClientDetailsProperties;
 import com.zhouzhili.zhilihomeproject.service.ClientService;
 import com.zhouzhili.zhilihomeproject.service.UserService;
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -56,7 +58,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             TokenStore jwtTokenStore,
             JwtAccessTokenConverter jwtAccessTokenConverter,
             TokenEnhancer tokenEnhancer,
-            InMemoryClientDetailsProperties inMemoryClientDetailsProperties) {
+            InMemoryClientDetailsProperties inMemoryClientDetailsProperties
+            ) {
         this.passwordEncoder = passwordEncoder;
         this.clientService = clientService;
         this.authenticationManager = authenticationManager;
@@ -75,12 +78,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         enhancers.add(jwtAccessTokenConverter);
         tokenEnhancerChain.setTokenEnhancers(enhancers);
 
-        endpoints.authenticationManager(authenticationManager)
+        endpoints
+                .authenticationManager(authenticationManager)
                 .tokenStore(jwtTokenStore)
                 .tokenEnhancer(tokenEnhancerChain)
                 .accessTokenConverter(jwtAccessTokenConverter)
                 .userDetailsService(userService)
-                .allowedTokenEndpointRequestMethods(HttpMethod.POST, HttpMethod.GET);
+                .allowedTokenEndpointRequestMethods(HttpMethod.POST, HttpMethod.GET)
+        ;
+        WebResponseExceptionTranslator oAuth2WebResponseExceptionTranslator = new OAuth2WebResponseExceptionTranslator();
+        endpoints.exceptionTranslator(oAuth2WebResponseExceptionTranslator);
     }
 
     @Override

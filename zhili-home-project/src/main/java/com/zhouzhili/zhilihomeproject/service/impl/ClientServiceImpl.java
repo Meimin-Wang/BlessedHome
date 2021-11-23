@@ -39,6 +39,7 @@ public class ClientServiceImpl implements ClientService {
             log.info("{}请求令牌。{}", clientId, client);
             return client;
         } else {
+            log.warn("未能够获取到 {} 客户端", clientId);
             throw new ClientRegistrationException("没有获取到客户端 [" + clientId + "]");
         }
     }

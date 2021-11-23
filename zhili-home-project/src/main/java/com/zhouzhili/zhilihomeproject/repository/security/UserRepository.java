@@ -35,7 +35,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    Page<User> findAll( Pageable pageable);
+    Page<User> findAll(Pageable pageable);
+
+
+    @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    List<User> findAll();
 
     boolean existsByUsername(String username);
 

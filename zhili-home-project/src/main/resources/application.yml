@@ -11,6 +11,7 @@ spring:
       - redis
       - sms
       - repository
+      - jwt
 logging:
   level:
     web: DEBUG
