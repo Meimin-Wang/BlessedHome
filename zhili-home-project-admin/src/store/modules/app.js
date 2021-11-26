@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 
+// 状态
 const state = {
   sidebar: {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
@@ -8,6 +9,7 @@ const state = {
   device: 'desktop'
 }
 
+// 用于操作状态的
 const mutations = {
   TOGGLE_SIDEBAR: state => {
     state.sidebar.opened = !state.sidebar.opened
@@ -28,6 +30,7 @@ const mutations = {
   }
 }
 
+// 用于响应组件中的动作
 const actions = {
   toggleSideBar({ commit }) {
     commit('TOGGLE_SIDEBAR')

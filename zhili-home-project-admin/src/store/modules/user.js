@@ -4,7 +4,7 @@ import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
-    token: getToken(),
+    token: '',
     name: '',
     avatar: ''
   }
@@ -28,7 +28,12 @@ const mutations = {
 }
 
 const actions = {
-  // user login
+  /**
+   * /views/login/index中登录按钮点击事件
+   * @param {*} param0 
+   * @param {*} userInfo 用户表单的信息，包括用户名和密码
+   * @returns 登录
+   */
   login({ commit }, userInfo) {
     const { username, password } = userInfo // 用户名和密码，从表单中获取
     return new Promise((resolve, reject) => {
@@ -55,26 +60,24 @@ const actions = {
         setToken(data)
         resolve()
       }).catch(error => {
-        console.log('登录失败！')
         reject(error)
       })
     })
   },
 
   // get user info
-  getInfo({ commit, state }) {
+  getInfo({ commit }, token) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      getInfo(token).then(response => {
         const { data } = response
-        console.log('登录用户信息', data)
         if (!data) {
           return reject('Verification failed, please Login again.')
         }
-
         commit('SET_NAME', data.username)
         commit('SET_AVATAR', '')
         resolve(data)
       }).catch(error => {
+        console.log('action getInfo', error)
         reject(error)
       })
     })
@@ -83,7 +86,7 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      removeToken() // must remove  token  first
+      removeToken() // 先删除token
       resetRouter()
       commit('RESET_STATE')
       return resolve()

@@ -2,6 +2,7 @@ spring:
   redis:
     host: www.blessed.com
 #    host: localhost
+#    host: 39.104.54.116
     port: 6379
   cache:
     type: redis

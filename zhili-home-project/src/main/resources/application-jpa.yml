@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
-#    url: jdbc:mysql://192.168.3.210:3306/zz_db?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+#    url: jdbc:mysql://39.104.54.116:3306/zz_db?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     url: jdbc:mysql://www.blessed.com:3306/zz_db?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
 #    url: jdbc:mysql://localhost:3306/zz_db?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
   jpa:

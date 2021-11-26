@@ -18,9 +18,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -62,6 +64,7 @@ public class Blog extends BaseEntity implements Serializable {
     @ApiModelProperty("博客简介")
     private String description = "";
 
+    @NotNull(message = "封面文件url不能为空")
     @URL(message = "封面路径不合法，必须是一个URL路径")
     @Column(name = "cover_image_url", nullable = false)
     @Description("博客封面图片")
@@ -98,5 +101,11 @@ public class Blog extends BaseEntity implements Serializable {
     @ApiModelProperty("博客评论")
     @Description("博客评论")
     private Set<Comment> comments = new HashSet<>();
+
+    @ManyToMany(targetEntity = Tag.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "tbl_blog_tags")
+    @Description("博客标签")
+    @ApiModelProperty("博客标签")
+    private Set<Tag> tags = new HashSet<>();
 
 }
