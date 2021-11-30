@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * @ClassName WebSecurityConfig
- * @Description TODO
+ * @Description WebSecurityConfig
  * @Author blessed
  * @Date 2021/11/9 : 16:48
  * @Email blessedwmm@gmail.com

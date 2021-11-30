@@ -3,7 +3,6 @@ package com.zhouzhili.zhilihomeproject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * {@link SpringBootApplication} 注解表明这是一个Spring Boot应用类，这是一个组合注解

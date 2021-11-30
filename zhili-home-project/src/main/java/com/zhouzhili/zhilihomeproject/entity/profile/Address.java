@@ -41,4 +41,13 @@ public class Address extends BaseEntity implements Serializable {
     @Column(name = "detail")
     private String addressDetail;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Country country;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Province province;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private City city;
+
 }

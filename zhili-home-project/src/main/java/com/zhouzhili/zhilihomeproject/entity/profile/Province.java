@@ -8,6 +8,8 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @ClassName Province
@@ -37,11 +39,6 @@ public class Province extends BaseEntity implements Serializable {
     @Column(name = "province_name", length = 50, nullable = false, unique = true)
     private String provinceName;
 
-    /**
-     * 地址映射
-     */
-    @ApiModelProperty(value = "地址映射", dataType = "com.zhouzhili.zhilihomeproject.entity.profile.Country")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "country_id")
-    private Country address;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<City> cities = new HashSet<>();
 }

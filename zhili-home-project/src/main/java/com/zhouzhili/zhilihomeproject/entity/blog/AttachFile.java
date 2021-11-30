@@ -20,8 +20,8 @@ import java.io.Serializable;
  * @Email blessedwmm@gmail.com
  */
 @Data
-@Entity(name = "tbl_entity")
-@Table(value = "tbl_entity")
+@Entity(name = "tbl_attach_file")
+@Table(value = "tbl_attach_file")
 @ApiModel("博客附件实体")
 public class AttachFile extends BaseEntity implements Serializable {
 

@@ -12,6 +12,7 @@ spring:
       - sms
       - repository
       - jwt
+      - opencv
 logging:
   level:
     web: DEBUG

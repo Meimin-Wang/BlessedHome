@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  * @Email blessedwmm@gmail.com
  */
 @Slf4j
-@ControllerAdvice
+//@ControllerAdvice
 public class GlobalControllerExceptionAdvice {
 
-    @ExceptionHandler({Exception.class})
+//    @ExceptionHandler({Exception.class})
     public ResponseEntity<?> handleException(Exception e) {
         return null;
     }

@@ -3,7 +3,6 @@ package com.zhouzhili.zhilihomeproject.handler.exception.resource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhouzhili.zhilihomeproject.dto.ErrorResponseData;
 import com.zhouzhili.zhilihomeproject.dto.ResponseState;
-import io.jsonwebtoken.JwtParser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.InitializingBean;
@@ -52,15 +51,16 @@ public class AuthenticationExceptionHandler implements AuthenticationEntryPoint,
                 .setResponseDate(new Date());
         String responseData = objectMapper.writeValueAsString(errorResponseData);
         response.setCharacterEncoding("UTF-8");
+
         response.setContentType(MimeTypeUtils.APPLICATION_JSON.toString());
         PrintWriter printWriter;
         response.setLocale(Locale.CHINA);
         try {
             printWriter = response.getWriter();
             printWriter.write(responseData);
-            response.setStatus(HttpStatus.SC_UNAUTHORIZED);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } catch (IOException ioException) {
-            response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             ioException.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();

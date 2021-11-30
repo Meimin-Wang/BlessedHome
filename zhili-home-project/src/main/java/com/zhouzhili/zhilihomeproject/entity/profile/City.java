@@ -41,12 +41,4 @@ public class City extends BaseEntity implements Serializable {
     @Column(name = "city_name", length = 50, nullable = false, unique = true)
     private String cityName;
 
-    /**
-     * 省实体
-     */
-    @ApiModelProperty(value = "省实体", dataType = "com.zhouzhili.zhilihomeproject.entity.profile.Province")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "province_id")
-    private Province province;
-
 }

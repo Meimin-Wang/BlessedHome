@@ -58,6 +58,7 @@ public class ResourceAccessDeniedExceptionHandler implements AccessDeniedHandler
                 ;
         response.setContentType(MimeTypeUtils.APPLICATION_JSON.toString());
         response.setLocale(Locale.CHINA);
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setCharacterEncoding("UTF-8");
         PrintWriter printWriter;
         try {

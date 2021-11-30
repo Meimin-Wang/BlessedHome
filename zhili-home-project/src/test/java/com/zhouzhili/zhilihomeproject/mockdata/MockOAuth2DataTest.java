@@ -7,8 +7,7 @@ import com.zhouzhili.zhilihomeproject.repository.security.oauth2.AuthorizedGrant
 import com.zhouzhili.zhilihomeproject.repository.security.oauth2.ClientRepository;
 import com.zhouzhili.zhilihomeproject.repository.security.oauth2.ScopeRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,6 +30,7 @@ import java.util.Set;
 @Slf4j
 @SpringBootTest
 @DisplayName(value = "测试添加OAuth2相关数据")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MockOAuth2DataTest {
 
     @Autowired
@@ -46,6 +46,8 @@ public class MockOAuth2DataTest {
     private PasswordEncoder passwordEncoder;
 
     @Test
+    @Order(1)
+    @DisplayName("测试添加grant types")
     public void testAddSupportGrantTypes() {
         List<AuthorizedGrantType> allGrantTypes = authorizedGrantTypeRepository.findAll();
         if (allGrantTypes.size() > 0) {
@@ -64,6 +66,8 @@ public class MockOAuth2DataTest {
     }
 
     @Test
+    @Order(2)
+    @DisplayName("测试添加Scope")
     public void testAddScope() {
         Optional<Scope> scope = scopeRepository.findByScopeName("all");
         if (!scope.isPresent()) {
@@ -77,6 +81,8 @@ public class MockOAuth2DataTest {
     }
 
     @Test
+    @Order(3)
+    @DisplayName("测试添加client")
     public void testAddClient() {
         Client client = new Client();
         client.setClientName("MeiminWang");
