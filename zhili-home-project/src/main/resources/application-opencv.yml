@@ -1,2 +1,2 @@
 opencv:
-  lib-path: /Users/blessed/Downloads/opencv-4.x/build/lib/libopencv_java454.dylib
+  lib-path: /usr/local/share/java/opencv4/libopencv_java454.dylib

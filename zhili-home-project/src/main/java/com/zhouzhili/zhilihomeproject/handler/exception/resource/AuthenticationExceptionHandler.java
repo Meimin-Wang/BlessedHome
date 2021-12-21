@@ -38,8 +38,8 @@ public class AuthenticationExceptionHandler implements AuthenticationEntryPoint,
     }
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        String uri = request.getRequestURI(); // 请求的路径
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        String uri = request.getRequestURI();
         String message = "该请求需要认证，情先认证，再访问！";
         ResponseState responseState = ResponseState.AUTHENTICATION_FAILED;
         Integer errorCode = HttpStatus.SC_UNAUTHORIZED;

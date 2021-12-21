@@ -1,6 +1,7 @@
 package com.zhouzhili.zhilihomeproject.service;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 
 /**
@@ -44,6 +45,16 @@ public interface AlibabaCloudOssService {
      * @author Blessed
      */
     URL uploadFile(File file, String key);
+
+    /**
+     * 上传文件到OSS中
+     * @param inputStream 文件输入流
+     * @param key 在OSS中的路径，不要以"/"开头，例如在bucket桶下的文件key：aaa/bb/c.png
+     *        不要写成/aaa/bb/c.png
+     * @return 返回一个 {@link URL} 对象
+     * @author Blessed
+     */
+    URL uploadFile(InputStream inputStream, String key, String filename);
 
     /**
      * 删除OSS中的文件

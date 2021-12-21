@@ -21,15 +21,6 @@ import java.io.Serializable;
 public class Education extends BaseEntity implements Serializable {
 
     /**
-     * 教育id
-     */
-    @ApiModelProperty(value = "教育id", dataType = "String")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "education_id")
-    private Long educationId;
-
-    /**
      * 毕业院校
      */
     @ApiModelProperty(value = "毕业院校", dataType = "String")

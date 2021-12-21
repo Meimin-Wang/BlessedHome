@@ -2,18 +2,28 @@ package com.zhouzhili.zhilihomeproject.mockdata;
 
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
-import com.github.jsonzou.jmockdata.JMockData;
 import com.zhouzhili.zhilihomeproject.entity.security.Role;
 import com.zhouzhili.zhilihomeproject.entity.security.User;
 import com.zhouzhili.zhilihomeproject.repository.security.RoleRepository;
 import com.zhouzhili.zhilihomeproject.repository.security.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * @ClassName UserMockData
@@ -24,6 +34,7 @@ import java.util.*;
  */
 @DisplayName("用户数据生成和准备测试")
 @Slf4j
+//@ContextConfiguration
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserMockDataTest {
@@ -78,6 +89,7 @@ public class UserMockDataTest {
     @Order(2)
     @DisplayName("添加管理员用户")
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testMockAdminUser() {
         Optional<User> adminUser = userRepository.findUserByUsername("admin");
         if (adminUser.isPresent()) {
@@ -90,7 +102,7 @@ public class UserMockDataTest {
         // 设置用户名和密码
         admin.setUsername("admin");
         admin.setPassword(passwordEncoder.encode("admin"));
-
+        admin.setAvatarUrl("https://blessed-wmm.oss-cn-shanghai.aliyuncs.com/zhili-home/avatars/admin.jpeg");
         Faker faker = new Faker();
         // 设置邮箱
         admin.setEmail(faker.bothify("????##@gmail.com"));
@@ -108,8 +120,9 @@ public class UserMockDataTest {
     @Order(3)
     @DisplayName("添加普通用户")
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testMockCommonUser() {
-        Optional<User> adminUser = userRepository.findUserByUsername("test_user");
+        Optional<User> adminUser = userRepository.findUserByUsername("user");
         if (adminUser.isPresent()) {
             log.info("admin user has present.");
             // 如果admin已经存在，则删除了在进行插入
@@ -120,7 +133,7 @@ public class UserMockDataTest {
         // 设置用户名和密码
         testUser.setUsername("user");
         testUser.setPassword(passwordEncoder.encode("user"));
-
+        testUser.setAvatarUrl("https://blessed-wmm.oss-cn-shanghai.aliyuncs.com/zhili-home/avatars/avatar5.jpg");
         Faker faker = new Faker();
         // 设置邮箱
         testUser.setEmail(faker.bothify("????##@gmail.com"));
@@ -138,6 +151,7 @@ public class UserMockDataTest {
     @Order(4)
     @DisplayName("添加导师用户")
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testMockSupervisorUser() {
         Optional<User> adminUser = userRepository.findUserByUsername("test_supervisor");
         if (adminUser.isPresent()) {
@@ -150,7 +164,7 @@ public class UserMockDataTest {
         // 设置用户名和密码
         testSupervisor.setUsername("supervisor");
         testSupervisor.setPassword(passwordEncoder.encode("supervisor"));
-
+        testSupervisor.setAvatarUrl("https://blessed-wmm.oss-cn-shanghai.aliyuncs.com/zhili-home/avatars/avatar3.jpg");
         Faker faker = new Faker();
         // 设置邮箱
         testSupervisor.setEmail(faker.bothify("????##@gmail.com"));
@@ -168,6 +182,7 @@ public class UserMockDataTest {
     @Order(5)
     @DisplayName("添加成员用户")
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testMockMemberUser() {
         Optional<User> adminUser = userRepository.findUserByUsername("test_member");
         if (adminUser.isPresent()) {
@@ -180,7 +195,7 @@ public class UserMockDataTest {
         // 设置用户名和密码
         testMember.setUsername("member");
         testMember.setPassword(passwordEncoder.encode("member"));
-
+        testMember.setAvatarUrl("https://blessed-wmm.oss-cn-shanghai.aliyuncs.com/zhili-home/avatars/avatar2.jpg");
         Faker faker = new Faker();
         // 设置邮箱
         testMember.setEmail(faker.bothify("????##@gmail.com"));
@@ -214,6 +229,7 @@ public class UserMockDataTest {
             user.setCreateDate(new Date());
             user.setUpdateDate(new Date());
             user.setEmail(faker.bothify("????##@gmail.com"));
+            user.setAvatarUrl("https://blessed-wmm.oss-cn-shanghai.aliyuncs.com/zhili-home/avatars/avatar8.jpg");
             Set<Role> roleSet = Set.of(roles.get((int) (Math.random() * 4)));
             user.setRoles(roleSet);
             users.add(user);

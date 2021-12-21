@@ -34,13 +34,6 @@ import java.io.Serializable;
 @Description("博客实体类")
 public class Comment extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
-    @ApiModelProperty("博客评论id")
-    @Description("博客评论id")
-    private Long commentId;
-
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;

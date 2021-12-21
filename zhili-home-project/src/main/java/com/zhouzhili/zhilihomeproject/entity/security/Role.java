@@ -25,15 +25,6 @@ import java.io.Serializable;
 public class Role extends BaseEntity implements GrantedAuthority, Serializable {
 
     /**
-     * 角色id
-     */
-    @ApiModelProperty(value = "角色id", dataType = "Long")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
-    private Long roleId;
-
-    /**
      * 角色名
      */
     @ApiModelProperty(value = "角色名，以ROLE_开头")

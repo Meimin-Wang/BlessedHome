@@ -4,6 +4,9 @@ import com.zhouzhili.zhilihomeproject.entity.blog.Blog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author blessed
+ */
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, Long> {
 }

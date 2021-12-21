@@ -13,6 +13,7 @@ spring:
       - repository
       - jwt
       - opencv
+      - druid
 logging:
   level:
     web: DEBUG

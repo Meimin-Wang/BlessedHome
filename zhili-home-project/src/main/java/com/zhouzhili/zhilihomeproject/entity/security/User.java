@@ -5,6 +5,7 @@ import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.rest.core.annotation.Description;
@@ -31,14 +32,6 @@ import java.util.Set;
 @Description("用户实体")
 @EntityListeners(AuditingEntityListener.class)
 public class User extends BaseEntity implements UserDetails, Serializable {
-    /**
-     * 用户id，自增
-     */
-    @ApiModelProperty(value = "用户id，自增", dataType = "Long", required = true)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
 
     /**
      * 用户名
@@ -52,7 +45,6 @@ public class User extends BaseEntity implements UserDetails, Serializable {
      */
     @ApiModelProperty(value = "用户密码", dataType = "String")
     @Column(name = "password", nullable = false)
-    @JsonIgnore
     private String password;
 
     /**
@@ -62,6 +54,14 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     @Column(name = "email", nullable = false, unique = true, length = 30)
     @Email(message = "邮箱不合法")
     private String email;
+
+    /**
+     * 头像地址
+     */
+    @URL(message = "头像地址必须是URL地址")
+    @Column(name = "avatar")
+    @ApiModelProperty(value = "头像地址", dataType = "String")
+    private String avatarUrl;
 
     /**
      * 角色，角色名必须以ROLE_开头

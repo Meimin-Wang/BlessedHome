@@ -26,15 +26,6 @@ import java.util.Date;
 public class City extends BaseEntity implements Serializable {
 
     /**
-     * 城市实体id
-     */
-    @ApiModelProperty(value = "城市实体id", dataType = "String")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "city_id")
-    private Long cityId;
-
-    /**
      * 城市名称
      */
     @ApiModelProperty(value = "城市名称", dataType = "String", required = true)

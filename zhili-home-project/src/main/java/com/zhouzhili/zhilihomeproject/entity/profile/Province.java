@@ -23,14 +23,6 @@ import java.util.Set;
 @Entity(name = "tbl_province")
 @Table(value = "tbl_province")
 public class Province extends BaseEntity implements Serializable {
-    /**
-     * 省实体id
-     */
-    @ApiModelProperty(value = "省实体id", dataType = "Long")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "province_id")
-    private Long provinceId;
 
     /**
      * 省实体名称

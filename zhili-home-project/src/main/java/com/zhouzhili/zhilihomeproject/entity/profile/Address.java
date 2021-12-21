@@ -26,15 +26,6 @@ import java.util.Date;
 public class Address extends BaseEntity implements Serializable {
 
     /**
-     * 地址id
-     */
-    @ApiModelProperty(value = "地址id", dataType = "Long")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
-    private Long addressId;
-
-    /**
      * 地址详细信息
      */
     @ApiModelProperty(value = "地址详细信息", dataType = "String")

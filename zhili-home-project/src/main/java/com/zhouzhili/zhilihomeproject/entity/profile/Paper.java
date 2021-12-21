@@ -23,14 +23,6 @@ import java.util.Date;
 @Entity(name = "tbl_paper")
 @Table(value = "tbl_paper")
 public class Paper extends BaseEntity implements Serializable {
-    /**
-     * 论文id
-     */
-    @ApiModelProperty(value = "论文id", dataType = "Long")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "paper_id")
-    private Long paperId;
 
     /**
      * 论文标题

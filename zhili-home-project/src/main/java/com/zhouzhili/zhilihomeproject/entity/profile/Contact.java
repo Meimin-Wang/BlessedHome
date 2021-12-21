@@ -27,14 +27,6 @@ import java.util.Date;
 @Entity(name = "tbl_contact")
 @Table(value = "tbl_contact")
 public class Contact extends BaseEntity implements Serializable {
-    /**
-     * 联系方式实体id
-     */
-    @ApiModelProperty(value = "联系方式实体id", dataType = "Long", required = true)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "contact_id")
-    private Long contactId;
 
     /**
      * 手机号码

@@ -26,15 +26,6 @@ import java.util.Date;
 public class JobInformation extends BaseEntity implements Serializable {
 
     /**
-     * 工作实体id
-     */
-    @ApiModelProperty(value = "工作实体id", dataType = "Long")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "job_id")
-    private Long jobId;
-
-    /**
      * 公司名称
      */
     @ApiModelProperty(value = "公司名称", dataType = "String")

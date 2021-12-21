@@ -15,6 +15,18 @@ import java.util.Optional;
  */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
+    /**
+     * 根据角色查找角色信息
+     * @param roleName 角色名
+     * @return 返回 {@link Optional<Role>}
+     */
     Optional<Role> findRoleByRoleName(String roleName);
 
+    /**
+     * 根据角色id获取角色信息
+     * @param id 角色id
+     * @return 返回 {@link Optional<Role>}
+     */
+    @Override
+    Optional<Role> findById(Long id);
 }

@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    druid:
+      max-active: 20 # 最大活跃数
+      initial-size: 1
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 1 from dual
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filters: stat, wall, slf4j
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico
+        session-stat-enable: true
+        session-stat-max-count: 10
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: false
+        login-username: meimin_wang
+        login-password: meimin_wang
+      aop-patterns: com.zhilihomeproject.service.*

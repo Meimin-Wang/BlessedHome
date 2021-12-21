@@ -1,19 +1,24 @@
 package com.zhouzhili.zhilihomeproject.controller;
 
+import com.zhouzhili.zhilihomeproject.constants.AlibabaCloudOssConstants;
 import com.zhouzhili.zhilihomeproject.dto.ResponseData;
 import com.zhouzhili.zhilihomeproject.dto.ResponseState;
 import com.zhouzhili.zhilihomeproject.dto.VerificationCode;
+import com.zhouzhili.zhilihomeproject.service.AlibabaCloudOssService;
 import com.zhouzhili.zhilihomeproject.service.UserService;
 import com.zhouzhili.zhilihomeproject.service.impl.EmailServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
@@ -29,18 +34,24 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    // 注册模式
+    /**
+     * 注册模式
+     */
     private static final String REGISTER_STATE = "register-state";
 
-    // 修改密码模式
+    /**
+     * 修改密码模式
+     */
     private static final String CHANGE_PASSWORD_STATE = "change-password-state";
 
     private final UserService userService;
     private final EmailServiceImpl emailService;
+    private final AlibabaCloudOssService alibabaCloudOssService;
 
-    public UserController(UserService userService, EmailServiceImpl emailService) {
+    public UserController(UserService userService, EmailServiceImpl emailService, AlibabaCloudOssService alibabaCloudOssService) {
         this.userService = userService;
         this.emailService = emailService;
+        this.alibabaCloudOssService = alibabaCloudOssService;
     }
 
     /**
@@ -81,5 +92,25 @@ public class UserController {
         } else {
             return verificationCodeResponseData;
         }
+    }
+
+    /**
+     * 上传用户头像
+     * @param avatarFile 用户头像文件
+     * @param username 用户名
+     * @return 返回上传头像后在OSS中的URL
+     * @throws IOException 上传文件的过程中抛出 {@link IOException}
+     */
+    @ResponseStatus(code = HttpStatus.CREATED)
+    @PostMapping("/avatar/upload/{username}")
+    public ResponseData<URL> uploadAvatar(MultipartFile avatarFile, @PathVariable("username") String username) throws IOException {
+        boolean existByUsername = userService.isExistByUsername(username);
+        Assert.isTrue(existByUsername, () -> String.format("用户：{%s}不存在", username));
+        String originalFilename = avatarFile.getOriginalFilename();
+        log.info("{} 上传了文件 {}", username, originalFilename);
+        URL url = alibabaCloudOssService.uploadFile(avatarFile.getInputStream(), AlibabaCloudOssConstants.AVATAR_OSS_DIRECTORY, originalFilename);
+        ResponseData<URL> response = new ResponseData<>();
+        response.setCode(201).setMessage("上传头像成功").setState(ResponseState.CREATED).setBody(url).setResponseDate(new Date());
+        return response;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
@@ -69,6 +70,15 @@ public class AlibabaCloudOssServiceImpl implements AlibabaCloudOssService {
     }
 
     @Override
+    public URL uploadFile(InputStream inputStream, String key, String filename) {
+        String uploadedFilename = AlibabaCloudOssUtils.randomGenerateFilename(key, filename);
+        PutObjectRequest putObjectRequest = new PutObjectRequest(alibabaCloudOssProperties.getBucketName(), uploadedFilename, inputStream);
+        PutObjectResult putObjectResult = ossClient.putObject(putObjectRequest);
+        log.info("{}", putObjectResult.getETag());
+        return getResourceUrl(uploadedFilename);
+    }
+
+    @Override
     public void deleteFile(String key) {
         GenericRequest genericRequest = new GenericRequest(alibabaCloudOssProperties.getBucketName(), key);
         if (ossClient.doesObjectExist(genericRequest)) {
@@ -106,6 +116,7 @@ public class AlibabaCloudOssServiceImpl implements AlibabaCloudOssService {
         URL url = null;
         try {
             url = new URL(sb.toString());
+            log.info("上传到OSS文件：{}", url);
         } catch (MalformedURLException e) {
             log.warn("{} is valid url", sb);
             e.printStackTrace();

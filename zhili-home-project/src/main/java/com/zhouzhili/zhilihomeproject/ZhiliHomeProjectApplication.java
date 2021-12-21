@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 /**
  * {@link SpringBootApplication} 注解表明这是一个Spring Boot应用类，这是一个组合注解
+ * @author blessed
  * @see org.springframework.boot.SpringBootConfiguration
  *      这个注解表明是一个Spring Boot的配置类，本质就是一个{@link java.lang.module.Configuration}注解
  * @see org.springframework.boot.autoconfigure.EnableAutoConfiguration

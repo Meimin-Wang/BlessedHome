@@ -26,12 +26,6 @@ import java.io.Serializable;
 @Description("论文写作文件")
 public class PaperWritingFile extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "pwp_file_id")
-    @ApiModelProperty("写作文件id")
-    @Description("写作文件id")
-    private Long paperWritingFileId;
 
     @Column(name = "remark", nullable = false)
     @ApiModelProperty("备注")

@@ -25,13 +25,6 @@ import java.io.Serializable;
 @ApiModel("博客附件实体")
 public class AttachFile extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "af_id")
-    @ApiModelProperty("博客附件id")
-    @Description("博客附件id")
-    private Long attachFileId;
-
     @Column(name = "mime_type", length = 50)
     @ApiModelProperty("文件类型")
     @Description("文件类型")

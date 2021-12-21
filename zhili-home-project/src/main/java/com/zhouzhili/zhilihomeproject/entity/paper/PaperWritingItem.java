@@ -26,13 +26,6 @@ import java.util.Set;
 @Description("写作行为")
 public class PaperWritingItem extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "pwp_item_id")
-    @ApiModelProperty("写作行为id")
-    @Description("写作行为id")
-    private Long paperWritingItemId;
-
     @Column(name = "remark", nullable = false)
     @ApiModelProperty("备注")
     @Description("备注")

@@ -1,6 +1,7 @@
 package com.zhouzhili.zhilihomeproject.handler.repository;
 
 import com.zhouzhili.zhilihomeproject.entity.security.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
  * @Email blessedwmm@gmail.com
  */
 @Component
+@Slf4j
 @RepositoryEventHandler
 public class UserHandler {
 
@@ -25,6 +27,8 @@ public class UserHandler {
 
     @HandleBeforeCreate
     private void handleEncodePassword(User user) {
+        log.info("{} create user", user.getUsername());
+        log.info("{}", user);
         String password = user.getPassword();
         user.setPassword(passwordEncoder.encode(password));
     }

@@ -33,22 +33,6 @@ import java.io.Serializable;
 public class PersonalInformation extends BaseEntity implements Serializable {
 
     /**
-     * 个人信息实体类id
-     */
-    @ApiModelProperty(value = "个人信息实体类id", dataType = "Long")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "p_info_id")
-    private Long personalInformationId;
-
-    /**
-     * 头像的URL
-     */
-    @URL(message = "头像URL不正确")
-    @Column(name = "avatar_url")
-    private String avatarUrl;
-
-    /**
      * 用户联系方式
      */
     @ApiModelProperty(value = "用户联系方式", dataType = "com.zhouzhili.zhilihomeproject.entity.profile.Contact")

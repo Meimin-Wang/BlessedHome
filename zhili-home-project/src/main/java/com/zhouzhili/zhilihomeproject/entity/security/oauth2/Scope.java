@@ -28,15 +28,6 @@ import java.io.Serializable;
 @Entity(name = "tbl_scope")
 @Table(value = "tbl_scope")
 public class Scope extends BaseEntity implements Serializable {
-    /**
-     * 作用域实体在数据表中的id
-     */
-    @Description("客户端作用域id")
-    @ApiModelProperty(value = "作用域实体在数据表中的id", dataType = "Long", required = true)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "scope_id")
-    private Integer scopeId;
 
     /**
      * 作用域名称，本系统中通常是all

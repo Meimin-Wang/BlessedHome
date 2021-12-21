@@ -36,13 +36,6 @@ import java.util.Set;
 @Description("论文写作项目")
 public class PaperWritingProject extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "pwp_id")
-    @ApiModelProperty("论文写作项目id")
-    @Description("论文写作id")
-    private Long paperWritingProjectId;
-
     @Column(name = "paper_title", length = 100, nullable = false, unique = true)
     @ApiModelProperty("论文题目")
     @Description("论文题目")

@@ -19,11 +19,6 @@ import java.io.Serializable;
 @Table(value = "tbl_tag")
 public class Tag extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tag_id")
-    private Long tagId;
-
     @Column(name = "tag_color")
     private String tagColor;
 

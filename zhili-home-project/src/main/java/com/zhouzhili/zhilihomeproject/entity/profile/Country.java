@@ -26,14 +26,6 @@ import java.util.Set;
 @Entity(name = "tbl_country")
 @Table(value = "tbl_country")
 public class Country extends BaseEntity implements Serializable {
-    /**
-     * 国家实体id
-     */
-    @ApiModelProperty(value = "国家实体id", dataType = "Long")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "country_id")
-    private Long countryId;
 
     /**
      * 国家名称

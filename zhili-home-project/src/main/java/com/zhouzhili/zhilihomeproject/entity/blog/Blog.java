@@ -42,13 +42,6 @@ import java.util.Set;
 @Description("用户实体")
 public class Blog extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "blog_id")
-    @ApiModelProperty("博客id")
-    @Description("用户id")
-    private Long blogId;
-
     @Column(name = "title", nullable = false, length = 100)
     @Description("文章标题")
     @ApiModelProperty("文章标题")

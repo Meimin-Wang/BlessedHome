@@ -39,6 +39,7 @@ public enum ResponseState {
      */
     HAS_EXISTED,
 
+    INTERNAL_SERVER_ERROR,
     /**
      * 权限不够，禁止访问
      */

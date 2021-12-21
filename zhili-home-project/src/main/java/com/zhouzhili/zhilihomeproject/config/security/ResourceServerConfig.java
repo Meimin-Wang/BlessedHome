@@ -44,6 +44,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/static/**",
                         "/webjars/**",
                         "/profile/**",
+                        "/users",
                         "/personalInformations/**"
                 ).permitAll()
 

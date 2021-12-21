@@ -78,21 +78,28 @@ public interface UserRepository extends JpaRepository<User, Long> {
             httpMethod = "GET"
     )
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "页码，从1开始"),
-            @ApiImplicitParam(name = "size", value = "每一页的条目数"),
-            @ApiImplicitParam(name = "sort", value = "排序策略：DESC | ASC")
+            @ApiImplicitParam(name = "page", value = "页码，从1开始", dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "size", value = "每一页的条目数", dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "sort", value = "排序策略：DESC | ASC", dataTypeClass = Integer.class)
     })
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     Page<User> findAll(Pageable pageable);
 
+    /**
+     * 该方法是向数据库中添加用户数据
+     * @param user 用户实体对象
+     * @param <S> {@link User} 及其子类
+     * @return 返回创建的用户实体
+     */
     @ApiOperation(
             value = "存储用户信息",
             notes = "创建一个用户实体到数据库中",
             httpMethod = "POST"
     )
+    @PreAuthorize("permitAll()")
     @Override
-    <S extends User> S save(@ApiParam(name = "entity", value = "用户实体", required = true) S entity);
+    <S extends User> S save(@ApiParam(name = "entity", value = "用户实体", required = true) S user);
 
     boolean existsByUsername(String username);
 

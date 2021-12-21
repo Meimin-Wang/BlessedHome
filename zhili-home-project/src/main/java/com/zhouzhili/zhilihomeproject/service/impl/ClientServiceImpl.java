@@ -29,7 +29,7 @@ public class ClientServiceImpl implements ClientService {
         this.clientRepository = clientRepository;
     }
 
-    @Cacheable(cacheNames = "oauth2", key = "'client-id-' + #clientId")
+//    @Cacheable(cacheNames = "oauth2", key = "'client-id-' + #clientId")
     @Override
     public ClientDetails loadClientByClientId(String clientId) {
         log.info("{} 请求获取令牌", clientId);

@@ -39,16 +39,6 @@ import java.util.Date;
 public class AuthorizedGrantType extends BaseEntity implements Serializable {
 
     /**
-     * 授权方式的主键id
-     */
-    @Description("授权方式id")
-    @ApiModelProperty(value = "授权方式的主键id", dataType = "Integer")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "grant_type_id")
-    private Integer id;
-
-    /**
      * 授权类型，四种之一
      */
     @Description("授权方式")

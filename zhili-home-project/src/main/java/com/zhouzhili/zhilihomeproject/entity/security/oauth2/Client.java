@@ -41,16 +41,6 @@ import java.util.Set;
 public class Client extends BaseEntity implements ClientDetails, Serializable {
 
     /**
-     * 客户端实体的id
-     */
-    @Description("客户端实体id")
-    @ApiModelProperty(value = "客户端id", dataType = "Long", required = true)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "subject_id")
-    private Long subjectId;
-
-    /**
      * 客户端实体的名称，也是所谓的clientId {@link Client#getClientId()}
      * 通过此名称可以查询数据库进行授权
      */

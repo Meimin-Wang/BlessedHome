@@ -92,6 +92,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>5.6.0</version>
+            <scope>test</scope>
+        </dependency>
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
@@ -212,12 +221,11 @@
             <artifactId>opencv-java</artifactId>
             <version>4.5.4</version>
         </dependency>
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/net.snowflake/snowflake-jdbc &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>net.snowflake</groupId>-->
-<!--            <artifactId>snowflake-jdbc</artifactId>-->
-<!--            <version>3.13.11</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.17</version>
+        </dependency>
 
     </dependencies>
 

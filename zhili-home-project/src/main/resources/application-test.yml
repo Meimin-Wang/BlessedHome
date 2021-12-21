@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    druid:
+      web-stat-filter:
+        enabled: false

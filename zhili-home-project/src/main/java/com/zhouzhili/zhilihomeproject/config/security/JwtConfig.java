@@ -50,8 +50,8 @@ public class JwtConfig {
             @Override
             public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
                 Map<String, Object> info = new LinkedHashMap<>();
-                info.put("userId", ((User)authentication.getPrincipal()).getId());
-                info.put("create time", LocalDateTime.now());
+                info.put("userInfo", ((User)authentication.getPrincipal()));
+                info.put("createTime", LocalDateTime.now());
                 ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(info);
                 return accessToken;
             }
