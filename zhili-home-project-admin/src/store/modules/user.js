@@ -1,4 +1,4 @@
-import { login, getInfo, refreshToken } from '@/api/user'
+import { login, refreshToken } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -57,7 +57,9 @@ const actions = {
          */
         const { data } = response
         commit('SET_TOKEN', data)
-        setToken(data)
+        setToken(data) // Cookie或本地缓存登录信息，下次不需要再次登录逻辑
+        commit('SET_AVATAR', data.userInfo.avatarUrl)
+        commit('SET_NAME', data.userInfo.username)
         resolve()
       }).catch(error => {
         reject(error)
@@ -65,31 +67,27 @@ const actions = {
     })
   },
 
-  // get user info
-  getInfo({ commit }, token) {
-    return new Promise((resolve, reject) => {
-      getInfo(token).then(response => {
-        const { data } = response
-        if (!data) {
-          return reject('Verification failed, please Login again.')
-        }
-        commit('SET_NAME', data.username)
-        commit('SET_AVATAR', '')
-        resolve(data)
-      }).catch(error => {
-        console.log('action getInfo', error)
-        reject(error)
-      })
-    })
-  },
-
   // user logout
-  logout({ commit, state }) {
+  logout({ commit }) {
     return new Promise((resolve, reject) => {
       removeToken() // 先删除token
       resetRouter()
       commit('RESET_STATE')
       return resolve()
+    })
+  },
+
+  setAvatarUrl({ commit }, avatarUrl) {
+    return new Promise((resolve, reject) => {
+      commit('SET_AVATAR', avatarUrl)
+      resolve()
+    })
+  },
+
+  setName({ commit }, username) {
+    return new Promise((resolve, reject) => {
+      commit('SET_NAME', username)
+      resolve()
     })
   },
 

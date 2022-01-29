@@ -15,5 +15,6 @@ export default {
   height: 300px;
   background: #1c1f24;
   padding-top: 5px;
+  color: white;
 }
 </style>

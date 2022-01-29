@@ -44,13 +44,22 @@ export const constantRoutes = [
   },
 
   // 主页
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'dashboard',
+  //     name: 'Dashboard',
+  //     component: () => import('@/views/dashboard/index'),
+  //     meta: { title: 'Dashboard', icon: 'dashboard' }
+  //   }]
+  // },
   {
     path: '/',
     component: Layout,
     redirect: '/home',
-    name: 'Home',
-    children: [
-      {
+    children: [{
         path: 'home',
         name: 'Home',
         component: () => import('@/views/home/index'),

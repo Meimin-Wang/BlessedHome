@@ -27,13 +27,19 @@ export function login(data) {
  */
 export function getInfo(token) {
   const tokenObject = JSON.parse(token)
+  console.log('Get Info: ', tokenObject)
   return request({
-    url: '/api/users/' + tokenObject['userId'],
+    url: '/api/users/' + tokenObject.userInfo.id,
     method: 'GET',
     headers: { 'Authorization': tokenObject['token_type'] + ' ' + tokenObject['access_token'] }
   })
 }
 
+/**
+ * 刷新令牌
+ * @param {*} token 
+ * @returns 
+ */
 export function refreshToken(token) {
   token = JSON.parse(token)
   return request({
@@ -45,4 +51,68 @@ export function refreshToken(token) {
       'refresh_token': token['refresh_token']
     }
   })
+}
+
+export function getAllUsers() {
+  const hasToken = getToken()
+    if (hasToken) {
+      const tokenObj = JSON.parse(hasToken)
+    return request({
+      url: '/api/users',
+      method: 'GET',
+      headers: {
+        'Authorization': tokenObj['token_type'] + ' ' + tokenObj['access_token']
+      }
+    })
+  }
+}
+
+export function getUsersByPage(page, size) {
+  const hasToken = getToken()
+  if (hasToken) {
+    const tokenObj = JSON.parse(hasToken)
+    return request({
+      url: '/api/users',
+      method: 'GET',
+      headers: {
+        'Authorization': tokenObj['token_type'] + ' ' + tokenObj['access_token']
+      },
+      params: {
+        page: page || 0,
+        size: size || 20
+      }
+    })
+  }
+}
+
+/**
+ * 根据id删除用户
+ * @param {required} id 
+ */
+export function deleteUserById(id) {
+  const hasToken = getToken()
+  if (hasToken) {
+    const tokenObj = JSON.parse(hasToken)
+    return request({
+      url: '/api/users/' + id,
+      method: 'DELETE',
+      headers: {
+        'Authorization': tokenObj['token_type'] + ' ' + tokenObj['access_token']
+      }
+    })
+  }
+}
+
+export function getAllRoles() {
+  const hasToken = getToken()
+  if (hasToken) {
+    const tokenObj = JSON.parse(hasToken)
+    return request({
+      url: '/api/roles',
+      method: 'GET',
+      headers: {
+        'Authorization': tokenObj['token_type'] + ' ' + tokenObj['access_token']
+      }
+    })
+  }
 }

@@ -14,9 +14,11 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^2.0.6",
     "animate.css": "^4.1.1",
+    "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.6",
     "moment": "^2.29.1",
+    "nanoid": "^3.1.30",
     "vue": "^2.6.11",
     "vue-router": "^3.5.3",
     "vuex": "^3.6.2"

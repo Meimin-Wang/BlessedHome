@@ -3,6 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
+        <h1 class="title">Blessed个人网站管理系统</h1>
         <h3 class="title">管理员登录</h3>
       </div>
 
@@ -105,6 +106,10 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
+            this.$message({
+              type: 'success',
+              message: '登录成功，欢迎！'
+            })
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
@@ -125,6 +130,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
@@ -137,7 +143,6 @@ $cursor: #fff;
     color: $cursor;
   }
 }
-
 /* reset element-ui css */
 .login-container {
   .el-input {

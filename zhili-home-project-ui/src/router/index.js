@@ -42,14 +42,14 @@ const router = new VueRouter({
           component: () => import('@/components/MainComponents/PaperPage')
         }
       ]
-    },
-    
-    // 登录页面路由
-    {
-      path: '/login',
-      name: 'Login',
-      component: () => import('@/views/auth/Login')
     }
+    
+    // // 登录页面路由
+    // {
+    //   path: '/login',
+    //   name: 'Login',
+    //   component: () => import('@/views/auth/Login')
+    // }
   ]
 })
 

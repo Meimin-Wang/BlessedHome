@@ -13,7 +13,6 @@ const whiteList = ['/login'] // no redirect whitelist
 router.beforeEach(async(to, from, next) => {
   // start progress bar
   NProgress.start()
-
   // set page title
   document.title = getPageTitle(to.meta.title)
   // determine whether the user has logged in
@@ -24,7 +23,11 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
+      const hasGetUserInfo = JSON.parse(hasToken)['userInfo']
+      const avatarUrl = hasGetUserInfo.avatarUrl
+      const username = hasGetUserInfo.username
+      store.dispatch('user/setAvatarUrl', avatarUrl)
+      store.dispatch('user/setName', username)
       if (hasGetUserInfo) {
         next()
       } else {

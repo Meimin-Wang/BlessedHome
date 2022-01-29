@@ -53,6 +53,7 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
+      console.log('注销，重定向到登录页面')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
