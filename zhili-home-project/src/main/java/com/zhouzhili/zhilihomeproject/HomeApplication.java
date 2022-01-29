@@ -28,10 +28,10 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
  */
 @SpringBootApplication
 @ConfigurationPropertiesScan(value = "com.zhouzhili.zhilihomeproject.properties")
-public class ZhiliHomeProjectApplication {
+public class HomeApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ZhiliHomeProjectApplication.class, args);
+        SpringApplication.run(HomeApplication.class, args);
     }
 
 }

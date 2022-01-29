@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @ClassName AuthorityValidator
- * @Description TODO
+ * @Description 权限校验
  * @Author blessed
  * @Date 2021/11/29 : 23:32
  * @Email blessedwmm@gmail.com

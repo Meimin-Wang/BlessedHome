@@ -2,6 +2,7 @@ package com.zhouzhili.zhilihomeproject.service.impl;
 
 import com.zhouzhili.zhilihomeproject.dto.VerificationCode;
 import com.zhouzhili.zhilihomeproject.entity.security.User;
+import com.zhouzhili.zhilihomeproject.exception.UserNotFoundException;
 import com.zhouzhili.zhilihomeproject.properties.ValidationCodeProperties;
 import com.zhouzhili.zhilihomeproject.repository.security.UserRepository;
 import com.zhouzhili.zhilihomeproject.service.UserService;
@@ -11,8 +12,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -81,4 +84,25 @@ public class UserServiceImpl implements UserService {
     public boolean isExistByUsernameOrEmail(String loginUser) {
         return userRepository.existsByUsernameOrEmail(loginUser, loginUser);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public User updateAvatarUrl(String username, String avatarUrl) throws UserNotFoundException {
+        Optional<User> userByUsername = userRepository.findUserByUsername(username);
+        if (userByUsername.isPresent()) {
+            User user = userByUsername.get();
+            user.setAvatarUrl(avatarUrl);
+            userRepository.save(user);
+        } else {
+            throw new UserNotFoundException(username);
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteBatchUsers(List<Long> ids) {
+        userRepository.deleteUsersByIdIn(ids);
+    }
+
 }

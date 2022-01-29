@@ -40,7 +40,7 @@ public class AddressMockDataTest {
 
     @Test
     @Order(1)
-    @DisplayName("测试添加中国省名称")
+    @DisplayName("1. 测试添加中国省名称")
     public void testInsertProvinces() {
         List<Province> allProvinces = provinceRepository.findAll();
         if (allProvinces.isEmpty()) {
@@ -57,7 +57,7 @@ public class AddressMockDataTest {
     }
     @Test
     @Order(2)
-    @DisplayName("测试添加中国国家")
+    @DisplayName("2. 测试添加中国国家")
     public void testAddChina() {
         Optional<Country> china = countryRepository.findByCountryName("中国");
         if (china.isPresent()) {

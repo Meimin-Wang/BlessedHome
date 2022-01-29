@@ -47,7 +47,7 @@ public class MockOAuth2DataTest {
 
     @Test
     @Order(1)
-    @DisplayName("测试添加grant types")
+    @DisplayName("1. 测试添加grant types")
     public void testAddSupportGrantTypes() {
         List<AuthorizedGrantType> allGrantTypes = authorizedGrantTypeRepository.findAll();
         if (allGrantTypes.size() > 0) {
@@ -67,7 +67,7 @@ public class MockOAuth2DataTest {
 
     @Test
     @Order(2)
-    @DisplayName("测试添加Scope")
+    @DisplayName("2. 测试添加Scope")
     public void testAddScope() {
         Optional<Scope> scope = scopeRepository.findByScopeName("all");
         if (!scope.isPresent()) {
@@ -82,7 +82,7 @@ public class MockOAuth2DataTest {
 
     @Test
     @Order(3)
-    @DisplayName("测试添加client")
+    @DisplayName("3. 测试添加client")
     public void testAddClient() {
         Client client = new Client();
         client.setClientName("MeiminWang");

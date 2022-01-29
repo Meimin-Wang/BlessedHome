@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.Description;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -13,6 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+
+import static com.zhouzhili.zhilihomeproject.constants.CacheConstants.CLIENT_CACHE_REPOSITORY_NAME;
 
 /**
  * @ClassName ClientRepository
@@ -36,6 +39,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
             @ApiResponse(code = 401, message = "未认证，需要登录")
     })
     @Description("根据【客户端名称】获取客户端")
+    @Cacheable(cacheNames = {CLIENT_CACHE_REPOSITORY_NAME}, key = "#clientName")
     Optional<Client> findClientByClientName(
             @ApiParam(value = "客户端名称", required = true, type = "String")
             String clientName);

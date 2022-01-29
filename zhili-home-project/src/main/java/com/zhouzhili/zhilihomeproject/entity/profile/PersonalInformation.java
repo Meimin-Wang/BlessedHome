@@ -8,16 +8,9 @@ import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.relational.core.mapping.Table;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @ClassName PersonalInformation
@@ -63,6 +56,14 @@ public class PersonalInformation extends BaseEntity implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address address;
+
+    /**
+     * 出生日期
+     */
+    @ApiModelProperty(value = "用户出生年月", dataType = "Date")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "birthday")
+    private Date birthday;
 
     /**
      * 用户对象，该个人信息属于的用户

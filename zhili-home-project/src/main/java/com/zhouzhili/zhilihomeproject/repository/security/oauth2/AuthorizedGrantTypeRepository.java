@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+import static com.zhouzhili.zhilihomeproject.constants.CacheConstants.AUTHORIZED_GRANTED_TYPE_CACHE_REPOSITORY_NAME;
+
 /**
  * @InterfaceName AuthorizedGrantTypeRepository
  * @Description TODO
@@ -17,6 +19,11 @@ import java.util.Optional;
 @Repository
 public interface AuthorizedGrantTypeRepository extends JpaRepository<AuthorizedGrantType, Integer> {
 
-    @Cacheable(cacheNames = "oauth2", key = "'grant_type-' + #grantTypeName")
+    /**
+     * 根据授权方式查询 {@link AuthorizedGrantType}
+     * @param grantTypeName 授权方式
+     * @return 返回一个 {@link Optional<AuthorizedGrantType>} 对象
+     */
+    @Cacheable(cacheNames = {AUTHORIZED_GRANTED_TYPE_CACHE_REPOSITORY_NAME}, key = "#grantTypeName")
     Optional<AuthorizedGrantType> findAuthorizedGrantTypeByGrantTypeName(String grantTypeName);
 }

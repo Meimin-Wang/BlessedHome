@@ -1,10 +1,13 @@
 package com.zhouzhili.zhilihomeproject.repository.security;
 
 import com.zhouzhili.zhilihomeproject.entity.security.Role;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+
+import static com.zhouzhili.zhilihomeproject.constants.CacheConstants.ROLE_CACHE_REPOSITORY_NAME;
 
 /**
  * @InterfaceName RoleRepository
@@ -20,6 +23,7 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
      * @param roleName 角色名
      * @return 返回 {@link Optional<Role>}
      */
+    @Cacheable(cacheNames = {ROLE_CACHE_REPOSITORY_NAME}, key = "#roleName")
     Optional<Role> findRoleByRoleName(String roleName);
 
     /**
@@ -27,6 +31,7 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
      * @param id 角色id
      * @return 返回 {@link Optional<Role>}
      */
+    @Cacheable(cacheNames = {ROLE_CACHE_REPOSITORY_NAME}, key = "#id")
     @Override
     Optional<Role> findById(Long id);
 }

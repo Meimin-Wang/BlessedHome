@@ -38,7 +38,7 @@ public class PaperWritingFile extends BaseEntity implements Serializable {
     @Description("文件路径")
     private String paperWritingFileUrl;
 
-    @Column(name = "文件大小", nullable = false, precision = 2)
+    @Column(name = "file_size", nullable = false, precision = 2)
     @ApiModelProperty("文件大小")
     @Description("文件大小")
     private Double fileSize;

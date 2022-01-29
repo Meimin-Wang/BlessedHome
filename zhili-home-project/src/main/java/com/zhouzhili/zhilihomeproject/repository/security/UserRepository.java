@@ -1,5 +1,7 @@
 package com.zhouzhili.zhilihomeproject.repository.security;
 
+import com.zhouzhili.zhilihomeproject.constants.CacheConstants;
+import com.zhouzhili.zhilihomeproject.constants.ResourceConstants;
 import com.zhouzhili.zhilihomeproject.dto.ErrorResponseData;
 import com.zhouzhili.zhilihomeproject.entity.security.User;
 import io.swagger.annotations.Api;
@@ -9,12 +11,19 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.Description;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -25,6 +34,11 @@ import java.util.Optional;
  * @Email blessedwmm@gmail.com
  */
 @Repository
+@RepositoryRestResource(
+        path = ResourceConstants.USER_RESOURCE_PATH,
+        collectionResourceDescription = @Description(value = "用户资源集合"),
+        collectionResourceRel = ResourceConstants.USER_RESOURCE_REL
+)
 @Api(protocols = "HTTP", value = "用户资源")
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -45,6 +59,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             @ApiResponse(code = 403, message = "权限不够，该接口只能够拥有ADMIN角色或自身id一致的用户访问", response = ErrorResponseData.class)
     })
     @PreAuthorize("hasRole('ROLE_ADMIN') or @authorityValidator.isAuthenticationEqualsSpecificUserId(authentication, #id)")
+    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#id")
     @Override
     Optional<User> findById(Long id);
 
@@ -65,6 +80,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             @ApiResponse(code = 404, message = "不存在的用户信息", response = ErrorResponseData.class)
     })
     @PreAuthorize("hasRole('ROLE_ADMIN') or @authorityValidator.isAuthenticationEqualsSpecificUsername(authentication, #username)")
+    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#username")
     Optional<User> findUserByUsername(@ApiParam(name = "username", value = "用户名", required = true) String username);
 
     /**
@@ -84,6 +100,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     })
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort")
+    @RestResource(description = @Description(value = "查询所有用户"))
     Page<User> findAll(Pageable pageable);
 
     /**
@@ -98,14 +116,57 @@ public interface UserRepository extends JpaRepository<User, Long> {
             httpMethod = "POST"
     )
     @PreAuthorize("permitAll()")
+    @CachePut(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#user.id")
     @Override
     <S extends User> S save(@ApiParam(name = "entity", value = "用户实体", required = true) S user);
 
+    /**
+     * 根据id删除用户
+     * @param id 用户id
+     */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @CacheEvict(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#id")
+    @Override
+    @RestResource(description = @Description(value = "删除用户信息"))
+    void deleteById(Long id);
+
+    /**
+     * 批量删除用户
+     * @param ids 用户id集合
+     * @author Blessed
+     * @return 影响数据库的行数
+     */
+    @RestResource(exported = false)
+    void deleteUsersByIdIn(List<Long> ids);
+
+    /**
+     * 查询指定用户名是否存在数据库中
+     * @param username 用户名
+     * @return 返回一个 {@link Boolean}
+     */
     boolean existsByUsername(String username);
 
+    /**
+     * 查询指定邮箱是否存在数据库中
+     * @param email 邮箱地址
+     * @return 返回一个 {@link Boolean}
+     */
     boolean existsByEmail(String email);
 
+    /**
+     * 查询指定用户名和邮箱的用户是否存在于数据库
+     * @param username 用户名
+     * @param email 邮箱
+     * @return 返回一个 {@link Boolean}
+     */
     boolean existsByUsernameOrEmail(String username, String email);
 
+    /**
+     * 通过用户名或者邮箱查询用户信息
+     * @param username 用户名
+     * @param email 邮箱
+     * @return 返回一个 {@link Optional<User>}
+     */
+    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#usernae + '-' + #email")
     Optional<User> findUserByUsernameOrEmail(String username, String email);
 }

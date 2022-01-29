@@ -4,9 +4,17 @@ import com.zhouzhili.zhilihomeproject.constants.AlibabaCloudOssConstants;
 import com.zhouzhili.zhilihomeproject.dto.ResponseData;
 import com.zhouzhili.zhilihomeproject.dto.ResponseState;
 import com.zhouzhili.zhilihomeproject.dto.VerificationCode;
+import com.zhouzhili.zhilihomeproject.entity.security.User;
+import com.zhouzhili.zhilihomeproject.exception.UserNotFoundException;
 import com.zhouzhili.zhilihomeproject.service.AlibabaCloudOssService;
 import com.zhouzhili.zhilihomeproject.service.UserService;
 import com.zhouzhili.zhilihomeproject.service.impl.EmailServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
@@ -29,6 +36,7 @@ import java.util.List;
  * @Date 2021/11/13 : 19:04
  * @Email blessedwmm@gmail.com
  */
+@Api("用户相关操作API")
 @Slf4j
 @RestController
 @RequestMapping("/users")
@@ -101,16 +109,75 @@ public class UserController {
      * @return 返回上传头像后在OSS中的URL
      * @throws IOException 上传文件的过程中抛出 {@link IOException}
      */
+    @ApiOperation("用户头像上传")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "username", value = "用户名，路径变量", required = true, dataTypeClass = String.class, dataType = "String"),
+            @ApiImplicitParam(name = "avatarFile", value = "用户头像文件", required = true, dataTypeClass = MultipartFile.class, dataType = "MultipartFile")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "用户头像更新成功"),
+            @ApiResponse(code = 401, message = "用户未登录"),
+            @ApiResponse(code = 403, message = "用户权限不够"),
+            @ApiResponse(code = 404, message = "用户不存在")
+    })
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @authorityValidator.isAuthenticationEqualsSpecificUsername(authentication, #username)")
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("/avatar/upload/{username}")
-    public ResponseData<URL> uploadAvatar(MultipartFile avatarFile, @PathVariable("username") String username) throws IOException {
+    public ResponseData<URL> uploadAvatar(MultipartFile avatarFile, @PathVariable("username") String username) throws IOException, UserNotFoundException {
+        Assert.hasText(username, () -> "上传用户头像，用户名不能为空！");
+        Assert.notNull(avatarFile, () -> "头像文件不能为null！");
         boolean existByUsername = userService.isExistByUsername(username);
-        Assert.isTrue(existByUsername, () -> String.format("用户：{%s}不存在", username));
+        if (!existByUsername) {
+            throw new UserNotFoundException(username);
+        }
         String originalFilename = avatarFile.getOriginalFilename();
         log.info("{} 上传了文件 {}", username, originalFilename);
         URL url = alibabaCloudOssService.uploadFile(avatarFile.getInputStream(), AlibabaCloudOssConstants.AVATAR_OSS_DIRECTORY, originalFilename);
         ResponseData<URL> response = new ResponseData<>();
         response.setCode(201).setMessage("上传头像成功").setState(ResponseState.CREATED).setBody(url).setResponseDate(new Date());
         return response;
+    }
+
+    /**
+     * 更新用户头像
+     * @param avatarFile 用户头像文件
+     * @param username 用户名
+     * @return 返回修改后的用户信息
+     * @throws UserNotFoundException 当用户名不存在的时候抛出该异常
+     * @throws IOException 当发生网络I/O异常的时候抛出该异常
+     */
+    @ApiOperation("用户更新头像操作")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "username", value = "用户名，路径变量", required = true, dataTypeClass = String.class, dataType = "String"),
+            @ApiImplicitParam(name = "avatarFile", value = "用户头像文件", required = true, dataTypeClass = MultipartFile.class, dataType = "MultipartFile")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "用户头像更新成功"),
+            @ApiResponse(code = 401, message = "用户未登录"),
+            @ApiResponse(code = 403, message = "用户权限不够"),
+            @ApiResponse(code = 404, message = "用户不存在")
+    })
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @authorityValidator.isAuthenticationEqualsSpecificUsername(authentication, #username)")
+    @ResponseStatus(code = HttpStatus.OK, reason = "用户修改头像成功")
+    @PutMapping("/avatar/update/{username}")
+    public ResponseData<User> updateUserAvatar(MultipartFile avatarFile, @PathVariable("username") String username) throws UserNotFoundException, IOException {
+        Assert.hasText(username, () -> "用户名不能为空！");
+        URL url = alibabaCloudOssService.uploadFile(avatarFile.getInputStream(), AlibabaCloudOssConstants.AVATAR_OSS_DIRECTORY, avatarFile.getOriginalFilename());
+        User user = userService.updateAvatarUrl(username, url.toString());
+        ResponseData<User> responseData = new ResponseData<>();
+        responseData.setState(ResponseState.SUCCESS)
+                .setCode(200)
+                .setResponseDate(new Date())
+                .setBody(user)
+                .setMessage(String.format("%s 更新头像成功", username));
+        return responseData;
+    }
+
+    @DeleteMapping("/deleteUsers")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "删除成功")
+    public void deleteBatchUsers(@RequestBody List<Long> ids) {
+        log.info("DeleteBatchUsers: {}", ids);
+        userService.deleteBatchUsers(ids);
     }
 }

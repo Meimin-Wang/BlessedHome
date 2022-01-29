@@ -1,8 +1,10 @@
 package com.zhouzhili.zhilihomeproject.dto;
 
+import com.zhouzhili.zhilihomeproject.entity.security.User;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @ClassName JwtAuthorizationToken
@@ -18,7 +20,7 @@ public class JwtAuthorizationTokenDTO {
     private String refresh_token;
     private Long expires_in;
     private String scope;
-    private Long userId;
+    private Map<String, Object> userInfo;
     private Date create_time;
     private String jti;
 }

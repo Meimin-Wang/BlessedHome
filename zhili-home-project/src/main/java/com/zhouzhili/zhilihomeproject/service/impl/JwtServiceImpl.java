@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * @ClassName JwtServiceImpl
  * @Description TODO
@@ -27,6 +29,6 @@ public class JwtServiceImpl implements JwtService {
     public Long getUserIdFromJwtToken(String accessToken) {
         Jwt jwt = Jwts.parserBuilder().setSigningKey(key.getBytes()).build().parse(accessToken);
         Claims body = (Claims) jwt.getBody();
-        return Long.parseLong(body.get("userId").toString());
+        return ((Integer)((Map<String, Object>)body.get("userInfo")).get("id")).longValue();
     }
 }

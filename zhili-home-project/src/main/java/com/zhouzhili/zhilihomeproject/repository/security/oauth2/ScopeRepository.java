@@ -7,15 +7,22 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+import static com.zhouzhili.zhilihomeproject.constants.CacheConstants.SCOPE_CACHE_REPOSITORY_NAME;
+
 /**
  * @InterfaceName ScopeRepository
- * @Description TODO
+ * @Description Scope数据访问接口
  * @Author blessed
  * @Date 2021/11/9 : 13:46
  * @Email blessedwmm@gmail.com
  */
 @Repository
 public interface ScopeRepository extends JpaRepository<Scope, Integer> {
-    @Cacheable(cacheNames = "oauth2-repo", key = "'scope-' + #scopeName")
+    /**
+     * 根据scope名称查询 {@link Scope}
+     * @param scopeName scope名称
+     * @return 返回一个 {@link Optional<Scope>} 对象
+     */
+    @Cacheable(cacheNames = {SCOPE_CACHE_REPOSITORY_NAME}, key = "#scopeName")
     Optional<Scope> findByScopeName(String scopeName);
 }

@@ -25,14 +25,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -125,7 +120,7 @@ public class UserApiTest {
 
     @Test
     @Order(3)
-    @DisplayName("3. 获取用户信息有认证信息:admin")
+    @DisplayName("3. 获取用户信息有认证信息: admin")
     public void testGetUsersWithAdminRole() throws Exception{
         JwtAuthorizationTokenDTO admin = getAccessTokenInfo("admin", "admin", "admin");
         mockMvc.perform(get(resourceName)
@@ -136,7 +131,7 @@ public class UserApiTest {
 
     @Test
     @Order(4)
-    @DisplayName("4. 获取用户信息有认证信息:user")
+    @DisplayName("4. 获取用户信息有认证信息: user")
     public void testGetUsersWithUserRole() throws Exception{
         JwtAuthorizationTokenDTO user = getAccessTokenInfo("user", "user", "user");
         mockMvc.perform(get(resourceName)
@@ -147,7 +142,7 @@ public class UserApiTest {
 
     @Test
     @Order(5)
-    @DisplayName("5. 获取用户信息有认证信息:supervisor")
+    @DisplayName("5. 获取用户信息有认证信息: supervisor")
     public void testGetUsersWithSupervisorRole() throws Exception{
         JwtAuthorizationTokenDTO supervisor = getAccessTokenInfo("supervisor", "supervisor", "supervisor");
         mockMvc.perform(get(resourceName)
@@ -158,7 +153,7 @@ public class UserApiTest {
 
     @Test
     @Order(6)
-    @DisplayName("6. 获取用户信息有认证信息:member")
+    @DisplayName("6. 获取用户信息有认证信息: member")
     public void testGetUsersWithMemberRole() throws Exception{
         JwtAuthorizationTokenDTO member = getAccessTokenInfo("member", "member", "member");
         mockMvc.perform(get(resourceName)
@@ -192,7 +187,8 @@ public class UserApiTest {
     @DisplayName("8. 根据用户id获取用户信息: admin")
     public void testGetUserByIdWithAdmin() throws Exception {
         JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("admin", "admin", "admin");
-        Long userId = accessTokenInfo.getUserId();
+        Map<String, Object> userInfo = accessTokenInfo.getUserInfo();
+        Long userId = ((Integer)userInfo.get("id")).longValue();
         mockMvc.perform(get(resourceName + "/" + userId)
                 .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
         ).andExpect(status().isOk())
@@ -212,7 +208,8 @@ public class UserApiTest {
     @DisplayName("9. 根据用户id获取用户信息: user")
     public void testGetUserByIdWithUser() throws Exception {
         JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("user", "user", "user");
-        Long userId = accessTokenInfo.getUserId();
+        Map<String, Object> userInfo = accessTokenInfo.getUserInfo();
+        Long userId = ((Integer)userInfo.get("id")).longValue();
         mockMvc.perform(get(resourceName + "/" + userId)
                 .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
         ).andExpect(status().isOk())
@@ -232,7 +229,8 @@ public class UserApiTest {
     @DisplayName("10. 根据用户id获取用户信息: supervisor")
     public void testGetUserByIdWithSupervisor() throws Exception {
         JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("supervisor", "supervisor", "supervisor");
-        Long userId = accessTokenInfo.getUserId();
+        Map<String, Object> userInfo = accessTokenInfo.getUserInfo();
+        Long userId = ((Integer)userInfo.get("id")).longValue();
         mockMvc.perform(get(resourceName + "/" + userId)
                 .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
         ).andExpect(status().isOk())
@@ -252,7 +250,8 @@ public class UserApiTest {
     @DisplayName("11. 根据用户id获取用户信息: member")
     public void testGetUserByIdWithMember() throws Exception {
         JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("member", "member", "member");
-        Long userId = accessTokenInfo.getUserId();
+        Map<String, Object> userInfo = accessTokenInfo.getUserInfo();
+        Long userId = ((Integer)userInfo.get("id")).longValue();
         mockMvc.perform(get(resourceName + "/" + userId)
                 .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
         ).andExpect(status().isOk())
@@ -267,7 +266,7 @@ public class UserApiTest {
                 .andDo(print());
     }
 
-    private static final String OTHER_USERNAME = "mertie.bins";
+    private static final String OTHER_USERNAME = "ruben.bode";
     private static final String NON_EXIST_USERNAME = "no-exist-username";
 
     @Test
@@ -410,7 +409,7 @@ public class UserApiTest {
 
     @Test
     @Order(18)
-    @DisplayName("17. PUT方法修改用户: unauthorized")
+    @DisplayName("18. PUT方法修改用户: unauthorized")
     @Transactional
     @WithMockUser(username = "admin", roles = "ADMIN")
     public void testPutUserWithUnauthorized() throws Exception {
@@ -445,7 +444,7 @@ public class UserApiTest {
 
     @Test
     @Order(19)
-    @DisplayName("18. PUT方法修改用户: admin")
+    @DisplayName("19. PUT方法修改用户: admin")
     @Transactional
     @WithMockUser(username = "admin", roles = "ADMIN")
     public void testPutUserWithAdminUser() throws Exception {
@@ -478,5 +477,191 @@ public class UserApiTest {
                         .content(objectMapper.writeValueAsString(data))
                 ).andExpect(status().isNoContent()) // 204
                 .andDo(print());
+    }
+
+    @Test
+    @Order(20)
+    @Transactional
+    @DisplayName("20. DELETE方法删除用户：admin")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    public void testDeleteUserByIdWithAdmin() throws Exception {
+        // 获取一个用户
+        Long id = 63L;
+        Optional<User> byId = userRepository.findById(id);
+        User user = null; // 这个user对象是【持久】对象
+        if (byId.isPresent()) {
+            user = byId.get();
+        }
+        // 登录ADMIN
+        JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("admin", "admin", "admin");
+        mockMvc.perform(delete(resourceName + "/" + id)
+                .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+        ).andExpect(status().isNoContent()) // 204
+                .andDo(print());
+    }
+
+    @Test
+    @Order(21)
+    @Transactional
+    @DisplayName("21. DELETE方法删除用户：user")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    public void testDeleteUserByIdWithUser() throws Exception {
+        // 获取一个用户
+        Long id = 63L;
+        Optional<User> byId = userRepository.findById(id);
+        User user = null; // 这个user对象是【持久】对象
+        if (byId.isPresent()) {
+            user = byId.get();
+        }
+        // 登录ADMIN
+        JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("user", "user", "user");
+        mockMvc.perform(delete(resourceName + "/" + id)
+                        .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                ).andExpect(status().isForbidden()) // 403
+                .andDo(print());
+    }
+
+    @Test
+    @Order(22)
+    @Transactional
+    @DisplayName("22. DELETE方法删除用户：supervisor")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    public void testDeleteUserByIdWithSupervisor() throws Exception {
+        // 获取一个用户
+        Long id = 63L;
+        Optional<User> byId = userRepository.findById(id);
+        User user = null; // 这个user对象是【持久】对象
+        if (byId.isPresent()) {
+            user = byId.get();
+        }
+        // 登录ADMIN
+        JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("supervisor", "supervisor", "supervisor");
+        mockMvc.perform(delete(resourceName + "/" + id)
+                        .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                ).andExpect(status().isForbidden()) // 403
+                .andDo(print());
+    }
+
+    @Test
+    @Order(23)
+    @Transactional
+    @DisplayName("23. DELETE方法删除用户：member")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    public void testDeleteUserByIdWithMember() throws Exception {
+        // 获取一个用户
+        Long id = 63L;
+        Optional<User> byId = userRepository.findById(id);
+        User user = null; // 这个user对象是【持久】对象
+        if (byId.isPresent()) {
+            user = byId.get();
+        }
+        // 登录ADMIN
+        JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("member", "member", "member");
+        mockMvc.perform(delete(resourceName + "/" + id)
+                        .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                ).andExpect(status().isForbidden()) // 403
+                .andDo(print());
+    }
+
+    @Test
+    @Order(24)
+    @Transactional(rollbackOn = Exception.class)
+    @DisplayName("24. 批量删除用户数据：admin")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    public void testDeleteBatchUsersWithAdmin() throws Exception {
+        List<User> allUsers = userRepository.findAll();
+        int userCount = allUsers.size();
+        List<Long> ids = new ArrayList<>();
+        for (User user : allUsers) {
+            ids.add(user.getId());
+        }
+        JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("admin", "admin", "admin");
+        mockMvc.perform(delete(resourceName + "/deleteUsers")
+                .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                        .content(objectMapper.writeValueAsString(ids))
+        ).andExpect(status().isNoContent())
+                .andDo(print());
+    }
+
+    @Test
+    @Order(25)
+    @Transactional(rollbackOn = Exception.class)
+    @DisplayName("25. 批量删除用户数据：user")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    public void testDeleteBatchUsersWithUser() throws Exception {
+        List<User> allUsers = userRepository.findAll();
+        int userCount = allUsers.size();
+        List<Long> ids = new ArrayList<>();
+        for (User user : allUsers) {
+            ids.add(user.getId());
+        }
+        JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("user", "user", "user");
+        mockMvc.perform(delete(resourceName + "/deleteUsers")
+                        .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(objectMapper.writeValueAsString(ids))
+                ).andExpect(status().isForbidden())
+                .andDo(print());
+    }
+
+    @Test
+    @Order(26)
+    @Transactional(rollbackOn = Exception.class)
+    @DisplayName("26. 批量删除用户数据：supervisor")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    public void testDeleteBatchUsersWithSupervisor() throws Exception {
+        List<User> allUsers = userRepository.findAll();
+        int userCount = allUsers.size();
+        List<Long> ids = new ArrayList<>();
+        for (User user : allUsers) {
+            ids.add(user.getId());
+        }
+        JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("supervisor", "supervisor", "supervisor");
+        mockMvc.perform(delete(resourceName + "/deleteUsers")
+                        .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(objectMapper.writeValueAsString(ids))
+                ).andExpect(status().isForbidden())
+                .andDo(print());
+    }
+
+    @Test
+    @Order(27)
+    @Transactional(rollbackOn = Exception.class)
+    @DisplayName("27. 批量删除用户数据：member")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    public void testDeleteBatchUsersWithMember() throws Exception {
+        List<User> allUsers = userRepository.findAll();
+        int userCount = allUsers.size();
+        List<Long> ids = new ArrayList<>();
+        for (User user : allUsers) {
+            ids.add(user.getId());
+        }
+        JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("member", "member", "member");
+        mockMvc.perform(delete(resourceName + "/deleteUsers")
+                        .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(objectMapper.writeValueAsString(ids))
+                ).andExpect(status().isForbidden())
+                .andDo(print());
+    }
+
+    public void testGetAllRoles() throws Exception {
+        String userType = "admin";
+        JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo(userType, userType, userType);
+//        mockMvc.perform(get("/roles"))
     }
 }

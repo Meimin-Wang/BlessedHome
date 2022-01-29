@@ -58,20 +58,37 @@ public class UserMockDataTest {
      */
     @Order(1)
     @Test
-    @DisplayName("添加角色信息")
+    @DisplayName("1. 添加角色信息")
     public void testRoleSave() {
         List<Role> roles = roleRepository.findAll();
         if (roles != null && roles.size() > 0) {
             roleRepository.deleteAll(); // 清空tbl_roles表
         }
+
         Role adminRole = new Role();
         adminRole.setRoleName("ROLE_ADMIN");
+        adminRole.setDescriptionImageUrl("https://blessed-wmm.oss-cn-shanghai.aliyuncs.com/zhili-home/roleCoverImages/admin.jpeg");
+        adminRole.setDescription("管理员角色主要负责系统平台的管理。包括安全管理、数据管理、系统健康监控等。");
+        adminRole.setDisplayName("管理员用户");
+
         Role userRole = new Role();
         userRole.setRoleName("ROLE_USER");
+        userRole.setDisplayName("普通用户");
+        userRole.setDescriptionImageUrl("https://blessed-wmm.oss-cn-shanghai.aliyuncs.com/zhili-home/roleCoverImages/user.jpeg");
+        userRole.setDescription("普通用户可以访问系统数据信息，包括各种论文、代码、博客等公开信息。");
+
         Role supervisorRole = new Role();
         supervisorRole.setRoleName("ROLE_SUPERVISOR");
+        supervisorRole.setDisplayName("指导老师");
+        supervisorRole.setDescriptionImageUrl("https://blessed-wmm.oss-cn-shanghai.aliyuncs.com/zhili-home/roleCoverImages/supervisor.jpeg");
+        supervisorRole.setDescription("指导老师用于负责与实验室成员沟通，负责论文、实验室设备等管理。此外，还能够与实验室成员进行论文写作合作。");
+
         Role memberRole = new Role();
         memberRole.setRoleName("ROLE_MEMBER");
+        memberRole.setDisplayName("实验室成员");
+        memberRole.setDescriptionImageUrl("https://blessed-wmm.oss-cn-shanghai.aliyuncs.com/zhili-home/roleCoverImages/member.jpeg");
+        memberRole.setDescription("实验室成员可以在系统中发布各种日常可言、工作的信息对外分享。");
+
         List<Role> savingRoles = new ArrayList<>();
         savingRoles.add(adminRole);
         savingRoles.add(userRole);
@@ -87,7 +104,7 @@ public class UserMockDataTest {
      *  - 密码: admin
      */
     @Order(2)
-    @DisplayName("添加管理员用户")
+    @DisplayName("2. 添加管理员用户")
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
     public void testMockAdminUser() {
@@ -118,7 +135,7 @@ public class UserMockDataTest {
     }
 
     @Order(3)
-    @DisplayName("添加普通用户")
+    @DisplayName("3. 添加普通用户")
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
     public void testMockCommonUser() {
@@ -149,7 +166,7 @@ public class UserMockDataTest {
     }
 
     @Order(4)
-    @DisplayName("添加导师用户")
+    @DisplayName("4. 添加导师用户")
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
     public void testMockSupervisorUser() {
@@ -180,7 +197,7 @@ public class UserMockDataTest {
     }
 
     @Order(5)
-    @DisplayName("添加成员用户")
+    @DisplayName("5. 添加成员用户")
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
     public void testMockMemberUser() {
@@ -215,14 +232,14 @@ public class UserMockDataTest {
      */
     @Test
     @Order(6)
-    @DisplayName("随机添加用户信息")
+    @DisplayName("6. 随机添加用户信息")
     public void testAddCommonUser() {
         List<User> users = new ArrayList<>();
         Faker faker = new Faker();
         Name name = faker.name();
 
         List<Role> roles = roleRepository.findAll();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             User user = new User();
             user.setUsername(name.username());
             user.setPassword(passwordEncoder.encode("123456"));
