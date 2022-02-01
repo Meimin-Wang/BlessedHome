@@ -17,7 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ContextConfiguration;
 
+import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -34,7 +37,7 @@ import java.util.Set;
  */
 @DisplayName("用户数据生成和准备测试")
 @Slf4j
-//@ContextConfiguration
+@ContextConfiguration
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserMockDataTest {
@@ -59,6 +62,7 @@ public class UserMockDataTest {
     @Order(1)
     @Test
     @DisplayName("1. 添加角色信息")
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testRoleSave() {
         List<Role> roles = roleRepository.findAll();
         if (roles != null && roles.size() > 0) {
@@ -114,6 +118,8 @@ public class UserMockDataTest {
             // 如果admin已经存在，则删除了在进行插入
             userRepository.delete(adminUser.get());
             log.info("admin user has deleted.");
+        } else {
+            log.info("Admin user is not in DB.");
         }
         User admin = new User();
         // 设置用户名和密码
@@ -122,15 +128,17 @@ public class UserMockDataTest {
         admin.setAvatarUrl("https://blessed-wmm.oss-cn-shanghai.aliyuncs.com/zhili-home/avatars/admin.jpeg");
         Faker faker = new Faker();
         // 设置邮箱
-        admin.setEmail(faker.bothify("????##@gmail.com"));
+        admin.setEmail("admin@163.com");
         admin.setCreateDate(new Date());
         admin.setUpdateDate(new Date());
         Optional<Role> adminRole = roleRepository.findRoleByRoleName("ROLE_ADMIN");
-        Set<Role> roles = new HashSet<>();
-        Assertions.assertNotNull(adminRole.get(), "未找到ROLE_ADMIN");
-        roles.add(adminRole.get());
-        admin.setRoles(roles);
-        User savedAdminUser = userRepository.saveAndFlush(admin);
+        if (!adminRole.isPresent()) {
+            log.info("ROLE_ADMIN不存在");
+            return;
+        }
+        Role role = adminRole.get();
+        admin.getRoles().add(role);
+        User savedAdminUser = userRepository.save(admin);
         log.info(savedAdminUser.toString());
     }
 
@@ -154,13 +162,15 @@ public class UserMockDataTest {
         Faker faker = new Faker();
         // 设置邮箱
         testUser.setEmail(faker.bothify("????##@gmail.com"));
-        testUser.setCreateDate(new Date());
-        testUser.setUpdateDate(new Date());
+        long nowTime = new Date().getTime();
+        testUser.setCreateDate(new Timestamp(nowTime));
+        testUser.setUpdateDate(new Timestamp(nowTime));
         Optional<Role> adminRole = roleRepository.findRoleByRoleName("ROLE_USER");
         Set<Role> roles = new HashSet<>();
-        Assertions.assertNotNull(adminRole.get(), "未找到ROLE_USER");
-        roles.add(adminRole.get());
-        testUser.setRoles(roles);
+        if (!adminRole.isPresent()) {
+            log.info("ROLE_USER不存在");
+        }
+        testUser.getRoles().add(adminRole.get());
         User savedAdminUser = userRepository.saveAndFlush(testUser);
         log.info(savedAdminUser.toString());
     }
@@ -185,8 +195,9 @@ public class UserMockDataTest {
         Faker faker = new Faker();
         // 设置邮箱
         testSupervisor.setEmail(faker.bothify("????##@gmail.com"));
-        testSupervisor.setCreateDate(new Date());
-        testSupervisor.setUpdateDate(new Date());
+        long nowTime = new Date().getTime();
+        testSupervisor.setCreateDate(new Timestamp(nowTime));
+        testSupervisor.setUpdateDate(new Timestamp(nowTime));
         Optional<Role> adminRole = roleRepository.findRoleByRoleName("ROLE_SUPERVISOR");
         Set<Role> roles = new HashSet<>();
         Assertions.assertNotNull(adminRole.get(), "未找到ROLE_SUPERVISOR");
@@ -216,8 +227,9 @@ public class UserMockDataTest {
         Faker faker = new Faker();
         // 设置邮箱
         testMember.setEmail(faker.bothify("????##@gmail.com"));
-        testMember.setCreateDate(new Date());
-        testMember.setUpdateDate(new Date());
+        long nowTime = new Date().getTime();
+        testMember.setCreateDate(new Timestamp(nowTime));
+        testMember.setUpdateDate(new Timestamp(nowTime));
         Optional<Role> adminRole = roleRepository.findRoleByRoleName("ROLE_MEMBER");
         Set<Role> roles = new HashSet<>();
         Assertions.assertNotNull(adminRole.get(), "未找到ROLE_MEMBER");
@@ -233,18 +245,20 @@ public class UserMockDataTest {
     @Test
     @Order(6)
     @DisplayName("6. 随机添加用户信息")
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void testAddCommonUser() {
         List<User> users = new ArrayList<>();
         Faker faker = new Faker();
         Name name = faker.name();
 
         List<Role> roles = roleRepository.findAll();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 300; i++) {
             User user = new User();
             user.setUsername(name.username());
             user.setPassword(passwordEncoder.encode("123456"));
-            user.setCreateDate(new Date());
-            user.setUpdateDate(new Date());
+            long nowTime = new Date().getTime();
+            user.setCreateDate(new Timestamp(nowTime));
+            user.setUpdateDate(new Timestamp(nowTime));
             user.setEmail(faker.bothify("????##@gmail.com"));
             user.setAvatarUrl("https://blessed-wmm.oss-cn-shanghai.aliyuncs.com/zhili-home/avatars/avatar8.jpg");
             Set<Role> roleSet = Set.of(roles.get((int) (Math.random() * 4)));

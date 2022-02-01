@@ -3,6 +3,7 @@ package com.zhouzhili.zhilihomeproject.dto;
 import com.zhouzhili.zhilihomeproject.entity.security.User;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 
@@ -21,6 +22,6 @@ public class JwtAuthorizationTokenDTO {
     private Long expires_in;
     private String scope;
     private Map<String, Object> userInfo;
-    private Date create_time;
+    private Map<String, Object> createTime;
     private String jti;
 }

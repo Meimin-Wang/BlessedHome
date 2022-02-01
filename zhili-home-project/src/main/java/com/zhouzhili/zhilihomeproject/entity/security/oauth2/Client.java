@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.rest.core.annotation.Description;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,11 +37,12 @@ import java.util.Set;
 @SuppressWarnings("all")
 @Description(value = "客户端实体类")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @ApiModel(value = "客户端", description = "通常是发起授权请求的客户端，比如前端应用")
 @Entity(name = "tbl_client")
 @Table(value = "tbl_client")
 public class Client extends BaseEntity implements ClientDetails, Serializable {
-
     /**
      * 客户端实体的名称，也是所谓的clientId {@link Client#getClientId()}
      * 通过此名称可以查询数据库进行授权

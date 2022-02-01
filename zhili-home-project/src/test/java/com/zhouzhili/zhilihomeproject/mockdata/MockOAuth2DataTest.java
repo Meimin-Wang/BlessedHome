@@ -98,7 +98,6 @@ public class MockOAuth2DataTest {
             client.setAuthorizedGrantTypes(authorizedGrantTypes);
         }
 
-        client.setAdditionalInformation("测试客户端");
         Client savedClient = clientRepository.saveAndFlush(client);
         log.info(savedClient.toString());
     }

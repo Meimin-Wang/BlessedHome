@@ -25,7 +25,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -266,7 +271,7 @@ public class UserApiTest {
                 .andDo(print());
     }
 
-    private static final String OTHER_USERNAME = "ruben.bode";
+    private static final String OTHER_USERNAME = "stanford.effertz";
     private static final String NON_EXIST_USERNAME = "no-exist-username";
 
     @Test
@@ -479,6 +484,10 @@ public class UserApiTest {
                 .andDo(print());
     }
 
+    /**
+     * 删除用户之前必须检查是否该用户有绑定的 {@link com.zhouzhili.zhilihomeproject.entity.profile.PersonalInformation} 对象
+     * @throws Exception
+     */
     @Test
     @Order(20)
     @Transactional
@@ -488,17 +497,16 @@ public class UserApiTest {
         // 获取一个用户
         Long id = 63L;
         Optional<User> byId = userRepository.findById(id);
-        User user = null; // 这个user对象是【持久】对象
-        if (byId.isPresent()) {
-            user = byId.get();
+        if (!byId.isPresent()) {
+            throw new IllegalArgumentException("ID " + id + "用户不存在！");
         }
         // 登录ADMIN
         JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo("admin", "admin", "admin");
         mockMvc.perform(delete(resourceName + "/" + id)
-                .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
-                .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
-        ).andExpect(status().isNoContent()) // 204
+                        .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                ).andExpect(status().isNoContent()) // 204
                 .andDo(print());
     }
 
@@ -659,9 +667,62 @@ public class UserApiTest {
                 .andDo(print());
     }
 
-    public void testGetAllRoles() throws Exception {
+    @Test
+    @Order(28)
+    @DisplayName("28. 获取所有的角色信息: No Authorization Information")
+    public void testGetAllRolesWithNoAuth() throws Exception {
+        mockMvc.perform(get("/roles")).andExpect(status().isUnauthorized()).andDo(print());
+    }
+
+    @Test
+    @Order(29)
+    @DisplayName("29. 获取所有的角色信息: admin")
+    public void testGetAllRolesWithAdmin() throws Exception {
         String userType = "admin";
         JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo(userType, userType, userType);
-//        mockMvc.perform(get("/roles"))
+        mockMvc.perform(get("/roles")
+                .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+        ).andExpect(status().isOk()).andDo(print());
+    }
+
+    @Test
+    @Order(30)
+    @DisplayName("30. 获取所有的角色信息: user")
+    public void testGetAllRolesWithUser() throws Exception {
+        String userType = "user";
+        JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo(userType, userType, userType);
+        mockMvc.perform(get("/roles")
+                .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+        ).andExpect(status().isForbidden()).andDo(print());
+    }
+
+    @Test
+    @Order(31)
+    @DisplayName("31. 获取所有的角色信息: supervisor")
+    public void testGetAllRolesWithSupervisor() throws Exception {
+        String userType = "supervisor";
+        JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo(userType, userType, userType);
+        mockMvc.perform(get("/roles")
+                .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+        ).andExpect(status().isForbidden()).andDo(print());
+    }
+
+    @Test
+    @Order(32)
+    @DisplayName("32. 获取所有的角色信息: member")
+    public void testGetAllRolesWithMember() throws Exception {
+        String userType = "member";
+        JwtAuthorizationTokenDTO accessTokenInfo = getAccessTokenInfo(userType, userType, userType);
+        mockMvc.perform(get("/roles")
+                .header("Authorization", accessTokenInfo.getToken_type() + " " + accessTokenInfo.getAccess_token())
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+        ).andExpect(status().isForbidden()).andDo(print());
     }
 }

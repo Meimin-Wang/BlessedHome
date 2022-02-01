@@ -1,7 +1,10 @@
 package com.zhouzhili.zhilihomeproject.config.data;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.zhouzhili.zhilihomeproject.utils.ClassUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -35,5 +38,11 @@ public class RepositoryConfig implements RepositoryRestConfigurer {
         });
         int size = repositoryClasses.entrySet().size();
         log.info("Total {} entities have exposed Id property.", size);
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        log.info("Override {}", ObjectMapper.class.getName());
+        return new ObjectMapper().disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
     }
 }

@@ -16,4 +16,5 @@ public class CacheConstants {
     public static final String SCOPE_CACHE_REPOSITORY_NAME = "scope-repo";
     public static final String AUTHORIZED_GRANTED_TYPE_CACHE_REPOSITORY_NAME = "authorized-grant-type-repo";
 
+    public static final String PERSONAL_INFO_CACHE_REPOSITORY_NAME = "repo-personal-info";
 }

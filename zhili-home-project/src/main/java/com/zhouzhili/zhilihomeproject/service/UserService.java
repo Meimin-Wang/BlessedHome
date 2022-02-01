@@ -1,6 +1,7 @@
 package com.zhouzhili.zhilihomeproject.service;
 
 import com.zhouzhili.zhilihomeproject.dto.VerificationCode;
+import com.zhouzhili.zhilihomeproject.entity.security.Role;
 import com.zhouzhili.zhilihomeproject.entity.security.User;
 import com.zhouzhili.zhilihomeproject.exception.UserNotFoundException;
 import org.springframework.security.core.userdetails.UserDetailsService;

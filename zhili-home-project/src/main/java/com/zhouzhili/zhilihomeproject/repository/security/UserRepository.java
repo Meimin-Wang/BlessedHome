@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,7 +58,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             @ApiResponse(code = 403, message = "权限不够，该接口只能够拥有ADMIN角色或自身id一致的用户访问", response = ErrorResponseData.class)
     })
     @PreAuthorize("hasRole('ROLE_ADMIN') or @authorityValidator.isAuthenticationEqualsSpecificUserId(authentication, #id)")
-    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#id")
+    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#id", unless = "@cacheCondition.isNotPresent(#result)")
     @Override
     Optional<User> findById(Long id);
 
@@ -80,7 +79,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             @ApiResponse(code = 404, message = "不存在的用户信息", response = ErrorResponseData.class)
     })
     @PreAuthorize("hasRole('ROLE_ADMIN') or @authorityValidator.isAuthenticationEqualsSpecificUsername(authentication, #username)")
-    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#username")
+    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#username", unless = "@cacheCondition.isNotPresent(#result)")
     Optional<User> findUserByUsername(@ApiParam(name = "username", value = "用户名", required = true) String username);
 
     /**
@@ -100,8 +99,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     })
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort")
-    @RestResource(description = @Description(value = "查询所有用户"))
+    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort", unless = "@cacheCondition.isPageNotEmpty(#result)")
     Page<User> findAll(Pageable pageable);
 
     /**
@@ -116,7 +114,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             httpMethod = "POST"
     )
     @PreAuthorize("permitAll()")
-    @CachePut(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#user.id")
+//    @CachePut(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#user.id", unless = "#result == null")
     @Override
     <S extends User> S save(@ApiParam(name = "entity", value = "用户实体", required = true) S user);
 
@@ -127,7 +125,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @CacheEvict(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#id")
     @Override
-    @RestResource(description = @Description(value = "删除用户信息"))
     void deleteById(Long id);
 
     /**
@@ -167,6 +164,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param email 邮箱
      * @return 返回一个 {@link Optional<User>}
      */
-    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#usernae + '-' + #email")
+    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#username", unless = "@cacheCondition.isNotPresent(#result)")
     Optional<User> findUserByUsernameOrEmail(String username, String email);
+
+    /**
+     * 根据用户名搜索用户信息，以分页形式展示
+     * @param username 用户名
+     * @param pageable 分页信息
+     * @return 返回 {@link Page<User>} 用户对象集合
+     */
+    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort", unless = "@cacheCondition.isPageNotEmpty(#result)")
+    Page<User> findUsersByUsernameContaining(String username, Pageable pageable);
 }

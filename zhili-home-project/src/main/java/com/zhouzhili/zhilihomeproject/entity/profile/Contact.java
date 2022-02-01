@@ -32,7 +32,7 @@ public class Contact extends BaseEntity implements Serializable {
      * 手机号码
      */
     @ApiModelProperty(value = "手机号码", dataType = "String")
-    @Column(name = "phone_number", length = 15, nullable = false, unique = true)
+    @Column(name = "phone_number", length = 11, nullable = false, unique = true)
     @PhoneNumber(message = "手机号不合法！")
     private String phoneNumber;
 
@@ -47,7 +47,7 @@ public class Contact extends BaseEntity implements Serializable {
      * QQ号
      */
     @ApiModelProperty(value = "QQ号", dataType = "String")
-    @Column(name = "qq_number", length = 14)
+    @Column(name = "qq_number", length = 18)
     @QQNumber(message = "QQ号不合法")
     private String qqNumber;
 

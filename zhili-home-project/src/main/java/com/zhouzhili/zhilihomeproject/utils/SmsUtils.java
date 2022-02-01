@@ -1,6 +1,5 @@
 package com.zhouzhili.zhilihomeproject.utils;
 
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.util.Random;
@@ -8,13 +7,13 @@ import java.util.regex.Pattern;
 
 /**
  * @ClassName SmsUtils
- * @Description TODO
+ * @Description 关于手机相关业务工具类
  * @Author blessed
  * @Date 2021/11/9 : 22:02
  * @Email blessedwmm@gmail.com
  */
 public class SmsUtils {
-    private static final String PHONE_NUMBER_REGEX = "((\\+86|0086)?\\s*)((134[0-8]\\d{7})|(((13([0-3]|[5-9]))|(14[5-9])|15([0-3]|[5-9])|(16(2|[5-7]))|17([0-3]|[5-8])|18[0-9]|19(1|[8-9]))\\d{8})|(14(0|1|4)0\\d{7})|(1740([0-5]|[6-9]|[10-12])\\d{7}))";
+    private static final String PHONE_NUMBER_REGEX = "^1((3[0-9])|(4[5-7])|(4[0|9])|(5[0-3])|(5[5-9])|66|(7[5-8])|(7[2|3])|(8[0-9])|(9[5-9])|(9[1|3]))\\\\d{8}$";
     private static final Random RANDOM = new Random();
 
     /**
@@ -23,7 +22,8 @@ public class SmsUtils {
      * @return 返回一个boolean值，如果是合法的手机号返回true，否则返回false
      */
     public static boolean isPhoneNumber(String phoneNumber) {
-        if (StringUtils.hasLength(phoneNumber)) {
+        // 手机号码不能为空
+        if (!StringUtils.hasText(phoneNumber)) {
             return false;
         }
         return Pattern.matches(PHONE_NUMBER_REGEX, phoneNumber);

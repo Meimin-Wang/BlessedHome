@@ -8,5 +8,10 @@ import java.util.List;
 
 @Repository
 public interface ProvinceRepository extends JpaRepository<Province, Long> {
-    List<Province> findByProvinceNameLike(String provinceName);
+    /**
+     * 根据省的名称获取省的对象
+     * @param provinceName 省名称
+     * @return 放回省实体对象
+     */
+    List<Province> findByProvinceNameContaining(String provinceName);
 }

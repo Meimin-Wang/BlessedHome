@@ -17,13 +17,8 @@ public class QqNumberConstraintValidator implements ConstraintValidator<QQNumber
     private static final String QQ_NUMBER_REGEX = "[1-9][0-9]{4,14}";
 
     @Override
-    public void initialize(QQNumber constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
-    }
-
-    @Override
     public boolean isValid(String qqNumber, ConstraintValidatorContext context) {
-        if (StringUtils.hasLength(qqNumber)) {
+        if (!StringUtils.hasText(qqNumber)) {
             return false;
         }
         return qqNumber.matches(QQ_NUMBER_REGEX);

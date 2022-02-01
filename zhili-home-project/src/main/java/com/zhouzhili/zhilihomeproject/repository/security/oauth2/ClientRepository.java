@@ -26,7 +26,7 @@ import static com.zhouzhili.zhilihomeproject.constants.CacheConstants.CLIENT_CAC
  */
 @Api("客户端资源端点")
 @Repository
-@RepositoryRestResource(path = "clients")
+@RepositoryRestResource(exported = false)
 public interface ClientRepository extends JpaRepository<Client, Long> {
     /**
      * 根据客户端名称获取客户端，该方法被 {@link com.zhouzhili.zhilihomeproject.service.ClientService#loadClientByClientId(String)调用}
@@ -39,7 +39,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
             @ApiResponse(code = 401, message = "未认证，需要登录")
     })
     @Description("根据【客户端名称】获取客户端")
-    @Cacheable(cacheNames = {CLIENT_CACHE_REPOSITORY_NAME}, key = "#clientName")
+    @Cacheable(cacheNames = {CLIENT_CACHE_REPOSITORY_NAME}, key = "#clientName", unless = "@cacheCondition.isNotPresent(#result)")
     Optional<Client> findClientByClientName(
             @ApiParam(value = "客户端名称", required = true, type = "String")
             String clientName);
