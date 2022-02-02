@@ -1,7 +1,6 @@
 package com.zhouzhili.zhilihomeproject.repository.security;
 
 import com.zhouzhili.zhilihomeproject.constants.CacheConstants;
-import com.zhouzhili.zhilihomeproject.constants.ResourceConstants;
 import com.zhouzhili.zhilihomeproject.dto.ErrorResponseData;
 import com.zhouzhili.zhilihomeproject.entity.security.User;
 import io.swagger.annotations.Api;
@@ -12,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +25,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import static com.zhouzhili.zhilihomeproject.constants.CacheConstants.USER_CACHE_REPOSITORY_NAME;
+import static com.zhouzhili.zhilihomeproject.constants.ResourceConstants.USER_RESOURCE_PATH;
+import static com.zhouzhili.zhilihomeproject.constants.ResourceConstants.USER_RESOURCE_REL;
+
 /**
  * @InterfaceName UserRepository
  * @Description 用户资源接口
@@ -34,9 +38,9 @@ import java.util.Optional;
  */
 @Repository
 @RepositoryRestResource(
-        path = ResourceConstants.USER_RESOURCE_PATH,
+        path = USER_RESOURCE_PATH,
         collectionResourceDescription = @Description(value = "用户资源集合"),
-        collectionResourceRel = ResourceConstants.USER_RESOURCE_REL
+        collectionResourceRel = USER_RESOURCE_REL
 )
 @Api(protocols = "HTTP", value = "用户资源")
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -58,7 +62,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             @ApiResponse(code = 403, message = "权限不够，该接口只能够拥有ADMIN角色或自身id一致的用户访问", response = ErrorResponseData.class)
     })
     @PreAuthorize("hasRole('ROLE_ADMIN') or @authorityValidator.isAuthenticationEqualsSpecificUserId(authentication, #id)")
-    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#id", unless = "@cacheCondition.isNotPresent(#result)")
+    @Cacheable(cacheNames = {USER_CACHE_REPOSITORY_NAME}, key = "#id", unless = "@cacheCondition.isNotPresent(#result)")
     @Override
     Optional<User> findById(Long id);
 
@@ -79,7 +83,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             @ApiResponse(code = 404, message = "不存在的用户信息", response = ErrorResponseData.class)
     })
     @PreAuthorize("hasRole('ROLE_ADMIN') or @authorityValidator.isAuthenticationEqualsSpecificUsername(authentication, #username)")
-    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#username", unless = "@cacheCondition.isNotPresent(#result)")
+    @Cacheable(cacheNames = {USER_CACHE_REPOSITORY_NAME}, key = "#username", unless = "@cacheCondition.isNotPresent(#result)")
     Optional<User> findUserByUsername(@ApiParam(name = "username", value = "用户名", required = true) String username);
 
     /**
@@ -99,8 +103,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
     })
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort", unless = "@cacheCondition.isPageNotEmpty(#result)")
+    @Cacheable(cacheNames = {USER_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort", unless = "@cacheCondition.isPageNotEmpty(#result)")
     Page<User> findAll(Pageable pageable);
+
+    /**
+     * 获取所有用户，需要管理员用户才能调用
+     * @return 返回用户集合
+     */
+    @Cacheable(cacheNames = {USER_CACHE_REPOSITORY_NAME}, key = "'all-users'", unless = "#result.size <= 0")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Override
+    List<User> findAll();
 
     /**
      * 该方法是向数据库中添加用户数据
@@ -114,7 +127,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             httpMethod = "POST"
     )
     @PreAuthorize("permitAll()")
-//    @CachePut(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#user.id", unless = "#result == null")
+    @CachePut(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#user.id", unless = "#result == null")
     @Override
     <S extends User> S save(@ApiParam(name = "entity", value = "用户实体", required = true) S user);
 
@@ -123,7 +136,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param id 用户id
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @CacheEvict(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#id")
+    @CacheEvict(cacheNames = {USER_CACHE_REPOSITORY_NAME}, key = "#id")
     @Override
     void deleteById(Long id);
 
@@ -164,7 +177,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param email 邮箱
      * @return 返回一个 {@link Optional<User>}
      */
-    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#username", unless = "@cacheCondition.isNotPresent(#result)")
+    @Cacheable(cacheNames = {USER_CACHE_REPOSITORY_NAME}, key = "#username", unless = "@cacheCondition.isNotPresent(#result)")
     Optional<User> findUserByUsernameOrEmail(String username, String email);
 
     /**
@@ -173,6 +186,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param pageable 分页信息
      * @return 返回 {@link Page<User>} 用户对象集合
      */
-    @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort", unless = "@cacheCondition.isPageNotEmpty(#result)")
+    @Cacheable(cacheNames = {USER_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort", unless = "@cacheCondition.isPageNotEmpty(#result)")
     Page<User> findUsersByUsernameContaining(String username, Pageable pageable);
 }

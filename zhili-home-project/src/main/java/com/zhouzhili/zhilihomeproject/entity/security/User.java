@@ -68,7 +68,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
      * 角色，角色名必须以ROLE_开头
      */
     @ApiModelProperty(value = "角色，角色名必须以ROLE_开头", dataType = "Set<Role>", example = "ROLE_ADMIN")
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
@@ -86,6 +86,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
      * @return {@link Role}的集合
      */
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }

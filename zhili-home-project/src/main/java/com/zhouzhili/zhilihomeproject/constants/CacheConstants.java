@@ -17,4 +17,8 @@ public class CacheConstants {
     public static final String AUTHORIZED_GRANTED_TYPE_CACHE_REPOSITORY_NAME = "authorized-grant-type-repo";
 
     public static final String PERSONAL_INFO_CACHE_REPOSITORY_NAME = "repo-personal-info";
+    public static final String ADDRESS_CACHE_REPOSITORY_NAME = "repo-address";
+    public static final String CITY_CACHE_REPOSITORY_NAME = "repo-city";
+    public static final String COUNTRY_CACHE_REPOSITORY_NAME = "repo-country";
+    public static final String PROVINCE_CACHE_REPOSITORY_NAME = "repo-province";
 }

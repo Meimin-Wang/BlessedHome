@@ -6,7 +6,11 @@ import com.zhouzhili.zhilihomeproject.repository.profile.PersonalInformationRepo
 import com.zhouzhili.zhilihomeproject.repository.security.RoleRepository;
 import com.zhouzhili.zhilihomeproject.repository.security.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -149,4 +153,63 @@ public class PersonalInformationApiTest {
                 .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
         ).andExpect(status().isForbidden()).andDo(print());
     }
+
+    @Test
+    @Order(7)
+    @DisplayName("7. 根据id访问个人信息: No AUth")
+    public void testGetPersonalInformationByIdWithNoAuthorizationInfo() throws Exception {
+        long id = 100L;
+        mockMvc.perform(get(resourceName + "/" + id)
+        ).andExpect(status().isUnauthorized()).andDo(print());
+    }
+
+    @Test
+    @Order(8)
+    @DisplayName("8. 根据id访问个人信息: admin")
+    public void testGetPersonalInformationByIdWithAdmin() throws Exception {
+        String authType = "member";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        long id = 100L;
+        mockMvc.perform(get(resourceName + "/" + id)
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+        ).andExpect(status().isOk()).andDo(print());
+    }
+
+    @Test
+    @Order(9)
+    @DisplayName("9. 根据id访问个人信息: admin")
+    public void testGetPersonalInformationByIdWithUser() throws Exception {
+        String authType = "user";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        long id = 100L;
+        mockMvc.perform(get(resourceName + "/" + id)
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+        ).andExpect(status().isOk()).andDo(print());
+    }
+
+    @Test
+    @Order(10)
+    @DisplayName("10. 根据id访问个人信息: supervisor")
+    public void testGetPersonalInformationByIdWithSupervisor() throws Exception {
+        String authType = "supervisor";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        long id = 100L;
+        mockMvc.perform(get(resourceName + "/" + id)
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+        ).andExpect(status().isOk()).andDo(print());
+    }
+
+    @Test
+    @Order(11)
+    @DisplayName("11. 根据id访问个人信息: member")
+    public void testGetPersonalInformationByIdWithMember() throws Exception {
+        String authType = "member";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        long id = 100L;
+        mockMvc.perform(get(resourceName + "/" + id)
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+        ).andExpect(status().isOk()).andDo(print());
+    }
+
+
 }

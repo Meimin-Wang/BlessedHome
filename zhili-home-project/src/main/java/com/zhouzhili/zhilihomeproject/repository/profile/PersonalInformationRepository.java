@@ -60,6 +60,16 @@ public interface PersonalInformationRepository extends JpaRepository<PersonalInf
     Optional<PersonalInformation> findPersonalInformationByUser(@NotNull User user);
 
     /**
+     * 根据id获取个人信息实体对象
+     * @param id 个人信息实体id
+     * @return 返回 {@link Optional<PersonalInformation>}
+     */
+    @PreAuthorize("permitAll()")
+    @Cacheable(cacheNames = {PERSONAL_INFO_CACHE_REPOSITORY_NAME}, key = "#id", unless = "@cacheCondition.isNotPresent(#result)")
+    @Override
+    Optional<PersonalInformation> findById(Long id);
+
+    /**
      * 保存实体 {@link PersonalInformation}
      * @param personalInformation 用户个人信息
      * @param <S> 实体类型
