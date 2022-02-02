@@ -79,7 +79,7 @@ export function getUsersByPage(page, size) {
       },
       params: {
         page: page || 0,
-        size: size || 20
+        size: size || 10
       }
     })
   }
@@ -103,6 +103,26 @@ export function deleteUserById(id) {
   }
 }
 
+/**
+ * 批量删除用户
+ * @param {required} ids 用户id数组
+ * @returns 返回axios对象
+ */
+export function batchDeleteUsers(ids) {
+  const hasToken = getToken()
+  if (hasToken) {
+    const tokenObj = JSON.parse(hasToken)
+    return request({
+      url: '/api/users/deleteUsers',
+      method: 'DELETE',
+      headers: {
+        'Authorization': tokenObj['token_type'] + ' ' + tokenObj['access_token']
+      },
+      data: ids
+    })
+  }
+}
+
 export function getAllRoles() {
   const hasToken = getToken()
   if (hasToken) {
@@ -112,6 +132,23 @@ export function getAllRoles() {
       method: 'GET',
       headers: {
         'Authorization': tokenObj['token_type'] + ' ' + tokenObj['access_token']
+      }
+    })
+  }
+}
+
+export function searchUsers(username) {
+  const hasToken = getToken()
+  if (hasToken) {
+    const tokenObj = JSON.parse(hasToken)
+    return request({
+      url: '/api/users/search/findUsersByUsernameContaining',
+      method: 'GET',
+      headers: {
+        'Authorization': tokenObj['token_type'] + ' ' + tokenObj['access_token']
+      },
+      params: {
+        username: username
       }
     })
   }

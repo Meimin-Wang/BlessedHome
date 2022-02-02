@@ -130,7 +130,13 @@ export const constantRoutes = [
         path: 'user',
         component: () => import('@/views/oauth/user/index'),
         name: 'UserAdmin',
-        meta: { title: '用户管理', icon: 'user-admin' }
+        meta: { title: '用户管理', icon: 'user-admin' },
+      },
+      {
+        path: 'profile/:id',
+        component: () => import('@/views/oauth/user/Profile'),
+        name: 'Profile',
+        props: true
       },
       {
         path: 'role',
