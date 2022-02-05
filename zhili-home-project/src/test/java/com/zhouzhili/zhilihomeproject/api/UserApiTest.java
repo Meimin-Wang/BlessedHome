@@ -32,11 +32,22 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
+ * 注解解释：
+ * {@link ContextConfiguration} 注解：用于模拟认证信息。在单元测试的时候，有些方法需要指定的认证信息，比如admin，user，在测试方法上加上
+ *                                  注解：{@link WithMockUser}, {@link org.springframework.security.test.context.support.WithUserDetails}
+ * {@link ActiveProfiles} 注解：这是激活指定环境的配置文件。
+ * {@link SpringBootTest} 注解：Spring Boot 2中的单元测试注解
+ * {@link DisplayName} 注解：对注解类或方法进行解释
+ * {@link AutoConfigureMockMvc} 注解：自动配置MockMvc，Spring提供的测试框架
+ * {@link TestMethodOrder} 注解：这个注解可以使得测试类中的方法有先后的执行顺序，配合 {@link Order} 注解在方法上进行使用
  * @ClassName UserApiTest
  * @Description User API测试
  * @Author blessed
@@ -63,6 +74,14 @@ public class UserApiTest {
     private static final String resourceName = "/users";
 
 
+    /**
+     * {@link JwtAuthorizationTokenDTO}是一个DTO（Data Transferring Object）
+     * @param username
+     * @param password
+     * @param type
+     * @return
+     * @throws Exception
+     */
     private JwtAuthorizationTokenDTO getAccessTokenInfo(String username, String password, String type) throws Exception {
         MvcResult mvcResult = mockMvc.perform(post("/oauth/token")
                 .header("Authorization", "Basic TWVpbWluV2FuZzptZWltaW4=")
@@ -70,7 +89,7 @@ public class UserApiTest {
                 .param("username", username)
                 .param("password", password)
                 .param("scope", "all")
-        ).andExpect(status().isOk())
+        ).andExpect(status().isOk())  // 如果返回的HTTP状态不是200，那么测试不通过
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
                 .andReturn();
@@ -115,10 +134,10 @@ public class UserApiTest {
 
     @Test
     @Order(2)
-    @DisplayName("2. 获取用户信息无认证信息")
+    @DisplayName("2. 获取所有用户的信息: No Auth")
     public void testGetUsersUnauthorized() throws Exception {
         mockMvc.perform(get(resourceName))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isUnauthorized())  // HTTP响应的状态必须为401
                 .andDo(print())
                 ;
     }
@@ -271,12 +290,12 @@ public class UserApiTest {
                 .andDo(print());
     }
 
-    private static final String OTHER_USERNAME = "craig.schoen";
+    private static final String OTHER_USERNAME = "alejandro.bernhard";
     private static final String NON_EXIST_USERNAME = "no-exist-username";
 
     @Test
     @Order(12)
-    @DisplayName("12. 根据用户id获取用户信息: unauthorized")
+    @DisplayName("12. 根据用户id获取用户信息: No Auth")
     public void testGetUserByUsernameWithUnauthorized() throws Exception {
         mockMvc.perform(get(resourceName + "/search/findUserByUsername")
                 .param("username", OTHER_USERNAME)
