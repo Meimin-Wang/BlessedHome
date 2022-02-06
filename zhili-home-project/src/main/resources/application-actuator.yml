@@ -1,3 +1,4 @@
+# Spring Boot健康管理相关配置
 management:
   endpoints:
     enabled-by-default: true
@@ -5,7 +6,7 @@ management:
       exposure:
         include: beans, info, health, metrics
 info:
-  artifact-id: '@project.artifactId@'
+  artifact-id: '@project.artifactId@'  # @xxx@是引用POM文件中的属性
   group-id: '@project.groupId@'
   name: '@project.name@'
   descript: '@project.description@'
