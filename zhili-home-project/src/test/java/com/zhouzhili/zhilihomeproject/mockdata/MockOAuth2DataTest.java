@@ -22,7 +22,7 @@ import java.util.Set;
 
 /**
  * @ClassName MockOAuth2DataTest
- * @Description TODO
+ * @Description OAuth 2.0相关数据初始化
  * @Author blessed
  * @Date 2021/11/10 : 14:34
  * @Email blessedwmm@gmail.com
