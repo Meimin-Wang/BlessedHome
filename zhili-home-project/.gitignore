@@ -3,7 +3,6 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-/Volumes/BlessedWMM/lab-home-project/zhili-teame-home/zhili-home-project/src/main/resources/application-alibaba.yml
 ### STS ###
 .apt_generated
 .classpath
