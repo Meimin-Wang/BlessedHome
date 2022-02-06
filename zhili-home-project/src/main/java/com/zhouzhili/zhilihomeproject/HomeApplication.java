@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 /**
+ * SpringBoot启动类
  * {@link SpringBootApplication} 注解表明这是一个Spring Boot应用类，这是一个组合注解
  * @author blessed
  * @see org.springframework.boot.SpringBootConfiguration
