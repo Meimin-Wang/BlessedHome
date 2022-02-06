@@ -17,3 +17,4 @@ spring:
 logging:
   level:
     web: DEBUG
+
