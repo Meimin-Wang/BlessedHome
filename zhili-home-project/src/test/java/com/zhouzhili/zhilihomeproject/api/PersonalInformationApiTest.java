@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * @ClassName PersonalInformationApiTest
- * @Description TODO
+ * @Description 用户个人信息测试类
  * @Author blessed
  * @Date 2022/1/30 : 20:46
  * @Email blessedwmm@gmail.com
