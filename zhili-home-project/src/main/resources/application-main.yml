@@ -1,3 +1,4 @@
+# 系统相关配置
 spring:
   main:
     allow-bean-definition-overriding: true
