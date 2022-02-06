@@ -1,3 +1,4 @@
+# Spring Data Redis和缓存相关配置
 spring:
   redis:
 #    host: www.blessed.com
