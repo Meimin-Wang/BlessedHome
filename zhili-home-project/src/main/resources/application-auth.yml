@@ -1,3 +1,4 @@
+# Spring Security相关配置
 security:
   oauth2:
     clients:
