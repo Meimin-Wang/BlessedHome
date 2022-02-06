@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @ClassName UserRepositoryTest
- * @Description 该测试类是对方法调用的测试
+ * @Description 用户仓库相关方法测试
  * @Author blessed
  * @Date 2022/2/1 : 16:59
  * @Email blessedwmm@gmail.com
