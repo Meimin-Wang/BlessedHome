@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @ClassName LoadOpencvLibararyListener
- * @Description TODO
+ * @Description OpenCV动态链接库加载监听器
  * @Author blessed
  * @Date 2021/11/28 : 16:14
  * @Email blessedwmm@gmail.com
@@ -22,12 +22,12 @@ public class LoadOpencvLibraryListener implements ApplicationListener<ContextRef
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        try {
-            System.load(opencvLibraryPath);
-            log.info("Load OpenCV-java-4.5.4: {}", opencvLibraryPath);
-        } catch (Exception e) {
-            log.error("Cannot load the opencv library: {}", opencvLibraryPath);
-            e.printStackTrace();
-        }
+//        try {
+//            System.load(opencvLibraryPath);
+//            log.info("Load OpenCV-java-4.5.4: {}", opencvLibraryPath);
+//        } catch (Exception e) {
+//            log.error("Cannot load the opencv library: {}", opencvLibraryPath);
+//            e.printStackTrace();
+//        }
     }
 }
