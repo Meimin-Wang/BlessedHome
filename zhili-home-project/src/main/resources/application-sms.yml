@@ -1,3 +1,4 @@
+# 短信相关配置，生成短信验证码
 sms:
   valid-code:
     length: 6
