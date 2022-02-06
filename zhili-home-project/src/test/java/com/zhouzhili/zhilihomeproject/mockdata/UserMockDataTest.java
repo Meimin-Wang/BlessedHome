@@ -30,7 +30,7 @@ import java.util.Set;
 
 /**
  * @ClassName UserMockData
- * @Description 用户数据模拟数据
+ * @Description 用户数据模拟
  * @Author blessed
  * @Date 2021/11/10 : 15:36
  * @Email blessedwmm@gmail.com
