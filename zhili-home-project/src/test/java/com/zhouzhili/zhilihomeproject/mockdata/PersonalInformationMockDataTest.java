@@ -40,7 +40,7 @@ import java.util.Random;
 
 /**
  * @ClassName PersonalInformationMockDataTest
- * @Description 用户个人信息测试
+ * @Description 模拟用户个人信息测试
  * @Author blessed
  * @Date 2022/1/30 : 21:08
  * @Email blessedwmm@gmail.com
