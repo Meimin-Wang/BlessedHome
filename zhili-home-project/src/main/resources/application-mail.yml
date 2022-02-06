@@ -1,3 +1,4 @@
+# 邮箱相关配置
 spring:
   mail:  # https://help.mail.163.com/faqDetail.do?code=d7a5dc8471cd0c0e8b4b8f4f8e49998b374173cfe9171305fa1ce630d7f67ac22dc0e9af8168582a
     host: smtp.163.com
