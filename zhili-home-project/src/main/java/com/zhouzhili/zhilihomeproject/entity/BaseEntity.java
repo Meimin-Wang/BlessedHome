@@ -17,7 +17,7 @@ import java.util.Objects;
 
 /**
  * @ClassName BaseEntity
- * @Description domain类的基类
+ * @Description domain类的基类，包括所有实体的id，创建时间、更新时间
  * @Author blessed
  * @Date 2021/11/10 : 15:00
  * @Email blessedwmm@gmail.com
