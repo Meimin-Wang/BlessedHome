@@ -11,6 +11,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
+/**
+ * 角色仓库相关方法测试
+ */
 @Slf4j
 @SpringBootTest
 class RoleRepositoryCustomizedImplTest {
