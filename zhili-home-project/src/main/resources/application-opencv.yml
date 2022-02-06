@@ -1,2 +1,4 @@
+# OpenCV相关配置
 opencv:
+  # OpenCV的动态链接库
   lib-path: /usr/local/share/java/opencv4/libopencv_java454.dylib
