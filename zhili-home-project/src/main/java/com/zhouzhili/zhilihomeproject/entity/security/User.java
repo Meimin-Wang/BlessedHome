@@ -5,6 +5,7 @@ import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.relational.core.mapping.Table;
@@ -12,8 +13,17 @@ import org.springframework.data.rest.core.annotation.Description;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
@@ -37,6 +47,10 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     /**
      * 用户名
      */
+    @NotBlank(message = "用户名不能为空")
+    @NotEmpty(message = "用户名不能为空")
+    @NotNull(message = "用户名不能为空")
+    @Length
     @ApiModelProperty(value = "用户名", dataType = "String", example = "Blessed")
     @Column(name = "username", nullable = false, unique = true, length = 30)
     private String username;
@@ -44,6 +58,9 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     /**
      * 用户密码
      */
+    @NotNull(message = "密码不能为空")
+    @NotEmpty(message = "密码不能为空")
+    @NotBlank(message = "密码不能为空")
     @ApiModelProperty(value = "用户密码", dataType = "String")
     @Column(name = "password", nullable = false)
     private String password;
@@ -51,9 +68,10 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     /**
      * 邮箱地址
      */
+    @Length(message = "邮箱长度不得超过30个字符", max = 30)
     @ApiModelProperty(value = "邮箱地址", dataType = "String", required = true)
     @Column(name = "email", nullable = false, unique = true, length = 30)
-    @Email(message = "邮箱不合法")
+    @Email(message = "邮箱格式不合法")
     private String email;
 
     /**
@@ -126,4 +144,5 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     public boolean isEnabled() {
         return true;
     }
+
 }
