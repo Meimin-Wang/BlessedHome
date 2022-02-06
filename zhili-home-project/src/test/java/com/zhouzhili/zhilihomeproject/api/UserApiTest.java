@@ -40,6 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
+ * 用户相关接口测试类
  * 注解解释：
  * {@link ContextConfiguration} 注解：用于模拟认证信息。在单元测试的时候，有些方法需要指定的认证信息，比如admin，user，在测试方法上加上
  *                                  注解：{@link WithMockUser}, {@link org.springframework.security.test.context.support.WithUserDetails}
