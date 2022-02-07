@@ -38,12 +38,12 @@ public class BaseEntity implements Serializable {
     @Description("创建时间")
     @CreatedDate
     @Column(name = "create_time")
-    protected Date createDate;
+    protected Date createDate = new Date();
 
     @Description("更新时间")
     @LastModifiedDate
     @Column(name = "update_time")
-    protected Date updateDate;
+    protected Date updateDate = new Date();
 
     @Column(name = "version")
     @Version
