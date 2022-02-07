@@ -14,6 +14,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 import static com.blessed.home.constants.ResourceConstants.PERSONAL_INFO_RESOURCE_PATH;
+import static com.blessed.home.constants.RoleConstants.ADMIN_ROLE_NAME;
 
 /**
  * @ClassName ResourceServerConfig
@@ -43,12 +44,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/druid/**",
                         "/public/**",
                         "/static/**",
-                        "/webjars/**",
+                        "/webjars/**"
                 ).permitAll()
-
                 // 监控端点
-                .antMatchers("/actuator/**").hasRole(RoleConstants.ADMIN_ROLE_NAME)
+                .antMatchers("/actuator/**").hasRole(ADMIN_ROLE_NAME)
+                // 注册用户：POST /users
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
+                // 根据用户id获取对应的个人详细资料：GET /peopleInformation/search/findPersonalInformationByUserId?userId=?
                 .antMatchers(HttpMethod.GET, String.format("/%s/search/findPersonalInformationByUserId", PERSONAL_INFO_RESOURCE_PATH)).permitAll()
 
 
