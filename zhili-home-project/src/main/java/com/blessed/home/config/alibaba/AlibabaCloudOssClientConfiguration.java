@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject.config.alibaba;
+package com.blessed.home.config.alibaba;
 
 import com.aliyun.oss.ClientConfiguration;
 import org.springframework.stereotype.Component;

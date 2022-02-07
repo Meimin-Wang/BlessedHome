@@ -1,9 +1,7 @@
-package com.zhouzhili.zhilihomeproject.config.alibaba;
+package com.blessed.home.config.alibaba;
 
 import com.aliyun.oss.common.auth.Credentials;
 import com.aliyun.oss.common.auth.CredentialsProvider;
-import com.zhouzhili.zhilihomeproject.properties.AlibabaCloudOssProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
