@@ -1,14 +1,13 @@
-package com.zhouzhili.zhilihomeproject.repository.security.oauth2;
+package com.blessed.home.repository.security.oauth2;
 
-import com.zhouzhili.zhilihomeproject.entity.security.oauth2.AuthorizedGrantType;
+import com.blessed.home.constants.CacheConstants;
+import com.blessed.home.entity.security.oauth2.AuthorizedGrantType;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
-import static com.zhouzhili.zhilihomeproject.constants.CacheConstants.AUTHORIZED_GRANTED_TYPE_CACHE_REPOSITORY_NAME;
 
 /**
  * @InterfaceName AuthorizedGrantTypeRepository
@@ -26,6 +25,6 @@ public interface AuthorizedGrantTypeRepository extends JpaRepository<AuthorizedG
      * @param grantTypeName 授权方式
      * @return 返回一个 {@link Optional<AuthorizedGrantType>} 对象
      */
-    @Cacheable(cacheNames = {AUTHORIZED_GRANTED_TYPE_CACHE_REPOSITORY_NAME}, key = "#grantTypeName", unless = "@cacheCondition.isNotPresent(#result)")
+    @Cacheable(cacheNames = {CacheConstants.AUTHORIZED_GRANTED_TYPE_CACHE_REPOSITORY_NAME}, key = "#grantTypeName", unless = "@cacheCondition.isNotPresent(#result)")
     Optional<AuthorizedGrantType> findAuthorizedGrantTypeByGrantTypeName(String grantTypeName);
 }
