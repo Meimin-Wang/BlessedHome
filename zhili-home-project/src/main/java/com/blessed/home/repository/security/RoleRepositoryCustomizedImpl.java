@@ -1,6 +1,6 @@
-package com.zhouzhili.zhilihomeproject.repository.security;
+package com.blessed.home.repository.security;
 
-import com.zhouzhili.zhilihomeproject.entity.security.Role;
+import com.blessed.home.entity.security.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +28,7 @@ public class RoleRepositoryCustomizedImpl implements RoleRepositoryCustomized {
 
     @Override
     public List<Role> getRoles(String username) {
-        String jpql = "SELECT r FROM com.zhouzhili.zhilihomeproject.entity.security.User u LEFT JOIN u.roles r WHERE u.username = :username";
+        String jpql = "SELECT r FROM com.blessed.home.entity.security.User u LEFT JOIN u.roles r WHERE u.username = :username";
         Query query = entityManager.createQuery(jpql).setParameter("username", "admin");
         List<Role> resultList = query.getResultList();
         log.info(resultList.toString());

@@ -1,6 +1,6 @@
-package com.zhouzhili.zhilihomeproject.repository.security;
+package com.blessed.home.repository.security;
 
-import com.zhouzhili.zhilihomeproject.entity.security.Role;
+import com.blessed.home.entity.security.Role;
 
 import java.util.List;
 

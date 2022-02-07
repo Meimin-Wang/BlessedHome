@@ -1,6 +1,7 @@
-package com.zhouzhili.zhilihomeproject.repository.security;
+package com.blessed.home.repository.security;
 
-import com.zhouzhili.zhilihomeproject.entity.security.Role;
+import com.blessed.home.constants.CacheConstants;
+import com.blessed.home.entity.security.Role;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -11,8 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
-import static com.zhouzhili.zhilihomeproject.constants.CacheConstants.ROLE_CACHE_REPOSITORY_NAME;
 
 /**
  * @InterfaceName RoleRepository
@@ -29,7 +28,7 @@ public interface RoleRepository extends JpaRepository<Role, Long>, RoleRepositor
      * @return 返回 {@link Optional<Role>}
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Cacheable(cacheNames = {ROLE_CACHE_REPOSITORY_NAME}, key = "#roleName", unless = "@cacheCondition.isNotPresent(#result)")
+    @Cacheable(cacheNames = {CacheConstants.ROLE_CACHE_REPOSITORY_NAME}, key = "#roleName", unless = "@cacheCondition.isNotPresent(#result)")
     Optional<Role> findRoleByRoleName(String roleName);
 
     /**
@@ -37,7 +36,7 @@ public interface RoleRepository extends JpaRepository<Role, Long>, RoleRepositor
      * @param id 角色id
      * @return 返回 {@link Optional<Role>}
      */
-    @Cacheable(cacheNames = {ROLE_CACHE_REPOSITORY_NAME}, key = "#id", unless = "@cacheCondition.isNotPresent(#result)")
+    @Cacheable(cacheNames = {CacheConstants.ROLE_CACHE_REPOSITORY_NAME}, key = "#id", unless = "@cacheCondition.isNotPresent(#result)")
     @Override
     Optional<Role> findById(Long id);
 
@@ -46,7 +45,7 @@ public interface RoleRepository extends JpaRepository<Role, Long>, RoleRepositor
      * @return 返回 {@link List<Role>} 集合
      */
     @Override
-    @Cacheable(cacheNames = {ROLE_CACHE_REPOSITORY_NAME}, key = "'all-roles'", unless = "#result.size <= 0")
+    @Cacheable(cacheNames = {CacheConstants.ROLE_CACHE_REPOSITORY_NAME}, key = "'all-roles'", unless = "#result.size <= 0")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     List<Role> findAll();
 
@@ -56,7 +55,7 @@ public interface RoleRepository extends JpaRepository<Role, Long>, RoleRepositor
      * @return 返回分页信息的角色实体集合
      */
     @Override
-    @Cacheable(cacheNames = {ROLE_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort", unless = "@cacheCondition.isPageNotEmpty(#result)")
+    @Cacheable(cacheNames = {CacheConstants.ROLE_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort", unless = "@cacheCondition.isPageNotEmpty(#result)")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     Page<Role> findAll(Pageable pageable);
 
@@ -67,7 +66,7 @@ public interface RoleRepository extends JpaRepository<Role, Long>, RoleRepositor
      * @return 返回带有id的角色实体信息
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @CachePut(cacheNames = {ROLE_CACHE_REPOSITORY_NAME}, key = "#entity.id", unless = "#result == null")
+    @CachePut(cacheNames = {CacheConstants.ROLE_CACHE_REPOSITORY_NAME}, key = "#entity.id", unless = "#result == null")
     @Override
     <S extends Role> S save(S entity);
 
@@ -78,7 +77,7 @@ public interface RoleRepository extends JpaRepository<Role, Long>, RoleRepositor
      * @return 返回带有id的角色实体信息
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @CachePut(cacheNames = {ROLE_CACHE_REPOSITORY_NAME}, key = "#entity.id", unless = "#result == null")
+    @CachePut(cacheNames = {CacheConstants.ROLE_CACHE_REPOSITORY_NAME}, key = "#entity.id", unless = "#result == null")
     @Override
     <S extends Role> S saveAndFlush(S entity);
 }

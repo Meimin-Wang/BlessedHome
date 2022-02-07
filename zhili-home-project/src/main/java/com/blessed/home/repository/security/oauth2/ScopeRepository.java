@@ -26,5 +26,5 @@ public interface ScopeRepository extends JpaRepository<Scope, Integer> {
      */
     @Cacheable(cacheNames = {CacheConstants.SCOPE_CACHE_REPOSITORY_NAME}, key = "#scopeName", unless = "@cacheCondition.isNotPresent(#result)")
     Optional<Scope> findByScopeName(String scopeName);
-    
+
 }
