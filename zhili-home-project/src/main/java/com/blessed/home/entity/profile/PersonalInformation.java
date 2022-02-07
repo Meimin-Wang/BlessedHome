@@ -1,16 +1,19 @@
-package com.zhouzhili.zhilihomeproject.entity.profile;
+package com.blessed.home.entity.profile;
 
-import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
-import com.zhouzhili.zhilihomeproject.entity.security.User;
+import com.blessed.home.entity.BaseEntity;
+import com.blessed.home.entity.security.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import org.hibernate.validator.constraints.URL;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.hibernate.Hibernate;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @ClassName PersonalInformation
@@ -19,7 +22,9 @@ import java.util.Date;
  * @Date 2021/11/9 : 21:14
  * @Email blessedwmm@gmail.com
  */
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @ApiModel(value = "个人信息实体类")
 @Entity(name = "tbl_personal_information")
 @Table(value = "tbl_personal_information")
@@ -73,4 +78,20 @@ public class PersonalInformation extends BaseEntity implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
+        PersonalInformation that = (PersonalInformation) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
