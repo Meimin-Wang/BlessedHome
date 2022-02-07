@@ -4,8 +4,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root  # 数据库用户名
     password: BLESSEDwmm320  # 数据库密码
-#    url: jdbc:mysql://39.104.54.116:3306/zz_db?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
-#    url: jdbc:mysql://www.blessed.com:3306/zz_db?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     #  数据库连接的URL，数据库名称为zz_home，需要现在数据库中创建一个空的数据库：create database zz_home;
     url: jdbc:mysql://localhost:3306/zz_home?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     type: com.alibaba.druid.pool.DruidDataSource  # 采用Apache Druid数据库连接池的时候采用此数据源
@@ -16,7 +14,8 @@ spring:
     show-sql: true  # 是否展示SQL
     properties:
       hibernate:
-        format-sql: true
+        format_sql: true
+        enable_lazy_load_no_trans: true
     database: mysql
     open-in-view: true
   data:
