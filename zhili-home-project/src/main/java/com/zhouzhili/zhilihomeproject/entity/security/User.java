@@ -4,9 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.URL;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.rest.core.annotation.Description;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,6 +20,7 @@ import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -26,12 +30,15 @@ import java.util.Set;
  * @Date 2021/11/7 : 16:23
  * @Email blessedwmm@gmail.com
  */
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @ApiModel(value = "用户实体类", description = "用于用户登录")
 @Table(value = "tbl_user")
 @Entity(name = "tbl_user")
 @Description("用户实体")
-@EntityListeners(AuditingEntityListener.class)
+@org.hibernate.annotations.Table(appliesTo = "tbl_user", comment = "用户表")
 public class User extends BaseEntity implements UserDetails, Serializable {
 
     /**
@@ -125,5 +132,18 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return id != null && Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
