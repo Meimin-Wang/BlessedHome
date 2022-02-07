@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject.algorithm.utils;
+package com.blessed.home.algorithm.utils;
 
 import lombok.extern.slf4j.Slf4j;
 //import org.opencv.core.CvType;
