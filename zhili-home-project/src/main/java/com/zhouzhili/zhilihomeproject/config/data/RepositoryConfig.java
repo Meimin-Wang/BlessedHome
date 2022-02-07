@@ -18,7 +18,7 @@ import static com.zhouzhili.zhilihomeproject.constants.MetaConstants.ENTITY_PACK
 
 /**
  * @ClassName RepositoryConfig
- * @Description Spring Data REST配置类
+ * @Description Spring Data JPA和REST配置类
  * @author blessed
  * @Date 2021/11/9 : 16:08
  * @Email blessedwmm@gmail.com
@@ -28,6 +28,11 @@ import static com.zhouzhili.zhilihomeproject.constants.MetaConstants.ENTITY_PACK
 @EnableJpaAuditing
 public class RepositoryConfig implements RepositoryRestConfigurer {
 
+    /**
+     * 暴露所有实体的id
+     * @param config 配置对象
+     * @param cors 注册对象
+     */
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         Map<String, Class<?>> repositoryClasses = ClassUtils.getClassesForAnnotation(ENTITY_PACKAGE_NAME, Entity.class);
