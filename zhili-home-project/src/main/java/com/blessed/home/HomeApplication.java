@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject;
+package com.blessed.home;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +28,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
  *  指明prefix，属性配置的前缀
  */
 @SpringBootApplication
-@ConfigurationPropertiesScan(value = "com.zhouzhili.zhilihomeproject.properties")
+@ConfigurationPropertiesScan(value = "com.blessed.home.properties")
 public class HomeApplication {
 
     public static void main(String[] args) {
