@@ -1,6 +1,5 @@
 package com.blessed.home.config.security;
 
-import com.blessed.home.constants.RoleConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,7 +13,10 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 import static com.blessed.home.constants.ResourceConstants.PERSONAL_INFO_RESOURCE_PATH;
+import static com.blessed.home.constants.ResourceConstants.USER_RESOURCE_PATH;
 import static com.blessed.home.constants.RoleConstants.ADMIN_ROLE_NAME;
+import static com.blessed.home.controller.BaseRestResourceKeyword.SEARCH;
+import static com.blessed.home.controller.PersonalInformationUrl.FIND_PERSONAL_INFORMATION_BY_USER_ID;
 
 /**
  * @ClassName ResourceServerConfig
@@ -49,9 +51,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 // 监控端点
                 .antMatchers("/actuator/**").hasRole(ADMIN_ROLE_NAME)
                 // 注册用户：POST /users
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers(HttpMethod.POST, String.format("/%s", USER_RESOURCE_PATH)).permitAll()
                 // 根据用户id获取对应的个人详细资料：GET /peopleInformation/search/findPersonalInformationByUserId?userId=?
-                .antMatchers(HttpMethod.GET, String.format("/%s/search/findPersonalInformationByUserId", PERSONAL_INFO_RESOURCE_PATH)).permitAll()
+                .antMatchers(HttpMethod.GET, String.format(
+                        "/%s/%s/%s",
+                        PERSONAL_INFO_RESOURCE_PATH,
+                        SEARCH,
+                        FIND_PERSONAL_INFORMATION_BY_USER_ID)).permitAll()
 
 
                 // 其他资源
