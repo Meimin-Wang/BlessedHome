@@ -1,4 +1,4 @@
-${AnsiColor.BRIGHT_GREEN}
+${AnsiColor.BRIGHT_BLUE}
  ________  ___       _______   ________   ________  _______   ________
 |\   __  \|\  \     |\  ___ \ |\   ____\ |\   ____\|\  ___ \ |\   ___ \
 \ \  \|\ /\ \  \    \ \   __/|\ \  \___|_\ \  \___|\ \   __/|\ \  \_|\ \  ____________
@@ -18,5 +18,5 @@ ${AnsiColor.BRIGHT_GREEN}
     \|__|\|__|\|_______|\|__|     \|__|\|_______|
 
 
-Author: Zhili-Lab               Spring Boot Version: ${spring-boot.formatted-version}
+Author: Blessed Wang    Spring Boot Version: ${spring-boot.formatted-version}
 
