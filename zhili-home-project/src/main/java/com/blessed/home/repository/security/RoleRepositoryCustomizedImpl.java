@@ -28,7 +28,7 @@ public class RoleRepositoryCustomizedImpl implements RoleRepositoryCustomized {
 
     @Override
     public List<Role> getRoles(String username) {
-        String jpql = "SELECT r FROM com.blessed.home.entity.security.User u LEFT JOIN u.roles r WHERE u.username = :username";
+        String jpql = RoleJpql.GET_ROLES_JPQL;
         Query query = entityManager.createQuery(jpql).setParameter("username", "admin");
         List<Role> resultList = query.getResultList();
         log.info(resultList.toString());
