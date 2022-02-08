@@ -1,6 +1,6 @@
-package com.zhouzhili.zhilihomeproject.config.security;
+package com.blessed.home.config.security;
 
-import com.zhouzhili.zhilihomeproject.entity.security.User;
+import com.blessed.home.entity.security.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * @ClassName JwtConfig
- * @Description TODO
+ * @Description JWT配置类
  * @Author blessed
  * @Date 2021/11/10 : 13:37
  * @Email blessedwmm@gmail.com
