@@ -1,8 +1,8 @@
-package com.zhouzhili.zhilihomeproject.constants;
+package com.blessed.home.constants;
 
 /**
  * @ClassName AlibabaCloudOssConstants
- * @Description TODO
+ * @Description 阿里云相关常量
  * @Author blessed
  * @Date 2021/12/21 : 15:00
  * @Email blessedwmm@gmail.com
