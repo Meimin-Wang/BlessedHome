@@ -9,12 +9,12 @@ package com.blessed.home.constants;
  */
 public class CacheConstants {
 
-    public static final String USER_CACHE_REPOSITORY_NAME = "user-repo";
-    public static final String ROLE_CACHE_REPOSITORY_NAME = "role-repo";
+    public static final String USER_CACHE_REPOSITORY_NAME = "repo-user";
+    public static final String ROLE_CACHE_REPOSITORY_NAME = "repo-role";
 
-    public static final String CLIENT_CACHE_REPOSITORY_NAME = "client-repo";
-    public static final String SCOPE_CACHE_REPOSITORY_NAME = "scope-repo";
-    public static final String AUTHORIZED_GRANTED_TYPE_CACHE_REPOSITORY_NAME = "authorized-grant-type-repo";
+    public static final String CLIENT_CACHE_REPOSITORY_NAME = "repo-client";
+    public static final String SCOPE_CACHE_REPOSITORY_NAME = "repo-scope";
+    public static final String AUTHORIZED_GRANTED_TYPE_CACHE_REPOSITORY_NAME = "repo-authorized-grant-type";
 
     public static final String PERSONAL_INFO_CACHE_REPOSITORY_NAME = "repo-personal-info";
     public static final String ADDRESS_CACHE_REPOSITORY_NAME = "repo-address";
