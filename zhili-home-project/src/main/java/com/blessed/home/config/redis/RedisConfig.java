@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject.config.redis;
+package com.blessed.home.config.redis;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
