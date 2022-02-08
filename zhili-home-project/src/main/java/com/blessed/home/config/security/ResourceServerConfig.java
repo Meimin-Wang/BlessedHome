@@ -58,7 +58,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         PERSONAL_INFO_RESOURCE_PATH,
                         SEARCH,
                         FIND_PERSONAL_INFORMATION_BY_USER_ID)).permitAll()
-
+                // 根据id删除个人信息
+                .antMatchers(HttpMethod.DELETE, String.format(
+                        "/%s/{id}", PERSONAL_INFO_RESOURCE_PATH
+                )).hasRole(ADMIN_ROLE_NAME)
 
                 // 其他资源
                 .anyRequest().authenticated()
