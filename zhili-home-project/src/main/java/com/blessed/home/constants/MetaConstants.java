@@ -11,5 +11,6 @@ import com.aliyun.oss.common.utils.StringUtils;
  */
 public class MetaConstants {
     public static final String BASE_PACKAGE_NAME = "com.blessed.home";
-    public static final String ENTITY_PACKAGE_NAME = StringUtils.join(".", BASE_PACKAGE_NAME, "entity");
+    public static final String ENTITY_PACKAGE_NAME = "com.blessed.home.entity";
+    public static final String PROPERTIES_PACKAGE_NAME = "com.blessed.home.properties";
 }
