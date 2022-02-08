@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject.constants;
+package com.blessed.home.constants;
 
 /**
  * @ClassName ResourceConstants
