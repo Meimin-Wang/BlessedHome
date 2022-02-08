@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject.config.web;
+package com.blessed.home.config.web;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @ClassName WebMvcConfig
- * @Description TODO
+ * @Description Web MVC配置类
  * @Author blessed
  * @Date 2021/11/14 : 13:27
  * @Email blessedwmm@gmail.com
