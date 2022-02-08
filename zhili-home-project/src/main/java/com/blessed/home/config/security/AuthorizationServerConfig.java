@@ -1,9 +1,9 @@
-package com.zhouzhili.zhilihomeproject.config.security;
+package com.blessed.home.config.security;
 
-import com.zhouzhili.zhilihomeproject.handler.exception.oauth2.OAuth2WebResponseExceptionTranslator;
-import com.zhouzhili.zhilihomeproject.properties.InMemoryClientDetailsProperties;
-import com.zhouzhili.zhilihomeproject.service.ClientService;
-import com.zhouzhili.zhilihomeproject.service.UserService;
+import com.blessed.home.handler.exception.oauth2.OAuth2WebResponseExceptionTranslator;
+import com.blessed.home.properties.InMemoryClientDetailsProperties;
+import com.blessed.home.service.ClientService;
+import com.blessed.home.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * @ClassName AuthorizationServerConfig
- * @Description TODO
+ * @Description 认证服务器配置类
  * @Author blessed
  * @Date 2021/11/8 : 21:27
  * @Email blessedwmm@gmail.com
