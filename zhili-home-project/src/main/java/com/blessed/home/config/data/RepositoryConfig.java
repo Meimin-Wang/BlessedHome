@@ -1,8 +1,9 @@
-package com.zhouzhili.zhilihomeproject.config.data;
+package com.blessed.home.config.data;
 
+import com.blessed.home.constants.MetaConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.zhouzhili.zhilihomeproject.utils.ClassUtils;
+import com.blessed.home.utils.ClassUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +14,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import javax.persistence.Entity;
 import java.util.Map;
-
-import static com.zhouzhili.zhilihomeproject.constants.MetaConstants.ENTITY_PACKAGE_NAME;
 
 /**
  * @ClassName RepositoryConfig
@@ -35,7 +34,7 @@ public class RepositoryConfig implements RepositoryRestConfigurer {
      */
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
-        Map<String, Class<?>> repositoryClasses = ClassUtils.getClassesForAnnotation(ENTITY_PACKAGE_NAME, Entity.class);
+        Map<String, Class<?>> repositoryClasses = ClassUtils.getClassesForAnnotation(MetaConstants.ENTITY_PACKAGE_NAME, Entity.class);
         log.info("Expose Id property for Repository as follows:");
         repositoryClasses.forEach((className, clazz) -> {
             log.info("Expose Id property for {}", clazz);
