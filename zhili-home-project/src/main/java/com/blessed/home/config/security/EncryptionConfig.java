@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject.config.security;
+package com.blessed.home.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
 /**
  * @ClassName EncryptionConfig
- * @Description TODO
+ * @Description 加密相关配置类
  * @Author blessed
  * @Date 2021/11/9 : 14:00
  * @Email blessedwmm@gmail.com
