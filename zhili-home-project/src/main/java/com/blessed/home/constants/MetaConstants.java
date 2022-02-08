@@ -1,7 +1,5 @@
 package com.blessed.home.constants;
 
-import com.aliyun.oss.common.utils.StringUtils;
-
 /**
  * @ClassName MetaConstants
  * @Description Java元信息相关常量，比如包名、类名称等
