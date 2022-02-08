@@ -2,7 +2,7 @@ package com.blessed.home.constants;
 
 /**
  * @ClassName ResourceConstants
- * @Description TODO
+ * @Description 实体资源相关常量，包括一些资源名称
  * @Author blessed
  * @Date 2022/1/29 : 18:58
  * @Email blessedwmm@gmail.com
