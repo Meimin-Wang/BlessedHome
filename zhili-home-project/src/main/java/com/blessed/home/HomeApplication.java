@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
+import static com.blessed.home.constants.MetaConstants.PROPERTIES_PACKAGE_NAME;
+
 /**
  * SpringBoot启动类
  * {@link SpringBootApplication} 注解表明这是一个Spring Boot应用类，这是一个组合注解
@@ -28,7 +30,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
  *  指明prefix，属性配置的前缀
  */
 @SpringBootApplication
-@ConfigurationPropertiesScan(value = "com.blessed.home.properties")
+@ConfigurationPropertiesScan(value = PROPERTIES_PACKAGE_NAME)
 public class HomeApplication {
 
     public static void main(String[] args) {
