@@ -12,6 +12,7 @@ import org.springframework.data.rest.core.annotation.Description;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -48,6 +49,15 @@ public class AttachFile extends BaseEntity implements Serializable {
     @ApiModelProperty("附件路径")
     @Description("附件路径")
     private String fileUrl;
+
+    /**
+     * 附件大小
+     */
+    @Column(name = "size")
+    @PositiveOrZero(message = "附件大小必须是0或正数")
+    @ApiModelProperty("附件大小")
+    @Description("附件大小")
+    private Long fileSize = 0L;
 
     @Override
     public boolean equals(Object o) {
