@@ -1,15 +1,16 @@
-package com.zhouzhili.zhilihomeproject.entity.profile;
+package com.blessed.home.entity.profile;
 
-import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
+import com.blessed.home.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Objects;
 
 /**
  * @ClassName Paper
@@ -18,7 +19,10 @@ import java.util.Date;
  * @Date 2021/11/9 : 22:23
  * @Email blessedwmm@gmail.com
  */
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @ApiModel(value = "发表的文章实体")
 @Entity(name = "tbl_paper")
 @Table(value = "tbl_paper")
@@ -28,7 +32,7 @@ public class Paper extends BaseEntity implements Serializable {
      * 论文标题
      */
     @ApiModelProperty(value = "论文标题", dataType = "String")
-    @Column(name = "paper_tile", nullable = false)
+    @Column(name = "paper_tile", nullable = false, unique = true)
     private String paperTitle;
 
     /**
@@ -42,9 +46,21 @@ public class Paper extends BaseEntity implements Serializable {
     /**
      * 个人信息实体
      */
-    @ApiModelProperty(value = "个人信息实体", dataType = "com.zhouzhili.zhilihomeproject.entity.profile.PersonalInformation")
+    @ApiModelProperty(value = "个人信息实体", dataType = "com.blessed.home.entity.profile.PersonalInformation")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     private PersonalInformation personalInformation;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Paper paper = (Paper) o;
+        return id != null && Objects.equals(id, paper.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
