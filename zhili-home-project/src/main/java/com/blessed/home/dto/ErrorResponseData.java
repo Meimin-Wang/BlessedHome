@@ -1,12 +1,9 @@
-package com.zhouzhili.zhilihomeproject.dto;
+package com.blessed.home.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.springframework.http.HttpStatus;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @ClassName ErrorResponseData

@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject.dto;
+package com.blessed.home.dto;
 
 /**
  * 自定义的响应状态

@@ -1,10 +1,7 @@
-package com.zhouzhili.zhilihomeproject.dto;
+package com.blessed.home.dto;
 
-import com.zhouzhili.zhilihomeproject.entity.security.User;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Map;
 
 /**

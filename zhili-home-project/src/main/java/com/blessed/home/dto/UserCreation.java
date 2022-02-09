@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject.dto;
+package com.blessed.home.dto;
 
 import lombok.Data;
 
