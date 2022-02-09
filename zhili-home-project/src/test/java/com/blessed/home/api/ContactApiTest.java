@@ -5,6 +5,7 @@ import com.blessed.home.entity.profile.Contact;
 import com.blessed.home.repository.profile.PersonalInformationRepository;
 import com.blessed.home.repository.security.RoleRepository;
 import com.blessed.home.repository.security.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -24,8 +25,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -253,5 +253,102 @@ public class ContactApiTest {
                         .content(content)
                 ).andExpect(status().isCreated())
                 .andDo(print());
+    }
+
+    @Test
+    @Order(11)
+    @DisplayName("11. PUT修改联系方式: No Auth Info")
+    @Transactional
+    public void testModifiedContactWithNoAuthorization() throws Exception {
+        Contact contact = new Contact();
+        contact.setId(32L);
+        contact.setPhoneNumber("15850720606");
+        contact.setQqNumber("834497774");
+        contact.setWeChatName("milition");
+        String content = objectMapper.writeValueAsString(contact);
+        mockMvc.perform(put(resourceName + "/" + 32L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content)
+        ).andExpect(status().isUnauthorized()).andDo(print());
+    }
+
+    @Test
+    @Order(12)
+    @DisplayName("12. PUT修改联系方式: admin")
+    @Transactional
+    public void testModifiedContactWithAdmin() throws Exception {
+        String authType = "admin";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        Contact contact = new Contact();
+        contact.setId(32L);
+        contact.setPhoneNumber("15850720606");
+        contact.setQqNumber("834497774");
+        contact.setWeChatName("milition");
+        String content = objectMapper.writeValueAsString(contact);
+        mockMvc.perform(put(resourceName + "/" + 32L)
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content)
+        ).andExpect(status().is2xxSuccessful()).andDo(print());
+    }
+
+    @Test
+    @Order(13)
+    @DisplayName("13. PUT修改联系方式: user")
+    @Transactional
+    public void testModifiedContactWithUser() throws Exception {
+        String authType = "user";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        Contact contact = new Contact();
+        contact.setId(32L);
+        contact.setPhoneNumber("15850720606");
+        contact.setQqNumber("834497774");
+        contact.setWeChatName("milition");
+        String content = objectMapper.writeValueAsString(contact);
+        mockMvc.perform(put(resourceName + "/" + 32L)
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content)
+        ).andExpect(status().is2xxSuccessful()).andDo(print());
+    }
+
+    @Test
+    @Order(14)
+    @DisplayName("14. PUT修改联系方式: supervisor")
+    @Transactional
+    public void testModifiedContactWithSupervisor() throws Exception {
+        String authType = "supervisor";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        Contact contact = new Contact();
+        contact.setId(32L);
+        contact.setPhoneNumber("15850720606");
+        contact.setQqNumber("834497774");
+        contact.setWeChatName("milition");
+        String content = objectMapper.writeValueAsString(contact);
+        mockMvc.perform(put(resourceName + "/" + 32L)
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content)
+        ).andExpect(status().is2xxSuccessful()).andDo(print());
+    }
+
+    @Test
+    @Order(15)
+    @DisplayName("15. PUT修改联系方式: member")
+    @Transactional
+    public void testModifiedContactWithMember() throws Exception {
+        String authType = "member";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        Contact contact = new Contact();
+        contact.setId(32L);
+        contact.setPhoneNumber("15850720606");
+        contact.setQqNumber("834497774");
+        contact.setWeChatName("milition");
+        String content = objectMapper.writeValueAsString(contact);
+        mockMvc.perform(put(resourceName + "/" + 32L)
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content)
+        ).andExpect(status().is2xxSuccessful()).andDo(print());
     }
 }
