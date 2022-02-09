@@ -1,19 +1,21 @@
-package com.zhouzhili.zhilihomeproject.entity.profile;
+package com.blessed.home.entity.profile;
 
-import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
-import com.zhouzhili.zhilihomeproject.validator.annotation.PhoneNumber;
-import com.zhouzhili.zhilihomeproject.validator.annotation.QQNumber;
+import com.blessed.home.entity.BaseEntity;
+import com.blessed.home.validator.annotation.PhoneNumber;
+import com.blessed.home.validator.annotation.QQNumber;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.springframework.data.relational.core.mapping.Table;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Objects;
 
 /**
  * @ClassName Contact
@@ -22,7 +24,10 @@ import java.util.Date;
  * @Date 2021/11/9 : 21:17
  * @Email blessedwmm@gmail.com
  */
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @ApiModel(value = "联系方式")
 @Entity(name = "tbl_contact")
 @Table(value = "tbl_contact")
@@ -51,4 +56,20 @@ public class Contact extends BaseEntity implements Serializable {
     @QQNumber(message = "QQ号不合法")
     private String qqNumber;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
+        Contact contact = (Contact) o;
+        return id != null && Objects.equals(id, contact.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
