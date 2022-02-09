@@ -1,10 +1,10 @@
-package com.zhouzhili.zhilihomeproject.api;
+package com.blessed.home.api;
 
+import com.blessed.home.dto.JwtAuthorizationTokenDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zhouzhili.zhilihomeproject.dto.JwtAuthorizationTokenDTO;
-import com.zhouzhili.zhilihomeproject.repository.profile.PersonalInformationRepository;
-import com.zhouzhili.zhilihomeproject.repository.security.RoleRepository;
-import com.zhouzhili.zhilihomeproject.repository.security.UserRepository;
+import com.blessed.home.repository.profile.PersonalInformationRepository;
+import com.blessed.home.repository.security.RoleRepository;
+import com.blessed.home.repository.security.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -15,12 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import javax.transaction.Transactional;
+
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -211,5 +215,122 @@ public class PersonalInformationApiTest {
         ).andExpect(status().isOk()).andDo(print());
     }
 
+    @Test
+    @Order(12)
+    @DisplayName("12. 根据用户id获取该用户的个人信息: No Auth")
+    public void testGetPersonalInformationByUserIdWithNoAuthorization() throws Exception {
+        Long userId = 12L;
+        mockMvc.perform(get(resourceName + "/search/findPersonalInformationByUserId")
+                .param("userId", userId + "")
+        ).andExpect(status().isOk()).andDo(print());
+    }
 
+    @Test
+    @Order(13)
+    @DisplayName("13. 根据用户id获取该用户的个人信息: admin")
+    public void testGetPersonalInformationByUserIdWithAdmin() throws Exception {
+        String authType = "admin";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        Long userId = 12L;
+        mockMvc.perform(get(resourceName + "/search/findPersonalInformationByUserId")
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+                .param("userId", userId + "")
+        ).andExpect(status().isOk()).andDo(print());
+    }
+
+    @Test
+    @Order(14)
+    @DisplayName("14. 根据用户id获取该用户的个人信息: user")
+    public void testGetPersonalInformationByUserIdWithUser() throws Exception {
+        String authType = "user";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        Long userId = 12L;
+        mockMvc.perform(get(resourceName + "/search/findPersonalInformationByUserId")
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+                .param("userId", userId + "")
+        ).andExpect(status().isOk()).andDo(print());
+    }
+
+    @Test
+    @Order(15)
+    @DisplayName("15. 根据用户id获取该用户的个人信息: supervisor")
+    public void testGetPersonalInformationByUserIdWithSupervisor() throws Exception {
+        String authType = "supervisor";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        Long userId = 12L;
+        mockMvc.perform(get(resourceName + "/search/findPersonalInformationByUserId")
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+                .param("userId", userId + "")
+        ).andExpect(status().isOk()).andDo(print());
+    }
+
+    @Test
+    @Order(16)
+    @DisplayName("16. 根据用户id获取该用户的个人信息: member")
+    public void testGetPersonalInformationByUserIdWithMember() throws Exception {
+        String authType = "member";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        Long userId = 12L;
+        mockMvc.perform(get(resourceName + "/search/findPersonalInformationByUserId")
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+                .param("userId", userId + "")
+        ).andExpect(status().isOk()).andDo(print());
+    }
+
+    @Test
+    @Order(17)
+    @Transactional
+    @DisplayName("17. 根据id删除个人详细资料: No Auth Info")
+    public void testDeletePersonalInformationWithNoAuthorization() throws Exception {
+        mockMvc.perform(delete(resourceName + "/" + 32)
+        ).andExpect(status().isUnauthorized()).andDo(print());
+    }
+
+    @Test
+    @Order(18)
+    @Transactional
+    @DisplayName("18. 根据id删除个人详细资料: admin")
+    public void testDeletePersonalInformationWithAdmin() throws Exception {
+        String authType = "admin";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        mockMvc.perform(delete(resourceName + "/" + 32)
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+        ).andExpect(status().isNoContent()).andDo(print());
+    }
+
+    @Test
+    @Order(19)
+    @Transactional
+    @DisplayName("19. 根据id删除个人详细资料: user")
+    public void testDeletePersonalInformationWithUser() throws Exception {
+        String authType = "user";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        mockMvc.perform(delete(resourceName + "/" + 32)
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+        ).andExpect(status().isForbidden()).andDo(print());
+    }
+
+    @Test
+    @Order(20)
+    @Transactional
+    @DisplayName("20. 根据id删除个人详细资料: supervisor")
+    public void testDeletePersonalInformationWithSupervisor() throws Exception {
+        String authType = "supervisor";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        mockMvc.perform(delete(resourceName + "/" + 32)
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+        ).andExpect(status().isForbidden()).andDo(print());
+    }
+
+    @Test
+    @Order(21)
+    @Transactional
+    @DisplayName("21. 根据id删除个人详细资料: member")
+    public void testDeletePersonalInformationWithMember() throws Exception {
+        String authType = "member";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+        mockMvc.perform(delete(resourceName + "/" + 32)
+                .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+        ).andExpect(status().isForbidden()).andDo(print());
+    }
 }
