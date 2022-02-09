@@ -1,6 +1,7 @@
-package com.zhouzhili.zhilihomeproject.repository.profile;
+package com.blessed.home.repository.profile;
 
-import com.zhouzhili.zhilihomeproject.entity.profile.Address;
+import com.blessed.home.constants.CacheConstants;
+import com.blessed.home.entity.profile.Address;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -11,9 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-import static com.zhouzhili.zhilihomeproject.constants.CacheConstants.ADDRESS_CACHE_REPOSITORY_NAME;
-
 /**
+ * 地址仓库类
  * @author Blessed
  */
 @Repository
@@ -24,7 +24,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
      * @param pageable 分页信息
      * @return 返回分页信息的地址集合
      */
-    @Cacheable(cacheNames = {ADDRESS_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort", unless = "@cacheCondition.isPageNotEmpty(#result)")
+    @Cacheable(cacheNames = {CacheConstants.ADDRESS_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort", unless = "@cacheCondition.isPageNotEmpty(#result)")
     @Override
     Page<Address> findAll(Pageable pageable);
 
@@ -33,7 +33,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
      * @param addressId 地址id
      * @return 返回 {@link Optional<Address>} 对象
      */
-    @Cacheable(cacheNames = {ADDRESS_CACHE_REPOSITORY_NAME}, key = "#addressId", unless = "@cacheCondition.isNotPresent(#result)")
+    @Cacheable(cacheNames = {CacheConstants.ADDRESS_CACHE_REPOSITORY_NAME}, key = "#addressId", unless = "@cacheCondition.isNotPresent(#result)")
     @Override
     Optional<Address> findById(Long addressId);
 
@@ -43,7 +43,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
      * @param <S> 实体类型
      * @return 返回带有id的持久化地址对象
      */
-    @CachePut(cacheNames = {ADDRESS_CACHE_REPOSITORY_NAME}, key = "#address.id", unless = "#result == null")
+    @CachePut(cacheNames = {CacheConstants.ADDRESS_CACHE_REPOSITORY_NAME}, key = "#address.id", unless = "#result == null")
     @Override
     <S extends Address> S save(S address);
 
@@ -53,7 +53,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
      * @param <S> 实体类型
      * @return 返回带有id的持久化地址对象
      */
-    @CachePut(cacheNames = {ADDRESS_CACHE_REPOSITORY_NAME}, key = "#address.id", unless = "#result == null")
+    @CachePut(cacheNames = {CacheConstants.ADDRESS_CACHE_REPOSITORY_NAME}, key = "#address.id", unless = "#result == null")
     @Override
     <S extends Address> S saveAndFlush(S address);
 
@@ -61,7 +61,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
      * 删除地址实体
      * @param address 带有id的持久化地址对象
      */
-    @CacheEvict(cacheNames = {ADDRESS_CACHE_REPOSITORY_NAME}, key = "#address.id")
+    @CacheEvict(cacheNames = {CacheConstants.ADDRESS_CACHE_REPOSITORY_NAME}, key = "#address.id")
     @Override
     void delete(Address address);
 }
