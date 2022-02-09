@@ -1,12 +1,13 @@
-package com.zhouzhili.zhilihomeproject.api;
+package com.blessed.home.api;
 
+import com.blessed.home.dto.JwtAuthorizationTokenDTO;
+import com.blessed.home.dto.UserCreation;
+import com.blessed.home.entity.profile.PersonalInformation;
+import com.blessed.home.entity.security.Role;
+import com.blessed.home.entity.security.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zhouzhili.zhilihomeproject.dto.JwtAuthorizationTokenDTO;
-import com.zhouzhili.zhilihomeproject.dto.UserCreation;
-import com.zhouzhili.zhilihomeproject.entity.security.Role;
-import com.zhouzhili.zhilihomeproject.entity.security.User;
-import com.zhouzhili.zhilihomeproject.repository.security.RoleRepository;
-import com.zhouzhili.zhilihomeproject.repository.security.UserRepository;
+import com.blessed.home.repository.security.RoleRepository;
+import com.blessed.home.repository.security.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -291,7 +292,7 @@ public class UserApiTest {
                 .andDo(print());
     }
 
-    private static final String OTHER_USERNAME = "nikki.barton";
+    private static final String OTHER_USERNAME = "joeann.hoppe";
     private static final String NON_EXIST_USERNAME = "no-exist-username";
 
     @Test
@@ -505,7 +506,7 @@ public class UserApiTest {
     }
 
     /**
-     * 删除用户之前必须检查是否该用户有绑定的 {@link com.zhouzhili.zhilihomeproject.entity.profile.PersonalInformation} 对象
+     * 删除用户之前必须检查是否该用户有绑定的 {@link PersonalInformation} 对象
      * @throws Exception
      */
     @Test
