@@ -27,6 +27,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * 联系方式API测试类
+ * @author Blessed
+ */
 @ContextConfiguration
 @ActiveProfiles("test")
 @SpringBootTest
