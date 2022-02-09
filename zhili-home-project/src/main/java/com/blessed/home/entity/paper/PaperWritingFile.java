@@ -1,16 +1,22 @@
-package com.zhouzhili.zhilihomeproject.entity.paper;
+package com.blessed.home.entity.paper;
 
-import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
-import com.zhouzhili.zhilihomeproject.validator.annotation.MimeType;
+import com.blessed.home.entity.BaseEntity;
+import com.blessed.home.validator.annotation.MimeType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.rest.core.annotation.Description;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @ClassName PaperWritingFile
@@ -19,7 +25,10 @@ import java.io.Serializable;
  * @Date 2021/11/23 : 13:42
  * @Email blessedwmm@gmail.com
  */
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity(name = "tbl_pwp_file")
 @Table(value = "tbl_pwp_file")
 @ApiModel("论文写作文件")
@@ -48,4 +57,21 @@ public class PaperWritingFile extends BaseEntity implements Serializable {
     @ApiModelProperty("文件类型")
     @Description("文件类型")
     private String mimeType;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
+        PaperWritingFile that = (PaperWritingFile) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

@@ -1,7 +1,7 @@
-package com.zhouzhili.zhilihomeproject.entity.paper;
+package com.blessed.home.entity.paper;
 
-import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
-import com.zhouzhili.zhilihomeproject.entity.security.User;
+import com.blessed.home.entity.security.User;
+import com.blessed.home.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,9 +11,6 @@ import org.springframework.data.rest.core.annotation.Description;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;

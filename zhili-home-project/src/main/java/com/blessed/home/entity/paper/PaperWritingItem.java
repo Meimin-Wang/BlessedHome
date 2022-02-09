@@ -1,6 +1,6 @@
-package com.zhouzhili.zhilihomeproject.entity.paper;
+package com.blessed.home.entity.paper;
 
-import com.zhouzhili.zhilihomeproject.entity.BaseEntity;
+import com.blessed.home.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
