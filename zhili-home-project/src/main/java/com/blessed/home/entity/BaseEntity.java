@@ -1,4 +1,4 @@
-package com.zhouzhili.zhilihomeproject.entity;
+package com.blessed.home.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +47,7 @@ public class BaseEntity implements Serializable {
 
     @Column(name = "version")
     @Version
-    protected Integer version;
+    protected Long version;
 
     @Override
     public boolean equals(Object o) {
