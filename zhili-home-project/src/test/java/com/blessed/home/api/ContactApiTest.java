@@ -191,4 +191,67 @@ public class ContactApiTest {
                 ).andExpect(status().isCreated())
                 .andDo(print());
     }
+
+    @Test
+    @Order(9)
+    @DisplayName("9. 添加联系方式: user")
+    @Transactional
+    public void testAddContactWithUser() throws Exception {
+        String authType = "user";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+
+        Contact contact = new Contact();
+        contact.setPhoneNumber("15834239438");
+        contact.setQqNumber("834497774");
+        contact.setWeChatName("milition");
+        String content = objectMapper.writeValueAsString(contact);
+        mockMvc.perform(post(resourceName)
+                        .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+                ).andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    @Test
+    @Order(10)
+    @DisplayName("10. 添加联系方式: supervisor")
+    @Transactional
+    public void testAddContactWithSupervisor() throws Exception {
+        String authType = "supervisor";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+
+        Contact contact = new Contact();
+        contact.setPhoneNumber("15834239438");
+        contact.setQqNumber("834497774");
+        contact.setWeChatName("milition");
+        String content = objectMapper.writeValueAsString(contact);
+        mockMvc.perform(post(resourceName)
+                        .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+                ).andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    @Test
+    @Order(10)
+    @DisplayName("11. 添加联系方式: member")
+    @Transactional
+    public void testAddContactWithMember() throws Exception {
+        String authType = "member";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+
+        Contact contact = new Contact();
+        contact.setPhoneNumber("15834239438");
+        contact.setQqNumber("834497774");
+        contact.setWeChatName("milition");
+        String content = objectMapper.writeValueAsString(contact);
+        mockMvc.perform(post(resourceName)
+                        .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+                ).andExpect(status().isCreated())
+                .andDo(print());
+    }
 }
