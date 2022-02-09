@@ -1,6 +1,7 @@
 package com.blessed.home.api;
 
 import com.blessed.home.dto.JwtAuthorizationTokenDTO;
+import com.blessed.home.entity.profile.Contact;
 import com.blessed.home.repository.profile.PersonalInformationRepository;
 import com.blessed.home.repository.security.RoleRepository;
 import com.blessed.home.repository.security.UserRepository;
@@ -20,6 +21,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import javax.transaction.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -149,5 +152,43 @@ public class ContactApiTest {
         mockMvc.perform(get(resourceName)
                 .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
         ).andExpect(status().isMethodNotAllowed()).andDo(print());
+    }
+
+    @Test
+    @Order(7)
+    @DisplayName("7. 添加联系方式: No Auth Info")
+    @Transactional
+    public void testAddContactWithNoAuthorization() throws Exception {
+        Contact contact = new Contact();
+        contact.setPhoneNumber("15834239438");
+        contact.setQqNumber("834497774");
+        contact.setWeChatName("milition");
+        String content = objectMapper.writeValueAsString(contact);
+        mockMvc.perform(post(resourceName)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content)
+        ).andExpect(status().isUnauthorized())
+                .andDo(print());
+    }
+
+    @Test
+    @Order(8)
+    @DisplayName("8. 添加联系方式: admin")
+    @Transactional
+    public void testAddContactWithAdmin() throws Exception {
+        String authType = "admin";
+        JwtAuthorizationTokenDTO admin = getAccessTokenInfo(authType, authType, authType);
+
+        Contact contact = new Contact();
+        contact.setPhoneNumber("15834239438");
+        contact.setQqNumber("834497774");
+        contact.setWeChatName("milition");
+        String content = objectMapper.writeValueAsString(contact);
+        mockMvc.perform(post(resourceName)
+                        .header("Authorization", admin.getToken_type() + " " + admin.getAccess_token())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+                ).andExpect(status().isCreated())
+                .andDo(print());
     }
 }
