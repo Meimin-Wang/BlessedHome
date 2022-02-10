@@ -1,0 +1,865 @@
+{
+	"info": {
+		"_postman_id": "916c619e-7b4b-47de-b40c-c595bc3aadae",
+		"name": "Zhou-Home API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "实体访问",
+			"item": [
+				{
+					"name": "User实体",
+					"item": [
+						{
+							"name": "获取所有用户",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJqdWRlLmdyZWVuZmVsZGVyIiwic2NvcGUiOlsiYWxsIl0sImV4cCI6Mzc4NTY3MjIyNiwidXNlcklkIjoxNCwiY3JlYXRlIHRpbWUiOnsibmFubyI6NzAzNzk0MDAwLCJ5ZWFyIjoyMDIxLCJtb250aFZhbHVlIjoxMSwiZGF5T2ZNb250aCI6MjksImhvdXIiOjIwLCJtaW51dGUiOjIyLCJzZWNvbmQiOjU5LCJtb250aCI6Ik5PVkVNQkVSIiwiZGF5T2ZXZWVrIjoiTU9OREFZIiwiZGF5T2ZZZWFyIjozMzMsImNocm9ub2xvZ3kiOnsiaWQiOiJJU08iLCJjYWxlbmRhclR5cGUiOiJpc284NjAxIn19LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwianRpIjoiOUdkSm51cFA1bTR4NWxmT0ItMWI3NjVFV2tjIiwiY2xpZW50X2lkIjoiTWVpbWluV2FuZyJ9._hXjwgZjwzUsFXEKVOu6bQleRnqjCX8ESWSkvFgEcUg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "根据用户名获取用户",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbImFsbCJdLCJleHAiOjM3ODU3MzkyMjcsInVzZXJJZCI6MSwiY3JlYXRlIHRpbWUiOnsibW9udGgiOiJOT1ZFTUJFUiIsImRheU9mV2VlayI6IlRVRVNEQVkiLCJkYXlPZlllYXIiOjMzNCwibmFubyI6NzMxNjMwMDAwLCJ5ZWFyIjoyMDIxLCJtb250aFZhbHVlIjoxMSwiZGF5T2ZNb250aCI6MzAsImhvdXIiOjE0LCJtaW51dGUiOjU5LCJzZWNvbmQiOjQwLCJjaHJvbm9sb2d5Ijp7ImlkIjoiSVNPIiwiY2FsZW5kYXJUeXBlIjoiaXNvODYwMSJ9fSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiI2WDFmS0JkSnJpWXhFQmtBWWRoNXV5V05JeDgiLCJjbGllbnRfaWQiOiJNZWltaW5XYW5nIn0.TocgHBRtygx8yf2WMOzV61rL418NKs8m7ydTrVVwb4A",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/users/search/findUserByUsername?username=admin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"search",
+										"findUserByUsername"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "admin"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "注册时获取验证码",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "abcddd",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "wmm.834497774@qq.com",
+											"type": "text"
+										},
+										{
+											"key": "state",
+											"value": "register-state",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/valid-code",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"valid-code"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "根据用户id获取用户",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/users/1234",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"1234"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "注册用户",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"testRegistration2\",\n    \"password\": \"123456\",\n    \"roles\": [\n        \"http://localhost:8080/roles/search/findRoleByRoleName?roleName=ROLE_USER\"\n    ],\n    \"email\": \"testRegistration@163.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "删除用户",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6MSwiY3JlYXRlRGF0ZSI6MTY0MjUyMTc2MjE4NiwidXBkYXRlRGF0ZSI6MTY0MjUyMTc2MjE4NiwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiJDJhJDEwJFJhaGFYZ1gvMHkuRW1GNzZjelBYTmV1NkxOcTRQUUtTM0N2RWlhTUxxbi93ZVlLSURrcDNPIiwiZW1haWwiOiJ1dG9jMzVAZ21haWwuY29tIiwiYXZhdGFyVXJsIjoiaHR0cHM6Ly9ibGVzc2VkLXdtbS5vc3MtY24tc2hhbmdoYWkuYWxpeXVuY3MuY29tL3poaWxpLWhvbWUvYXZhdGFycy9hZG1pbi5qcGVnIiwicm9sZXMiOlt7ImlkIjoxLCJjcmVhdGVEYXRlIjoxNjQyNTIxNzYyMDEzLCJ1cGRhdGVEYXRlIjoxNjQyNTIxNzYyMDEzLCJyb2xlTmFtZSI6IlJPTEVfQURNSU4iLCJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJlbmFibGVkIjp0cnVlLCJhdXRob3JpdGllcyI6W3siaWQiOjEsImNyZWF0ZURhdGUiOjE2NDI1MjE3NjIwMTMsInVwZGF0ZURhdGUiOjE2NDI1MjE3NjIwMTMsInJvbGVOYW1lIjoiUk9MRV9BRE1JTiIsImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImFjY291bnROb25FeHBpcmVkIjp0cnVlLCJhY2NvdW50Tm9uTG9ja2VkIjp0cnVlLCJjcmVkZW50aWFsc05vbkV4cGlyZWQiOnRydWV9LCJjcmVhdGVUaW1lIjp7Im5hbm8iOjY0NDc2NTAwMCwieWVhciI6MjAyMiwibW9udGhWYWx1ZSI6MSwiZGF5T2ZNb250aCI6MjYsImhvdXIiOjIyLCJtaW51dGUiOjIyLCJzZWNvbmQiOjI0LCJtb250aCI6IkpBTlVBUlkiLCJkYXlPZldlZWsiOiJXRURORVNEQVkiLCJkYXlPZlllYXIiOjI2LCJjaHJvbm9sb2d5Ijp7ImlkIjoiSVNPIiwiY2FsZW5kYXJUeXBlIjoiaXNvODYwMSJ9fSwidXNlcl9uYW1lIjoiYWRtaW4iLCJzY29wZSI6WyJhbGwiXSwiZXhwIjozNzkwNjkwNTkxLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IkZaNE5MQVhyNHdvR09FMEx6a3BhYTRMS0lKcyIsImNsaWVudF9pZCI6Ik1laW1pbldhbmcifQ.C7AA80etalxECGV7j5BkSvFZRwNbiwxLS6T5ujKj2rU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/users/54",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"54"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "批量删除用户",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6MSwiY3JlYXRlRGF0ZSI6MTY0MjUyMTc2MjE4NiwidXBkYXRlRGF0ZSI6MTY0MjUyMTc2MjE4NiwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiJDJhJDEwJFJhaGFYZ1gvMHkuRW1GNzZjelBYTmV1NkxOcTRQUUtTM0N2RWlhTUxxbi93ZVlLSURrcDNPIiwiZW1haWwiOiJ1dG9jMzVAZ21haWwuY29tIiwiYXZhdGFyVXJsIjoiaHR0cHM6Ly9ibGVzc2VkLXdtbS5vc3MtY24tc2hhbmdoYWkuYWxpeXVuY3MuY29tL3poaWxpLWhvbWUvYXZhdGFycy9hZG1pbi5qcGVnIiwicm9sZXMiOlt7ImlkIjoxLCJjcmVhdGVEYXRlIjoxNjQyNTIxNzYyMDEzLCJ1cGRhdGVEYXRlIjoxNjQyNTIxNzYyMDEzLCJyb2xlTmFtZSI6IlJPTEVfQURNSU4iLCJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJlbmFibGVkIjp0cnVlLCJhdXRob3JpdGllcyI6W3siaWQiOjEsImNyZWF0ZURhdGUiOjE2NDI1MjE3NjIwMTMsInVwZGF0ZURhdGUiOjE2NDI1MjE3NjIwMTMsInJvbGVOYW1lIjoiUk9MRV9BRE1JTiIsImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImFjY291bnROb25FeHBpcmVkIjp0cnVlLCJhY2NvdW50Tm9uTG9ja2VkIjp0cnVlLCJjcmVkZW50aWFsc05vbkV4cGlyZWQiOnRydWV9LCJjcmVhdGVUaW1lIjp7Im5hbm8iOjY0NDc2NTAwMCwieWVhciI6MjAyMiwibW9udGhWYWx1ZSI6MSwiZGF5T2ZNb250aCI6MjYsImhvdXIiOjIyLCJtaW51dGUiOjIyLCJzZWNvbmQiOjI0LCJtb250aCI6IkpBTlVBUlkiLCJkYXlPZldlZWsiOiJXRURORVNEQVkiLCJkYXlPZlllYXIiOjI2LCJjaHJvbm9sb2d5Ijp7ImlkIjoiSVNPIiwiY2FsZW5kYXJUeXBlIjoiaXNvODYwMSJ9fSwidXNlcl9uYW1lIjoiYWRtaW4iLCJzY29wZSI6WyJhbGwiXSwiZXhwIjozNzkwNjkwNTkxLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IkZaNE5MQVhyNHdvR09FMEx6a3BhYTRMS0lKcyIsImNsaWVudF9pZCI6Ik1laW1pbldhbmcifQ.C7AA80etalxECGV7j5BkSvFZRwNbiwxLS6T5ujKj2rU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[234, 455]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/users/deleteUsers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users",
+										"deleteUsers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "根据用户名查询该用户的角色信息",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "根据用户名搜索用户信息",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "客户端实体",
+					"item": [
+						{
+							"name": "获取所有客户端",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbImFsbCJdLCJleHAiOjM3ODQ0NjgyMDgsInVzZXJJZCI6MSwiY3JlYXRlIHRpbWUiOnsibmFubyI6MzYxMTIyMDAwLCJ5ZWFyIjoyMDIxLCJtb250aFZhbHVlIjoxMSwiZGF5T2ZNb250aCI6MTUsImhvdXIiOjIxLCJtaW51dGUiOjU2LCJzZWNvbmQiOjEsIm1vbnRoIjoiTk9WRU1CRVIiLCJkYXlPZldlZWsiOiJNT05EQVkiLCJkYXlPZlllYXIiOjMxOSwiY2hyb25vbG9neSI6eyJpZCI6IklTTyIsImNhbGVuZGFyVHlwZSI6Imlzbzg2MDEifX0sImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiZTlYV0g5c0pLWEtaZjh6cEMzWUdfeW5hWVhzIiwiY2xpZW50X2lkIjoiTWVpbWluV2FuZyJ9.f8CggFmiZpEd70mUl1MzK2Njbw_JiMM3Oiwcv5my4eI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "客户端profile",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/clients",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"clients"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "角色实体",
+					"item": [
+						{
+							"name": "根据角色名获取角色",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/roles/search/findRoleByRoleName?roleName=ROLE_USER",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"roles",
+										"search",
+										"findRoleByRoleName"
+									],
+									"query": [
+										{
+											"key": "roleName",
+											"value": "ROLE_USER"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "根绝角色id获取角色",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "获取指定用户id的角色信息",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PersonalInformation实体",
+					"item": [
+						{
+							"name": "获取所有的个人信息资料: admin",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6MSwiY3JlYXRlRGF0ZSI6MTY0MjUyMTc2MjE4NiwidXBkYXRlRGF0ZSI6MTY0MjUyMTc2MjE4NiwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiJDJhJDEwJFJhaGFYZ1gvMHkuRW1GNzZjelBYTmV1NkxOcTRQUUtTM0N2RWlhTUxxbi93ZVlLSURrcDNPIiwiZW1haWwiOiJ1dG9jMzVAZ21haWwuY29tIiwiYXZhdGFyVXJsIjoiaHR0cHM6Ly9ibGVzc2VkLXdtbS5vc3MtY24tc2hhbmdoYWkuYWxpeXVuY3MuY29tL3poaWxpLWhvbWUvYXZhdGFycy9hZG1pbi5qcGVnIiwicm9sZXMiOlt7ImlkIjoxLCJjcmVhdGVEYXRlIjoxNjQyNTIxNzYyMDEzLCJ1cGRhdGVEYXRlIjoxNjQyNTIxNzYyMDEzLCJyb2xlTmFtZSI6IlJPTEVfQURNSU4iLCJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJlbmFibGVkIjp0cnVlLCJhdXRob3JpdGllcyI6W3siaWQiOjEsImNyZWF0ZURhdGUiOjE2NDI1MjE3NjIwMTMsInVwZGF0ZURhdGUiOjE2NDI1MjE3NjIwMTMsInJvbGVOYW1lIjoiUk9MRV9BRE1JTiIsImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImFjY291bnROb25FeHBpcmVkIjp0cnVlLCJhY2NvdW50Tm9uTG9ja2VkIjp0cnVlLCJjcmVkZW50aWFsc05vbkV4cGlyZWQiOnRydWV9LCJjcmVhdGVUaW1lIjp7Im5hbm8iOjY0NDc2NTAwMCwieWVhciI6MjAyMiwibW9udGhWYWx1ZSI6MSwiZGF5T2ZNb250aCI6MjYsImhvdXIiOjIyLCJtaW51dGUiOjIyLCJzZWNvbmQiOjI0LCJtb250aCI6IkpBTlVBUlkiLCJkYXlPZldlZWsiOiJXRURORVNEQVkiLCJkYXlPZlllYXIiOjI2LCJjaHJvbm9sb2d5Ijp7ImlkIjoiSVNPIiwiY2FsZW5kYXJUeXBlIjoiaXNvODYwMSJ9fSwidXNlcl9uYW1lIjoiYWRtaW4iLCJzY29wZSI6WyJhbGwiXSwiZXhwIjozNzkwNjkwNTkxLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IkZaNE5MQVhyNHdvR09FMEx6a3BhYTRMS0lKcyIsImNsaWVudF9pZCI6Ik1laW1pbldhbmcifQ.C7AA80etalxECGV7j5BkSvFZRwNbiwxLS6T5ujKj2rU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/peopleInformation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"peopleInformation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取所有的个人信息资料: user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6MSwiY3JlYXRlRGF0ZSI6MTY0MjUyMTc2MjE4NiwidXBkYXRlRGF0ZSI6MTY0MjUyMTc2MjE4NiwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiJDJhJDEwJFJhaGFYZ1gvMHkuRW1GNzZjelBYTmV1NkxOcTRQUUtTM0N2RWlhTUxxbi93ZVlLSURrcDNPIiwiZW1haWwiOiJ1dG9jMzVAZ21haWwuY29tIiwiYXZhdGFyVXJsIjoiaHR0cHM6Ly9ibGVzc2VkLXdtbS5vc3MtY24tc2hhbmdoYWkuYWxpeXVuY3MuY29tL3poaWxpLWhvbWUvYXZhdGFycy9hZG1pbi5qcGVnIiwicm9sZXMiOlt7ImlkIjoxLCJjcmVhdGVEYXRlIjoxNjQyNTIxNzYyMDEzLCJ1cGRhdGVEYXRlIjoxNjQyNTIxNzYyMDEzLCJyb2xlTmFtZSI6IlJPTEVfQURNSU4iLCJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJlbmFibGVkIjp0cnVlLCJhdXRob3JpdGllcyI6W3siaWQiOjEsImNyZWF0ZURhdGUiOjE2NDI1MjE3NjIwMTMsInVwZGF0ZURhdGUiOjE2NDI1MjE3NjIwMTMsInJvbGVOYW1lIjoiUk9MRV9BRE1JTiIsImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImFjY291bnROb25FeHBpcmVkIjp0cnVlLCJhY2NvdW50Tm9uTG9ja2VkIjp0cnVlLCJjcmVkZW50aWFsc05vbkV4cGlyZWQiOnRydWV9LCJjcmVhdGVUaW1lIjp7Im5hbm8iOjY0NDc2NTAwMCwieWVhciI6MjAyMiwibW9udGhWYWx1ZSI6MSwiZGF5T2ZNb250aCI6MjYsImhvdXIiOjIyLCJtaW51dGUiOjIyLCJzZWNvbmQiOjI0LCJtb250aCI6IkpBTlVBUlkiLCJkYXlPZldlZWsiOiJXRURORVNEQVkiLCJkYXlPZlllYXIiOjI2LCJjaHJvbm9sb2d5Ijp7ImlkIjoiSVNPIiwiY2FsZW5kYXJUeXBlIjoiaXNvODYwMSJ9fSwidXNlcl9uYW1lIjoiYWRtaW4iLCJzY29wZSI6WyJhbGwiXSwiZXhwIjozNzkwNjkwNTkxLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IkZaNE5MQVhyNHdvR09FMEx6a3BhYTRMS0lKcyIsImNsaWVudF9pZCI6Ik1laW1pbldhbmcifQ.C7AA80etalxECGV7j5BkSvFZRwNbiwxLS6T5ujKj2rU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/peopleInformation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"peopleInformation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取所有的个人信息资料: supervisor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6MSwiY3JlYXRlRGF0ZSI6MTY0MjUyMTc2MjE4NiwidXBkYXRlRGF0ZSI6MTY0MjUyMTc2MjE4NiwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiJDJhJDEwJFJhaGFYZ1gvMHkuRW1GNzZjelBYTmV1NkxOcTRQUUtTM0N2RWlhTUxxbi93ZVlLSURrcDNPIiwiZW1haWwiOiJ1dG9jMzVAZ21haWwuY29tIiwiYXZhdGFyVXJsIjoiaHR0cHM6Ly9ibGVzc2VkLXdtbS5vc3MtY24tc2hhbmdoYWkuYWxpeXVuY3MuY29tL3poaWxpLWhvbWUvYXZhdGFycy9hZG1pbi5qcGVnIiwicm9sZXMiOlt7ImlkIjoxLCJjcmVhdGVEYXRlIjoxNjQyNTIxNzYyMDEzLCJ1cGRhdGVEYXRlIjoxNjQyNTIxNzYyMDEzLCJyb2xlTmFtZSI6IlJPTEVfQURNSU4iLCJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJlbmFibGVkIjp0cnVlLCJhdXRob3JpdGllcyI6W3siaWQiOjEsImNyZWF0ZURhdGUiOjE2NDI1MjE3NjIwMTMsInVwZGF0ZURhdGUiOjE2NDI1MjE3NjIwMTMsInJvbGVOYW1lIjoiUk9MRV9BRE1JTiIsImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImFjY291bnROb25FeHBpcmVkIjp0cnVlLCJhY2NvdW50Tm9uTG9ja2VkIjp0cnVlLCJjcmVkZW50aWFsc05vbkV4cGlyZWQiOnRydWV9LCJjcmVhdGVUaW1lIjp7Im5hbm8iOjY0NDc2NTAwMCwieWVhciI6MjAyMiwibW9udGhWYWx1ZSI6MSwiZGF5T2ZNb250aCI6MjYsImhvdXIiOjIyLCJtaW51dGUiOjIyLCJzZWNvbmQiOjI0LCJtb250aCI6IkpBTlVBUlkiLCJkYXlPZldlZWsiOiJXRURORVNEQVkiLCJkYXlPZlllYXIiOjI2LCJjaHJvbm9sb2d5Ijp7ImlkIjoiSVNPIiwiY2FsZW5kYXJUeXBlIjoiaXNvODYwMSJ9fSwidXNlcl9uYW1lIjoiYWRtaW4iLCJzY29wZSI6WyJhbGwiXSwiZXhwIjozNzkwNjkwNTkxLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IkZaNE5MQVhyNHdvR09FMEx6a3BhYTRMS0lKcyIsImNsaWVudF9pZCI6Ik1laW1pbldhbmcifQ.C7AA80etalxECGV7j5BkSvFZRwNbiwxLS6T5ujKj2rU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/peopleInformation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"peopleInformation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取所有的个人信息资料: member",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6MSwiY3JlYXRlRGF0ZSI6MTY0MjUyMTc2MjE4NiwidXBkYXRlRGF0ZSI6MTY0MjUyMTc2MjE4NiwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiJDJhJDEwJFJhaGFYZ1gvMHkuRW1GNzZjelBYTmV1NkxOcTRQUUtTM0N2RWlhTUxxbi93ZVlLSURrcDNPIiwiZW1haWwiOiJ1dG9jMzVAZ21haWwuY29tIiwiYXZhdGFyVXJsIjoiaHR0cHM6Ly9ibGVzc2VkLXdtbS5vc3MtY24tc2hhbmdoYWkuYWxpeXVuY3MuY29tL3poaWxpLWhvbWUvYXZhdGFycy9hZG1pbi5qcGVnIiwicm9sZXMiOlt7ImlkIjoxLCJjcmVhdGVEYXRlIjoxNjQyNTIxNzYyMDEzLCJ1cGRhdGVEYXRlIjoxNjQyNTIxNzYyMDEzLCJyb2xlTmFtZSI6IlJPTEVfQURNSU4iLCJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJlbmFibGVkIjp0cnVlLCJhdXRob3JpdGllcyI6W3siaWQiOjEsImNyZWF0ZURhdGUiOjE2NDI1MjE3NjIwMTMsInVwZGF0ZURhdGUiOjE2NDI1MjE3NjIwMTMsInJvbGVOYW1lIjoiUk9MRV9BRE1JTiIsImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImFjY291bnROb25FeHBpcmVkIjp0cnVlLCJhY2NvdW50Tm9uTG9ja2VkIjp0cnVlLCJjcmVkZW50aWFsc05vbkV4cGlyZWQiOnRydWV9LCJjcmVhdGVUaW1lIjp7Im5hbm8iOjY0NDc2NTAwMCwieWVhciI6MjAyMiwibW9udGhWYWx1ZSI6MSwiZGF5T2ZNb250aCI6MjYsImhvdXIiOjIyLCJtaW51dGUiOjIyLCJzZWNvbmQiOjI0LCJtb250aCI6IkpBTlVBUlkiLCJkYXlPZldlZWsiOiJXRURORVNEQVkiLCJkYXlPZlllYXIiOjI2LCJjaHJvbm9sb2d5Ijp7ImlkIjoiSVNPIiwiY2FsZW5kYXJUeXBlIjoiaXNvODYwMSJ9fSwidXNlcl9uYW1lIjoiYWRtaW4iLCJzY29wZSI6WyJhbGwiXSwiZXhwIjozNzkwNjkwNTkxLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IkZaNE5MQVhyNHdvR09FMEx6a3BhYTRMS0lKcyIsImNsaWVudF9pZCI6Ik1laW1pbldhbmcifQ.C7AA80etalxECGV7j5BkSvFZRwNbiwxLS6T5ujKj2rU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/peopleInformation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"peopleInformation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取所有的个人信息资料: No Auth",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/peopleInformation",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"peopleInformation"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "根据id获取个人信息资料: admin",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6MTQsImNyZWF0ZURhdGUiOjE2NDM3MjQyODEyNTcsInVwZGF0ZURhdGUiOjE2NDM3MjQyODEyNTcsInZlcnNpb24iOjAsInVzZXJuYW1lIjoiYWRtaW4iLCJwYXNzd29yZCI6IiQyYSQxMCQ2QWo1WjVkTG5LWnFlTWhhdGg3bUZldGQvTVNrS2RQNGVEUEwwNlcxOVAyd1IueEwxQk1PSyIsImVtYWlsIjoiYWRtaW5AMTYzLmNvbSIsImF2YXRhclVybCI6Imh0dHBzOi8vYmxlc3NlZC13bW0ub3NzLWNuLXNoYW5naGFpLmFsaXl1bmNzLmNvbS96aGlsaS1ob21lL2F2YXRhcnMvYWRtaW4uanBlZyIsInJvbGVzIjpbeyJpZCI6MSwiY3JlYXRlRGF0ZSI6MTY0MzcyMDEzMzY3OCwidXBkYXRlRGF0ZSI6MTY0MzcyMDEzMzY3OCwidmVyc2lvbiI6MCwicm9sZU5hbWUiOiJST0xFX0FETUlOIiwiZGVzY3JpcHRpb25JbWFnZVVybCI6Imh0dHBzOi8vYmxlc3NlZC13bW0ub3NzLWNuLXNoYW5naGFpLmFsaXl1bmNzLmNvbS96aGlsaS1ob21lL3JvbGVDb3ZlckltYWdlcy9hZG1pbi5qcGVnIiwiZGlzcGxheU5hbWUiOiLnrqHnkIblkZjnlKjmiLciLCJkZXNjcmlwdGlvbiI6IueuoeeQhuWRmOinkuiJsuS4u-imgei0n-i0o-ezu-e7n-W5s-WPsOeahOeuoeeQhuOAguWMheaLrOWuieWFqOeuoeeQhuOAgeaVsOaNrueuoeeQhuOAgeezu-e7n-WBpeW6t-ebkeaOp-etieOAgiIsImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImVuYWJsZWQiOnRydWUsImFjY291bnROb25FeHBpcmVkIjp0cnVlLCJhY2NvdW50Tm9uTG9ja2VkIjp0cnVlLCJjcmVkZW50aWFsc05vbkV4cGlyZWQiOnRydWV9LCJjcmVhdGVUaW1lIjp7Im5hbm8iOjczNTQ0OTAwMCwieWVhciI6MjAyMiwibW9udGhWYWx1ZSI6MiwiZGF5T2ZNb250aCI6MiwiaG91ciI6MTQsIm1pbnV0ZSI6OSwic2Vjb25kIjo1MywibW9udGgiOiJGRUJSVUFSWSIsImRheU9mV2VlayI6IldFRE5FU0RBWSIsImRheU9mWWVhciI6MzMsImNocm9ub2xvZ3kiOnsiaWQiOiJJU08iLCJjYWxlbmRhclR5cGUiOiJpc284NjAxIn19LCJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbImFsbCJdLCJleHAiOjM3OTEyNjU4NDAsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiaUNlS1dWNG8zV0g2bW44bmwtWUg1a3B1SjBjIiwiY2xpZW50X2lkIjoiTWVpbWluV2FuZyJ9.xRRd-x7QCQgZpCOsOPoU2rNPRjIAUwvz1cAPybNv-JQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/peopleInformation/100",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"peopleInformation",
+										"100"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "根据id获取个人信息资料: No Auth",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/peopleInformation/100",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"peopleInformation",
+										"100"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "根据用户id获取用户个人资料: No Auth",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/peopleInformation/search/findPersonalInformationByUserId?userId=100",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"peopleInformation",
+										"search",
+										"findPersonalInformationByUserId"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "City实体",
+					"item": []
+				},
+				{
+					"name": "Contact实体",
+					"item": [
+						{
+							"name": "获取所有的联系方式",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6MiwiY3JlYXRlRGF0ZSI6MTY0NDIyOTYxMjU3NiwidXBkYXRlRGF0ZSI6MTY0NDIyOTYxMjU3NiwidmVyc2lvbiI6MCwidXNlcm5hbWUiOiJ1c2VyIiwicGFzc3dvcmQiOiIkMmEkMTAkODAxR2NJTUVqSm1qRDhKRHAwZThXT24ualZ5RzRHUTVDa2U0OTJqWW54eU5vcDkxR3pRM3EiLCJlbWFpbCI6Imd3bHA4MEBnbWFpbC5jb20iLCJhdmF0YXJVcmwiOiJodHRwczovL2JsZXNzZWQtd21tLm9zcy1jbi1zaGFuZ2hhaS5hbGl5dW5jcy5jb20vemhpbGktaG9tZS9hdmF0YXJzL2F2YXRhcjUuanBnIiwicm9sZXMiOlt7ImlkIjoyLCJjcmVhdGVEYXRlIjoxNjQ0MjI5NjEyMzYxLCJ1cGRhdGVEYXRlIjoxNjQ0MjI5NjEyMzYxLCJ2ZXJzaW9uIjowLCJyb2xlTmFtZSI6IlJPTEVfVVNFUiIsImRlc2NyaXB0aW9uSW1hZ2VVcmwiOiJodHRwczovL2JsZXNzZWQtd21tLm9zcy1jbi1zaGFuZ2hhaS5hbGl5dW5jcy5jb20vemhpbGktaG9tZS9yb2xlQ292ZXJJbWFnZXMvdXNlci5qcGVnIiwiZGlzcGxheU5hbWUiOiLmma7pgJrnlKjmiLciLCJkZXNjcmlwdGlvbiI6IuaZrumAmueUqOaIt-WPr-S7peiuv-mXruezu-e7n-aVsOaNruS_oeaBr--8jOWMheaLrOWQhOenjeiuuuaWh-OAgeS7o-eggeOAgeWNmuWuouetieWFrOW8gOS_oeaBr-OAgiIsImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiYWNjb3VudE5vbkxvY2tlZCI6dHJ1ZSwiYWNjb3VudE5vbkV4cGlyZWQiOnRydWUsImNyZWRlbnRpYWxzTm9uRXhwaXJlZCI6dHJ1ZSwiZW5hYmxlZCI6dHJ1ZX0sImNyZWF0ZVRpbWUiOnsibW9udGgiOiJGRUJSVUFSWSIsImRheU9mV2VlayI6IldFRE5FU0RBWSIsImRheU9mWWVhciI6NDAsIm5hbm8iOjY4NjMzNTAwLCJ5ZWFyIjoyMDIyLCJtb250aFZhbHVlIjoyLCJkYXlPZk1vbnRoIjo5LCJob3VyIjoxNSwibWludXRlIjoxNiwic2Vjb25kIjo0NSwiY2hyb25vbG9neSI6eyJpZCI6IklTTyIsImNhbGVuZGFyVHlwZSI6Imlzbzg2MDEifX0sInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJhbGwiXSwiZXhwIjozNzkxODc0NjUyLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwianRpIjoid0ZObVRZU2F4WUxMazdZbENGX2pvLXhncWw0IiwiY2xpZW50X2lkIjoiTWVpbWluV2FuZyJ9.uYiLQSH6UucDpYEU5kkZ9wo6StFs9ttfqZpotgUqunk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/contacts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "用户登录",
+			"item": [
+				{
+					"name": "Admin login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "meimin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "MeiminWang",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "all",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "meimin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "MeiminWang",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "all",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supervisor login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "meimin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "MeiminWang",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "all",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Member login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "meimin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "MeiminWang",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "all",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
