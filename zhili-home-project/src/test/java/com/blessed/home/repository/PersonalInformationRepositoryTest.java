@@ -28,7 +28,6 @@ class PersonalInformationRepositoryTest {
 
     @Transactional
     @Test
-    @WithMockUser(username = "admin", roles = "ADMIN")
     void testFindPersonalInformationByUserId() {
         Optional<PersonalInformation> personalInfo = personalInformationRepository.findPersonalInformationByUserId(32L);
         Assertions.assertTrue(personalInfo.isPresent(), "未查询到个人信息资料");
