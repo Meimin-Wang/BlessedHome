@@ -1,7 +1,7 @@
 # Spring Data Redis和缓存相关配置
 spring:
   redis:
-    host: 192.168.40.128
+    host: 114.116.107.129
 #    host: localhost
 #    host: 39.104.54.116
     port: 6379
