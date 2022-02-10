@@ -3,7 +3,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root  # 数据库用户名
-    password: BLESSEDwmm320  # 数据库密码
+    password: 123456  # 数据库密码
     #  数据库连接的URL，数据库名称为zz_home，需要现在数据库中创建一个空的数据库：create database zz_home;
     url: jdbc:mysql://localhost:3306/zz_home?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     type: com.alibaba.druid.pool.DruidDataSource  # 采用Apache Druid数据库连接池的时候采用此数据源
