@@ -8,12 +8,7 @@ import lombok.Data;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.rest.core.annotation.Description;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -33,26 +28,22 @@ import java.util.Set;
 @Description("论文写作项目")
 public class PaperWritingProject extends BaseEntity implements Serializable {
 
-    @Column(name = "paper_title", length = 100, nullable = false, unique = true)
+    @Column(name = "project_name", length = 100, nullable = false, unique = true)
     @ApiModelProperty("论文题目")
     @Description("论文题目")
-    private String paperTitle;
+    private String projectName;
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "supervisor_id")
+    @ManyToMany(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinTable(name = "tbl_pwp_supervisors", joinColumns = @JoinColumn(name = "pwp_id"), inverseJoinColumns = @JoinColumn(name = "supervisor_id"))
     @ApiModelProperty("导师")
     @Description("导师")
-    private User supervisor;
+    private Set<User> supervisors = new HashSet<>();
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinTable(name = "tbl_pwp_authors", joinColumns = @JoinColumn(name = "pwp_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     @ApiModelProperty("论文作者")
     @Description("论文作者")
-    private User author;
-
-    @OneToMany(targetEntity = User.class, fetch = FetchType.EAGER)
-    @ApiModelProperty("协作者")
-    @Description("协作者")
-    private Set<User> otherCollaborators = new HashSet<>();
+    private Set<User> authors = new HashSet<>();
 
     @Column(name = "journal_name", length = 100)
     @ApiModelProperty("期刊名称")
