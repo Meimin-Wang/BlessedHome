@@ -48,7 +48,7 @@ public class PaperWritingItem extends BaseEntity implements Serializable {
     /**
      * 提交附件
      */
-    @OneToMany(targetEntity = PaperWritingFile.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = PaperWritingFile.class, fetch = FetchType.LAZY)
     @ApiModelProperty("附件")
     @Description("附件")
     private Set<PaperWritingFile> paperWritingFiles = new HashSet<>();
