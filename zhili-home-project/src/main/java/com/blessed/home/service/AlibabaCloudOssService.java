@@ -51,6 +51,7 @@ public interface AlibabaCloudOssService {
      * @param inputStream 文件输入流
      * @param key 在OSS中的路径，不要以"/"开头，例如在bucket桶下的文件key：aaa/bb/c.png
      *        不要写成/aaa/bb/c.png
+     * @param filename 文件名
      * @return 返回一个 {@link URL} 对象
      * @author Blessed
      */
