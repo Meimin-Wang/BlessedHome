@@ -1,6 +1,8 @@
 package com.blessed.home.service;
 
+import javax.validation.constraints.NotNull;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -14,27 +16,12 @@ import java.net.URL;
 public interface AlibabaCloudOssService {
 
     /**
-     * 创建一个新的桶，当需要创建的桶不存在的时候
-     * @param bucketName 桶的名称
-     * @author Blessed
-     */
-    void createBucket(String bucketName);
-
-    /**
      * 判断OSS中是否存在指定的文件
      * @param filename 文件名称，即key
      * @return 返回一个boolean值
      * @author Blessed
      */
-    boolean isFileExistByFilename(String filename);
-
-    /**
-     * 判断是否存在指定的桶
-     * @param bucketName 桶的名称
-     * @return 返回一个boolean值
-     * @author Blessed
-     */
-    boolean isBucketExist(String bucketName);
+    boolean isFileExistByFilename(@NotNull String filename);
 
     /**
      * 上传文件到OSS中
@@ -44,7 +31,8 @@ public interface AlibabaCloudOssService {
      * @return 返回一个 {@link URL} 对象
      * @author Blessed
      */
-    URL uploadFile(File file, String key);
+    @NotNull
+    URL uploadFile(File file, String key) throws FileNotFoundException;
 
     /**
      * 上传文件到OSS中
@@ -55,7 +43,7 @@ public interface AlibabaCloudOssService {
      * @return 返回一个 {@link URL} 对象
      * @author Blessed
      */
-    URL uploadFile(InputStream inputStream, String key, String filename);
+    URL uploadFile(InputStream inputStream, String key);
 
     /**
      * 删除OSS中的文件
@@ -63,12 +51,5 @@ public interface AlibabaCloudOssService {
      * @author Blessed
      */
     void deleteFile(String key);
-
-    /**
-     * 在OSS上创建一个文件夹
-     * @param directory 文件夹的名称
-     * @author Blessed
-     */
-    void createDirectory(String directory);
 
 }
