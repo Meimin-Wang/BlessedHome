@@ -1,7 +1,9 @@
 package com.blessed.home.service.impl;
 
 import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.model.*;
+import com.aliyun.oss.model.GenericRequest;
+import com.aliyun.oss.model.PutObjectRequest;
+import com.aliyun.oss.model.PutObjectResult;
 import com.blessed.home.properties.AlibabaCloudOssProperties;
 import com.blessed.home.service.AlibabaCloudOssService;
 import com.blessed.home.utils.AlibabaCloudOssUtils;
@@ -9,11 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.validation.constraints.NotNull;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Date;
 
 /**
  * @ClassName AlibabaCloudOssServiceImpl
@@ -35,66 +39,48 @@ public class AlibabaCloudOssServiceImpl implements AlibabaCloudOssService {
     }
 
     @Override
-    public void createBucket(String bucketName) {
-        if (!ossClient.doesBucketExist(bucketName)) {
-            Bucket bucket = ossClient.createBucket(bucketName);
-            Date bucketCreationDate = bucket.getCreationDate();
-            String name = bucket.getName();
-            log.info("{}已经创建，创建日期为：{}", name, bucketCreationDate);
-        } else {
-            log.warn("{} 已经存在，无法创建！", bucketName);
-        }
-
-    }
-
-    @Override
-    public boolean isFileExistByFilename(String filename) {
+    public boolean isFileExistByFilename(@NotNull String filename) {
+        String trimFilename = AlibabaCloudOssUtils.preprocessAlibabaCloudOssKey(filename);
         return ossClient.doesObjectExist(
                 alibabaCloudOssProperties.getBucketName(),
-                filename
+                trimFilename
         );
     }
 
+    @NotNull
     @Override
-    public boolean isBucketExist(String bucketName) {
-        return ossClient.doesBucketExist(new GenericRequest(bucketName));
+    public URL uploadFile(File file, String key) throws FileNotFoundException {
+        return uploadFile(new FileInputStream(file), key);
     }
 
     @Override
-    public URL uploadFile(File file, String key) {
-        String uploadedFilename = AlibabaCloudOssUtils.randomGenerateFilename(key, file.getName());
-        PutObjectRequest putObjectRequest = new PutObjectRequest(alibabaCloudOssProperties.getBucketName(), uploadedFilename, file);
-        PutObjectResult putObjectResult = ossClient.putObject(putObjectRequest);
-        log.info("{}", putObjectResult.getETag());
-        return getResourceUrl(uploadedFilename);
-    }
-
-    @Override
-    public URL uploadFile(InputStream inputStream, String key, String filename) {
-        String uploadedFilename = AlibabaCloudOssUtils.randomGenerateFilename(key, filename);
-        PutObjectRequest putObjectRequest = new PutObjectRequest(alibabaCloudOssProperties.getBucketName(), uploadedFilename, inputStream);
-        PutObjectResult putObjectResult = ossClient.putObject(putObjectRequest);
-        log.info("{}", putObjectResult.getETag());
-        return getResourceUrl(uploadedFilename);
+    public URL uploadFile(InputStream inputStream, String key) {
+        PutObjectRequest putObjectRequest = new PutObjectRequest(
+                alibabaCloudOssProperties.getBucketName(),
+                AlibabaCloudOssUtils.preprocessAlibabaCloudOssKey(key),
+                inputStream
+        );
+        boolean doesObjectExist = ossClient.doesObjectExist(
+                alibabaCloudOssProperties.getBucketName(),
+                AlibabaCloudOssUtils.preprocessAlibabaCloudOssKey(key)
+        );
+        if (!doesObjectExist) {
+            PutObjectResult putObjectResult = ossClient.putObject(putObjectRequest);
+            log.info("Request ID: [{}] --> {} 上传成功", putObjectResult.getRequestId(), key);
+        } else {
+            log.warn("{} 已存在", key);
+        }
+        return getResourceUrl(AlibabaCloudOssUtils.preprocessAlibabaCloudOssKey(key));
     }
 
     @Override
     public void deleteFile(String key) {
-        GenericRequest genericRequest = new GenericRequest(alibabaCloudOssProperties.getBucketName(), key);
+        GenericRequest genericRequest = new GenericRequest(alibabaCloudOssProperties.getBucketName(), AlibabaCloudOssUtils.preprocessAlibabaCloudOssKey(key));
         if (ossClient.doesObjectExist(genericRequest)) {
             ossClient.deleteObject(genericRequest);
             log.info("删除文件 {} 成功", key);
         }
         log.warn("{} 不存在！", key);
-    }
-
-    @Override
-    public void createDirectory(String directory) {
-        log.info("OSS创建目录: {}", directory);
-        ossClient.createDirectory(
-                alibabaCloudOssProperties.getBucketName(),
-                directory
-        );
     }
 
     /**
