@@ -109,4 +109,20 @@ public class AlibabaCloudOssServiceImpl implements AlibabaCloudOssService {
         }
         return url;
     }
+
+
+
+    /**
+     *  //TODO
+     *  为了测试运行临时接
+     * @param inputStream
+     * @param key
+     * @param filename
+     * @return
+     */
+    @Override
+    public URL uploadFile(InputStream inputStream, String key, String filename) {
+        return null;
+    }
+
 }

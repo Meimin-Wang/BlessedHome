@@ -52,4 +52,13 @@ public interface AlibabaCloudOssService {
      */
     void deleteFile(String key);
 
+    /**
+     * //TODO
+     * 为了测试运行临时接口
+     * @param inputStream
+     * @param key
+     * @param filename
+     * @return
+     */
+    URL uploadFile(InputStream inputStream, String key, String filename);
 }

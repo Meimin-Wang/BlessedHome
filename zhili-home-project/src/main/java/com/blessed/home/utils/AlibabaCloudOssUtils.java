@@ -22,4 +22,14 @@ public class AlibabaCloudOssUtils {
         return rootPath + File.separator + UUID.randomUUID().toString().substring(10) + filename;
     }
 
+    /**
+     * 为了测试运行的临时接口
+     * @param key
+     * @return
+     */
+    public static String preprocessAlibabaCloudOssKey(String key) {
+        // TODO
+        return null;
+    }
+
 }
