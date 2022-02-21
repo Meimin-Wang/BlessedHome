@@ -86,6 +86,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
 
     /**
      * 角色，角色名必须以ROLE_开头
+     * 角色与用户是many-to-many关系，所以必定会产生3张表
      */
     @NotNull
     @ApiModelProperty(value = "角色，角色名必须以ROLE_开头", dataType = "Set<Role>", example = "ROLE_ADMIN")

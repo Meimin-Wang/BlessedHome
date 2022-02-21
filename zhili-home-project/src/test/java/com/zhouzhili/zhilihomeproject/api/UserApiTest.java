@@ -291,7 +291,7 @@ public class UserApiTest {
                 .andDo(print());
     }
 
-    private static final String OTHER_USERNAME = "alejandro.bernhard";
+    private static final String OTHER_USERNAME = "lynelle.beahan";
     private static final String NON_EXIST_USERNAME = "no-exist-username";
 
     @Test
