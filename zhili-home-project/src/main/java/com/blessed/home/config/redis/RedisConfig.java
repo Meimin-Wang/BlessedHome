@@ -27,6 +27,11 @@ import java.time.Duration;
 @EnableRedisRepositories
 public class RedisConfig {
 
+    /**
+     * {@link Jackson2JsonRedisSerializer}注解: 存储在redis中的值为bytes array, 所以需要加上序列化器,将对象转换成序列化器。
+     * @param redisConnectionFactory
+     * @return
+     */
     @Bean(name = "entityRedisTemplate")
     public RedisTemplate<Object, Object> entityRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<Object, Object> entityRedisTemplate = new RedisTemplate<>();
