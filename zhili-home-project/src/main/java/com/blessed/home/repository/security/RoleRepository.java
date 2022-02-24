@@ -2,6 +2,7 @@ package com.blessed.home.repository.security;
 
 import com.blessed.home.constants.CacheConstants;
 import com.blessed.home.entity.security.Role;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -80,4 +81,13 @@ public interface RoleRepository extends JpaRepository<Role, Long>, RoleRepositor
     @CachePut(cacheNames = {CacheConstants.ROLE_CACHE_REPOSITORY_NAME}, key = "#entity.id", unless = "#result == null")
     @Override
     <S extends Role> S saveAndFlush(S entity);
+
+    /**
+     * 删除角色信息
+     * @param id 角色的id
+     */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @CacheEvict(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#id")
+    @Override
+    void deleteById(Long id);
 }
