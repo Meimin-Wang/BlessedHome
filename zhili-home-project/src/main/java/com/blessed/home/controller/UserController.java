@@ -1,5 +1,6 @@
 package com.blessed.home.controller;
 
+import com.aliyun.oss.common.utils.StringUtils;
 import com.blessed.home.constants.AlibabaCloudOssConstants;
 import com.blessed.home.dto.ResponseData;
 import com.blessed.home.dto.ResponseState;
@@ -132,7 +133,7 @@ public class UserController {
         }
         String originalFilename = avatarFile.getOriginalFilename();
         log.info("{} 上传了文件 {}", username, originalFilename);
-        URL url = alibabaCloudOssService.uploadFile(avatarFile.getInputStream(), AlibabaCloudOssConstants.AVATAR_OSS_DIRECTORY, originalFilename);
+        URL url = alibabaCloudOssService.uploadFile(avatarFile.getInputStream(), StringUtils.join("/", AlibabaCloudOssConstants.AVATAR_OSS_DIRECTORY, originalFilename));
         ResponseData<URL> response = new ResponseData<>();
         response.setCode(201).setMessage("上传头像成功").setState(ResponseState.CREATED).setBody(url).setResponseDate(new Date());
         return response;
@@ -162,7 +163,7 @@ public class UserController {
     @PutMapping("/avatar/update/{username}")
     public ResponseData<User> updateUserAvatar(MultipartFile avatarFile, @PathVariable("username") String username) throws UserNotFoundException, IOException {
         Assert.hasText(username, () -> "用户名不能为空！");
-        URL url = alibabaCloudOssService.uploadFile(avatarFile.getInputStream(), AlibabaCloudOssConstants.AVATAR_OSS_DIRECTORY, avatarFile.getOriginalFilename());
+        URL url = alibabaCloudOssService.uploadFile(avatarFile.getInputStream(), StringUtils.join("/", AlibabaCloudOssConstants.AVATAR_OSS_DIRECTORY, avatarFile.getOriginalFilename()));
         User user = userService.updateAvatarUrl(username, url.toString());
         ResponseData<User> responseData = new ResponseData<>();
         responseData.setState(ResponseState.SUCCESS)

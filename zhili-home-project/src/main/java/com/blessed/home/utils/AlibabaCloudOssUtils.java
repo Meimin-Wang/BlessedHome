@@ -1,5 +1,7 @@
 package com.blessed.home.utils;
 
+import org.springframework.util.StringUtils;
+
 import java.io.File;
 import java.util.UUID;
 
@@ -22,4 +24,8 @@ public class AlibabaCloudOssUtils {
         return rootPath + File.separator + UUID.randomUUID().toString().substring(10) + filename;
     }
 
+    public static String preprocessAlibabaCloudOssKey(String key) {
+        String f = StringUtils.trimAllWhitespace(key);
+        return StringUtils.trimLeadingCharacter(f, '/');
+    }
 }

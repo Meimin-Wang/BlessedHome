@@ -1,12 +1,18 @@
 <template>
   <div id="chatPage">
     <div class="chatContainer">
+      
       <div class="ChatList">
+        <div id="blogSearch">
+          <el-input v-model="search" placeholder="请输入要搜索的内容" clearable suffix-icon="el-icon-search"></el-input>
+        </div>
         <blog-item v-for="item in blogList" :key="item.blogId" :blog="item" />
       </div>
       <div class="TagAndHot">
-        <div class="Tags"></div>
-        <div class="Hots"></div>
+        <div class="Edit">写博客</div>
+        <div class="BlogAdmin">博客管理</div>
+        <div class="Tags">博客分类</div>
+        <div class="Hots">热门博客</div>
       </div>
     </div>
   </div>
@@ -65,6 +71,7 @@ export default {
           ]
         }
       ],
+      search: '',
       blogTags: [],
       hotBlogs: []
     }
@@ -77,21 +84,38 @@ export default {
   margin-top: 20px;
   margin-bottom: 5px;
 }
+
 .chatContainer {
   margin-left: 30px;
   margin-right: 30px;
   display: flex;
-
 }
 
-.ChatList {
+.ChatList{
   width: 60%;
   margin-right: 10px;
 }
-
+#blogSearch {
+  margin-bottom: 30px;
+}
 .TagAndHot {
   width: 40%;
   background: blueviolet;
+}
+.Edit {
+  height: 100px;
+  background: no-repeat center / contain;
+  /* background-image: url('../../assets/chat/edit-blog.jpg'); */
+  background-size: 100% 100%;
+  margin: 20px;
+  color: white;
+  font-size: 50px;
+  font-weight: 600;
+}
+.BlogAdmin {
+  height: 100px;
+  background: rgb(172, 129, 129);
+  margin: 20px;
 }
 .Tags {
   height: 100px;
