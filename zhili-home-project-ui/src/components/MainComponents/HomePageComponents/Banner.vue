@@ -1,10 +1,11 @@
 <template>
   <div id="banner">
-    <h1 id="bannerTitle" class="animate__animated animate__fadeIn">Charley Zhou Lab</h1>
+    <h1 id="bannerTitle" class="animate__animated animate__fadeIn">未来智慧</h1>
     <div id="bannerDescription" class="animate__animated animate__slideInUp">
-      <h2>实验室描述</h2>
+      <h2>智慧创造未来，未来属于智慧</h2>
       <div id="labDescription">
-        Eu deserunt et aliqua ut incididunt in non occaecat eiusmod exercitation reprehenderit. Dolor eiusmod et pariatur esse sint do cillum quis irure deserunt consequat et occaecat ut. Excepteur duis qui ex occaecat occaecat. Labore laboris est mollit ipsum cupidatat culpa tempor ea nostrud ea. Eiusmod aliquip dolor occaecat consectetur nisi exercitation veniam. Elit anim qui eiusmod amet est consectetur elit eu incididunt. Sint commodo eu velit qui ad qui duis non adipisicing.
+        用智慧定义未来，用智慧迎接未来，用智慧创造未来 <br>
+        AI is all you need.
       </div>
     </div>
   </div>
@@ -19,7 +20,8 @@ export default {
 <style>
 #banner {
   /* background-image: url(../../../assets/home/Banner.png); */
-  background: #171514;
+  /* background: #171514; */
+  background: linear-gradient(to bottom right, black, rgb(85, 78, 78));
   background-size: 100%;
   color: white;
   padding: 1px;
@@ -37,7 +39,7 @@ export default {
 #labDescription {
   margin-left: 15%;
   margin-right: 15%;
-  text-align: left;
+  text-align: center;
 }
 
 </style>
