@@ -2,10 +2,10 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root  # 数据库用户名
-    password: BLESSEDwmm320  # 数据库密码
+    username: ENC(jIKDrAI2gh3og2y4kuHJEYd5xLqlTwzgheyah6MncpJ9q1Acr189aY8OYCEFCQpy)  # 数据库用户名
+    password: ENC(jNisw/FlP6aequqk5hbAKX6ei8/t9eVPfGplgCBpWT9VmZxCoDwY4iJZAZHrNGaA)  # 数据库密码
     #  数据库连接的URL，数据库名称为zz_home，需要现在数据库中创建一个空的数据库：create database zz_home;
-    url: jdbc:mysql://localhost:3306/zz_home?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    url: jdbc:mysql://121.5.112.234:3306/blessed_home?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     type: com.alibaba.druid.pool.DruidDataSource  # 采用Apache Druid数据库连接池的时候采用此数据源
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
