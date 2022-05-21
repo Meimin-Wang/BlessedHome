@@ -2,7 +2,7 @@
 alibaba:
   cloud:
     oss:  # OSS云存储相关配置
-      access-key: LTAI5tLUp2PgCJjzfBCqwgHj # 访问身份验证中用到用户标识
-      secret-key: lUNP5g1q23dFa5hOzNn5S0gVDnoFcb # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+      access-key: ENC(uHJm5LmsaWdsz5csSvi5nWqFlUo3Xq7AcYUFKS4wmxxP62EEz3tXPoNHw9l4nCmBFbHUMIKbHP9EMlKwYXUn8g==) # 访问身份验证中用到用户标识
+      secret-key: ENC(ZflzKKJ1ZLF1JqCOzg1nA1AW/UlbAxP0azxN5TC37sWrbk+0zPAnwNI0wXvU+8IYA+iQcEpGsQ4SUoV4PHSb7g==) # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
       endpoint: oss-cn-shanghai.aliyuncs.com  # oss对外服务的访问域名
       bucket-name: blessed-home # oss的存储空间
