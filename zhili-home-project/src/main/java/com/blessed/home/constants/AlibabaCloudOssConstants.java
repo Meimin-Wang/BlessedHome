@@ -9,9 +9,10 @@ package com.blessed.home.constants;
  */
 public class AlibabaCloudOssConstants {
 
-    public static final String ROOT = "zhili-home";
+    public static final String ROOT = "blessed-home";
 
-    public static final String AVATAR_OSS_DIRECTORY = "zhili-home/avatars";
+    public static final String AVATAR_OSS_DIRECTORY = "blessed-home/avatars";
 
+    public static final String TEST_OSS_DIRECTORY = "blessed-home/test";
 
 }

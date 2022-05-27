@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/zhili-home-project/blessed-home.iml" filepath="$PROJECT_DIR$/zhili-home-project/blessed-home.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zhili-home-project-admin/zhili-home-project-admin.iml" filepath="$PROJECT_DIR$/zhili-home-project-admin/zhili-home-project-admin.iml" />
+    </modules>
+  </component>
+</project>

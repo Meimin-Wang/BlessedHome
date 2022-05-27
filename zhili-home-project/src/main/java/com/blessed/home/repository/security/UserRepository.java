@@ -3,6 +3,7 @@ package com.blessed.home.repository.security;
 import com.blessed.home.constants.CacheConstants;
 import com.blessed.home.constants.ResourceConstants;
 import com.blessed.home.dto.ErrorResponseData;
+import com.blessed.home.entity.security.Role;
 import com.blessed.home.entity.security.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -185,4 +186,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     @Cacheable(cacheNames = {CacheConstants.USER_CACHE_REPOSITORY_NAME}, key = "#pageable.pageSize + '-' + #pageable.pageNumber + '-' + #pageable.sort", unless = "@cacheCondition.isPageNotEmpty(#result)")
     Page<User> findUsersByUsernameContaining(String username, Pageable pageable);
+
+    /**
+     * //TODO 连表查询
+     * 为了测试的临时接口
+     * @param role
+     * @return
+     */
+    List<User> findUsersByRolesContaining(Role role);
 }

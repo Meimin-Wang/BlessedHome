@@ -36,22 +36,34 @@ import java.util.Objects;
 public class PaperWritingFile extends BaseEntity implements Serializable {
 
 
-    @Column(name = "remark", nullable = false)
+    /**
+     * 附件备注
+     */
+    @Column(name = "remark", nullable = false, length = 100)
     @ApiModelProperty("备注")
     @Description("备注")
     private String remark = "";
 
+    /**
+     * 附件在OSS云存储的URL
+     */
     @URL(message = "论文文件路径必须是URL路径")
     @Column(name = "pwp_file_url")
     @ApiModelProperty("文件路径")
     @Description("文件路径")
     private String paperWritingFileUrl;
 
+    /**
+     * 附件大小
+     */
     @Column(name = "file_size", nullable = false, precision = 2)
     @ApiModelProperty("文件大小")
     @Description("文件大小")
     private Double fileSize;
 
+    /**
+     * 附件类型
+     */
     @Column(name = "mime_type", nullable = false, length = 30)
     @MimeType(message = "文件的类型必须符合mime type标准")
     @ApiModelProperty("文件类型")

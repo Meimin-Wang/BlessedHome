@@ -14,4 +14,6 @@ public class ResourceConstants {
 
     public static final String PERSONAL_INFO_RESOURCE_PATH = "peopleInformation";
     public static final String PERSONAL_INFO_RESOURCE_REL = "peopleInformation";
+    public static final String CONTANCT_RESOURCE_PATH = "contacts";
+    public static final String CONTANCT_RESOURCE_REL = "contacts";
 }
